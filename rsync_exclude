@@ -1,0 +1,12 @@
+/rsync_exclude
+/Makefile
+/modele
+/.dist
+/target
+
+/locales/templates/messages.pot
+
+/vendor
+/features
+/composer.*
+/NOTES

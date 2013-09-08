@@ -1,0 +1,160 @@
+# Translation of RSLT dotclear plugin to French
+# Copyright(C) 2010 Nicolas Roudaire  http://www.nikrou.net
+# This file is distributed under the same license as the Dotclear package.
+# Nicolas Roudaire <nikrou77@gmail.com>, 2010
+#
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-09-02 20:31+0200\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/views/form_author.tpl:3 src/views/form_author.tpl:9
+#: src/views/index.tpl:39 src/views/index.tpl:40 src/views/index.tpl:51
+#: src/controller/config.php:39
+msgid "Authors"
+msgstr "Auteurs"
+
+#: src/views/form_author.tpl:20
+msgid "Firstname"
+msgstr "Prénom"
+
+#: src/views/form_author.tpl:27
+msgid "Lastname"
+msgstr "Nom"
+
+#: src/views/form_song.tpl:3 src/views/form_song.tpl:9 src/views/index.tpl:50
+#: src/views/index.tpl:51 src/views/index.tpl:136 src/controller/config.php:41
+msgid "Songs"
+msgstr "Chansons"
+
+#: src/views/form_song.tpl:20 src/views/form_album.tpl:20
+msgid "Title:"
+msgstr "Titre : "
+
+#: src/views/form_album.tpl:3 src/views/form_album.tpl:9
+#: src/views/index.tpl:45 src/views/index.tpl:46 src/views/index.tpl:96
+#: src/controller/config.php:40
+msgid "Albums"
+msgstr "Albums"
+
+#: src/views/index.tpl:14 src/views/index.tpl:15 src/views/index.tpl:26
+#: src/controller/config.php:26
+msgid "Settings"
+msgstr "Paramètres"
+
+#: src/views/index.tpl:18 src/views/index.tpl:29
+msgid "Plugin activation"
+msgstr "Activation du plugin"
+
+#: src/views/index.tpl:22 src/views/index.tpl:33
+msgid "Enable RSLT plugin"
+msgstr "Activer le plugin RSLT"
+
+#: src/views/index.tpl:27 src/views/index.tpl:38
+msgid "Save configuration"
+msgstr "Sauver la configuration"
+
+#: src/views/index.tpl:31 src/views/index.tpl:42
+msgid "Advanced options"
+msgstr "Options avancées"
+
+#: src/views/index.tpl:41 src/views/index.tpl:53
+#: src/controller/controllerAuthor.php:24
+msgid "New author"
+msgstr "Nouvel auteur"
+
+#: src/views/index.tpl:47 src/views/index.tpl:94
+#: src/controller/controllerAlbum.php:24
+msgid "New album"
+msgstr "Nouvel album"
+
+#: src/views/index.tpl:52 src/views/index.tpl:138
+#: src/controller/controllerSong.php:24
+msgid "New song"
+msgstr "Nouvelle chanson"
+
+#: src/views/index.tpl:55 src/views/index.tpl:56 src/views/index.tpl:179
+#: src/controller/config.php:27
+msgid "About"
+msgstr "A propos"
+
+#: src/views/index.tpl:58 src/views/index.tpl:181
+msgid ""
+"If you want more informations on that plugin or have new ideas to develope "
+"it, or want to submit a bug or need help (to install or configure it) or for "
+"anything else ..."
+msgstr ""
+"Si vous voulez des informations sur ce plugin ou si vous avez des idées pour "
+"l'améliorer ou si vous pensez avoir trouvé un bug ou si vous avez besoin "
+"d'aide (pour l'installer ou le configurer) ou pour tout autre chose..."
+
+#: src/views/index.tpl:60 src/views/index.tpl:183
+#, php-format
+msgid "Go to %sthe dedicated page%s in"
+msgstr "Allez sur la %spage dédiée%s du"
+
+#: src/views/index.tpl:65 src/views/index.tpl:188
+msgid "Made by:"
+msgstr "Créé par : "
+
+#: src/controller/config.php:40 src/controller/config.php:49
+msgid "Configuration successfully updated."
+msgstr "La configuration a été mise à jour avec succès."
+
+#: src/views/index.tpl:56
+msgid "No author"
+msgstr "Pas d'auteur"
+
+#: src/views/index.tpl:99
+msgid "No album"
+msgstr "Pas d'album"
+
+#: src/views/index.tpl:106 src/views/index.tpl:149
+msgid "Title"
+msgstr "Titre : "
+
+#: src/views/index.tpl:142
+msgid "No song"
+msgstr "Pas de chanson"
+
+#: src/controller/controllerAuthor.php:49
+msgid "Author has been successfully updated."
+msgstr "L'auteur a été mis à jour avec succès."
+
+#: src/controller/controllerAuthor.php:54
+msgid "Author has been successfully added."
+msgstr "L'auteur a été ajouté avec succès."
+
+#: src/controller/controllerSong.php:45
+msgid "Song has been successfully updated."
+msgstr "La chanson a été mise à jour avec succès."
+
+#: src/controller/controllerSong.php:50
+msgid "Song has been successfully added."
+msgstr "La chanson a été ajoutée avec succès."
+
+#: src/controller/controllerAlbum.php:45
+msgid "Album has been successfully updated."
+msgstr "L'album a été mis à jour avec succès."
+
+#: src/controller/controllerAlbum.php:50
+msgid "Album has been successfully added."
+msgstr "L'album a été ajouté avec succès."
+
+#: src/model/object.manager.php:60 src/model/object.manager.php:82
+#, php-format
+msgid "You must provide %s field"
+msgstr "Vous devez remplir le champ %s"
+
+msgid "Song(s) successfully deleted."
+msgstr "Les chansons ont été supprimées avec succès."
+
+msgid "Author(s) successfully deleted."
+msgstr "Les auteurs ont été supprimés avec succès."
+
+msgid "Album(s) successfully deleted."
+msgstr "Les albums ont été supprimés avec succès."
