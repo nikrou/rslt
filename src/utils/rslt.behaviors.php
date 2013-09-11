@@ -19,12 +19,9 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-if (!defined('DC_RC_PATH')) { return; }
-
-$this->registerModule(
-		      /* Name */		'RSLT',
-		      /* Description*/	'Restons sur leurs traces',
-		      /* Author */		'Nicolas Roudaire',
-		      /* Version */		'0.0.15',
-		      /* Permissions */	'admin,contentadmin'
-		      );
+class rsltBehaviors
+{
+    public static function addTplPath($core) {
+        $core->tpl->setPath($core->tpl->getPath(), __DIR__.'/../../default-templates');
+    }
+}

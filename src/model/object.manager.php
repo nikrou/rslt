@@ -21,90 +21,147 @@
 
 class objectManager
 {
-  public function __construct($core, $object_name, $fields) {
-    $this->core = $core;
-    $this->blog = $core->blog;
-    $this->con = $this->blog->con;
-    $this->table = $this->blog->prefix.'rslt_'.$object_name;
+    public static $fields = array();
 
-    $this->object_name = $object_name;
-    $this->fields = $fields;
-  }
+    public function __construct($core, $object_name, $fields) {
+        $this->core = $core;
+        $this->blog = $core->blog;
+        $this->con = $this->blog->con;
+        $this->table = $this->blog->prefix.'rslt_'.$object_name;
 
-  public function getById($id) {
-    $strReq =  'SELECT '.implode(',', $this->fields);
-    $strReq .= ' FROM '.$this->table;
-    $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
-    $strReq .= ' AND id='.$this->con->escape($id);
+        $this->object_name = $object_name;
+        self::$fields = $fields;
+    }
+  
+    public function add($object) {
+        foreach (self::$fields as $field) {
+            if (empty($object[$field])) {
+                throw new Exception(sprintf(__('You must provide %s field', $field)));
+            }
+        }
 
-    $rs = $this->con->select($strReq);
-    $rs = $rs->toStatic();
+        $cur = $this->con->openCursor($this->table);
+        $cur->blog_id = (string) $this->blog->id;
+      
+        foreach (self::$fields as $field) {
+            if ($field=='publication_date') {
+                $cur->$field = date('Y-m-d H:i', strtotime($object[$field].'-01-01 00:00'));
+            } else {
+                $cur->$field = $object[$field];
+            }
+        }
+        $cur->url = text::str2URL((string) $object['title']);
 
-    return $rs;
-  }
+        $strReq = 'SELECT MAX(id) FROM '.$this->table;
+        $rs = $this->con->select($strReq);
+        $cur->id = (int) $rs->f(0) + 1;
+      
+        $cur->insert();
+        $this->blog->triggerBlog();
 
-  public function getList() {
-    $strReq =  'SELECT id, '.implode(',', $this->fields);
-    $strReq .= ' FROM '.$this->table;
-    $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
-
-    $rs = $this->con->select($strReq);
-    $rs = $rs->toStatic();
-
-    return $rs;
-  }
-
-  public function add($object) {
-    foreach ($this->fields as $field) {
-      if (empty($object[$field])) {
-	throw new Exception(sprintf(__('You must provide %s field', $field)));
-      }
+        return $cur;
     }
 
-    $cur = $this->con->openCursor($this->table);
-    $cur->blog_id = (string) $this->blog->id;
+    public function update($object) {
+        foreach (self::$fields as $field) {
+            if (empty($object[$field])) {
+                throw new Exception(sprintf(__('You must provide %s field', $field)));
+            }
+        }
+      
+        $cur = $this->con->openCursor($this->table);
+        $cur->blog_id = (string) $this->blog->id;
+        foreach (self::$fields as $field) {
+            if ($field=='publication_date') {
+                $cur->$field = date('Y-m-d H:i', strtotime($object[$field].'-01-01 00:00'));
+            } else {
+                $cur->$field = $object[$field];
+            }
+        }
+        if (empty($cur->url)) {
+            $cur->url = text::str2URL((string) $object['title']);
+        }
 
-    foreach ($this->fields as $field) {
-      $cur->$field = $object[$field];
+        $cur->update('WHERE id = '.(int) $object['id']." AND blog_id = '".$this->con->escape($this->blog->id)."'");
+        $this->blog->triggerBlog();
+
+        return $cur;
     }
 
-    $strReq = 'SELECT MAX(id) FROM '.$this->table;
-    $rs = $this->con->select($strReq);
-    $cur->id = (int) $rs->f(0) + 1;
+    // replace by finding existing object with same title
+    public function replaceByTitle($object) {
+        $element = $this->findByTitle($object['title']);
+        if (!$element->isEmpty()) {
+            $object['id'] = $element->id;
+            $rs = $this->update($object);
+        } else {
+            $rs = $this->add($object);
+        }
 
-    $cur->insert();
-    $this->blog->triggerBlog();
-  }
-
-  public function update($object) {
-    foreach ($this->fields as $field) {
-      if (empty($object[$field])) {
-	throw new Exception(sprintf(__('You must provide %s field', $field)));
-      }
+        return $rs;
     }
 
-    $cur = $this->con->openCursor($this->table);
-    $cur->blog_id = (string) $this->blog->id;
-    foreach ($this->fields as $field) {
-      $cur->$field = $object[$field];
+    public function delete(array $ids=array()) {
+        if (empty($ids)) {
+            return false;
+        }
+
+        $cur = $this->con->openCursor($this->table);
+        $strReq = 'DELETE FROM '.$this->table;
+        if (count($ids)==1) {
+            $strReq .= ' WHERE id = '.$ids[0];
+        } else {
+            $strReq .= ' WHERE id IN ('.implode(',', $ids).')';
+        }
+        $this->con->execute($strReq);
     }
 
-    $cur->update('WHERE id = '.(int) $object['id']." AND blog_id = '".$this->con->escape($this->blog->id)."'");
-    $this->blog->triggerBlog();
-  }
+    public function findById($id) {
+        $strReq =  'SELECT id, url, '.implode(',', self::$fields);
+        $strReq .= ' FROM '.$this->table;
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+        $strReq .= ' AND id='.$this->con->escape($id);
 
-  public function delete(array $ids=array()) {
-    if (empty($ids)) {
-      return false;
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
+
+        return $rs;
     }
 
-    $cur = $this->con->openCursor($this->table);
-    $strReq = 'DELETE FROM '.$this->table;
-    if (count($ids)==1) {
-      $strReq .= ' WHERE id = '.$ids[0];
-    } else {
-      $strReq .= ' WHERE id IN ('.implode(',', $ids).')';
+    public function findByTitle($title) {
+        $strReq =  'SELECT id, url, '.implode(',', self::$fields);
+        $strReq .= ' FROM '.$this->table;
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+
+        $strReq .= ' AND title = \''.$this->con->escape($title).'\'';
+      
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
+      
+        return $rs;     
     }
-    $this->con->execute($strReq);
-  }
+
+    public function findByURL($url) {
+        $strReq =  'SELECT id, url, '.implode(',', self::$fields);
+        $strReq .= ' FROM '.$this->table;
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+
+        $strReq .= ' AND url = \''.$this->con->escape($url).'\'';
+      
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
+      
+        return $rs;     
+    }
+
+    public function getList() {
+        $strReq =  'SELECT id, url, '.implode(',', self::$fields);
+        $strReq .= ' FROM '.$this->table;
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+      
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
+      
+        return $rs;
+    }
 }

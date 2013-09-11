@@ -19,12 +19,28 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-if (!defined('DC_RC_PATH')) { return; }
+class albumSong
+{
+    public function __construct($core) {
+        $this->core = $core;
+        $this->blog = $core->blog;
+        $this->con = $this->blog->con;
+        $this->table = $this->blog->prefix.'rslt_album_song';
+	}
 
-$this->registerModule(
-		      /* Name */		'RSLT',
-		      /* Description*/	'Restons sur leurs traces',
-		      /* Author */		'Nicolas Roudaire',
-		      /* Version */		'0.0.15',
-		      /* Permissions */	'admin,contentadmin'
-		      );
+    public function add($album_id, $song_id) {
+        $album_id = (int) $album_id;
+        $song_id = (int) $song_id;
+
+        $cur = $this->con->openCursor($this->table);
+		$cur->album_id = $album_id;
+		$cur->song_id = $song_id;
+
+        try {
+            $cur->insert();
+        } catch (Exception $e) {
+            // row exists ?
+        } 
+		$this->core->blog->triggerBlog();
+    }
+}

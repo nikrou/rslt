@@ -21,8 +21,28 @@
 
 class albumManager extends objectManager
 {
-  public function __construct($core) {
-    $fields = array('title');
-    parent::__construct($core, 'album', $fields);
-  }
+    public static $fields = array('title', 'singer', 'publication_date');
+
+    public function __construct($core) {        
+        parent::__construct($core, 'album', self::$fields);
+
+        $this->table_song = $this->blog->prefix.'rslt_song';
+        $this->table_join = $this->blog->prefix.'rslt_album_song';
+    }
+
+    public function getSongs($album_id) {
+        $strReq =  'SELECT id, url, '.implode(',', songManager::$fields);
+        $strReq .= ' FROM '.$this->table_song.' as _s';
+        $strReq .= ' LEFT JOIN '.$this->table_join.' as _as';
+        $strReq .= ' ON _s.id = _as.song_id';
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+      
+        $strReq .= ' AND album_id = '.$album_id;
+ 
+        Log::getInstance()->debug($strReq);
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
+      
+        return $rs;
+    }
 }

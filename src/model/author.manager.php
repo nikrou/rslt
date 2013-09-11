@@ -21,8 +21,9 @@
 
 class authorManager extends objectManager
 {
-  public function __construct($core) {
-    $fields = array('firstname', 'lastname');
-    parent::__construct($core, 'author', $fields);
-  }
+    public static $fields = array('firstname', 'lastname');
+    
+    public function __construct($core) {
+        parent::__construct($core, 'author', self::$fields);
+    }
 }

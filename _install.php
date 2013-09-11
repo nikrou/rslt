@@ -28,6 +28,9 @@ $settings = $core->blog->settings;
 $settings->addNamespace('rslt');
 
 $settings->rslt->put('active', false, 'boolean', 'RSLT plugin activated ?', false);
+$settings->rslt->put('albums_prefix', 'albums', 'string', 'RSLT albums prefix', false);
+$settings->rslt->put('album_prefix', 'album', 'string', 'RSLT album prefix', false);
+$settings->rslt->put('song_prefix', 'song', 'string', 'RSLT song prefix', false);
 
 $s = new dbStruct($core->con, $core->prefix);
 
@@ -35,7 +38,9 @@ $s->rslt_album
 ->id ('bigint',	0, false)
 ->blog_id ('varchar', 32, false)
 ->title('varchar', 255, true, null)
+->singer('varchar', 255, true, null)
 ->publication_date('timestamp', 0, false, 'now()')
+->url('varchar', 255, true, null)
 ->created_at('timestamp', 0, false, 'now()')
 ->updated_at('timestamp', 0, false, 'now()')
 ->primary('pk_rslt_album', 'id');
@@ -45,6 +50,7 @@ $s->rslt_author
 ->blog_id ('varchar', 32, false)
 ->firstname('varchar', 255, true, null)
 ->lastname('varchar', 255, true, null)
+->url('varchar', 255, true, null)
 ->created_at('timestamp', 0, false, 'now()')
 ->updated_at('timestamp', 0, false, 'now()')
 ->primary('pk_rslt_author', 'id');
@@ -58,6 +64,12 @@ $s->rslt_song
 ->id ('bigint',	0, false)
 ->blog_id ('varchar', 32, false)
 ->title('varchar', 255, true, null)
+->author('varchar', 255, true, null)
+->compositor('varchar', 255, true, null)
+->singer('varchar', 255, true, null)
+->publication_date('timestamp', 0, false, 'now()')
+->duration('integer', 0, true)
+->url('varchar', 255, true, null)
 ->created_at('timestamp', 0, false, 'now()')
 ->updated_at('timestamp', 0, false, 'now()')
 ->primary('pk_rslt_song', 'id');

@@ -4,6 +4,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
     <script type="text/javascript" src="index.php?pf=rslt/js/jquery.tabs.js"></script>
     <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
+    <script type="text/javascript">var default_tab = "<?php echo $default_tab;?>";</script>
   </head>
   <body>
     <h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; RSLT</h2>
@@ -11,18 +12,8 @@
     <p class="message"><?php echo $message;?></p>
     <?php endif;?>
 
-    <div class="part-tabs">
-      <ul>
-	<?php foreach ($Tabs as $tab_id => $tab):?>
-	<li<?php if (!empty($tab['class'])):echo ' class="', $tab['class'],'"';endif;?>>
-	  <a href="#<?php echo $tab_id;?>"><?php echo $tab['label'];?></a>
-	</li>
-	<?php endforeach;?>
-      </ul>
-    </div>
-
     <?php if ($is_super_admin):?>
-    <div class="multi-part" id="rslt_settings">
+    <div class="multi-part" id="rslt_settings" title="<?php echo __('Settings');?>">
       <h3 class="hidden-if-js"><?php echo __('Settings'); ?></h3>
       <form action="<?php echo $p_url;?>" method="post" enctype="multipart/form-data">
 	<div class="fieldset">
@@ -47,7 +38,7 @@
     </div>
     <?php endif;?>
     <?php if ($rslt_active):?>
-    <div class="multi-part" id="rslt_authors">
+    <div class="multi-part" id="rslt_authors" title="<?php echo __('Authors');?>">
       <h3 class="hidden-if-js"><?php echo __('Authors'); ?></h3>
       <p class="top-add">
 	<a class="button add" href="<?php echo $p_url;?>&amp;object=author&amp;action=add"><?php echo __('New author');?></a>
@@ -89,7 +80,7 @@
       <?php endif;?>
     </div>
 
-    <div class="multi-part" id="rslt_albums">
+    <div class="multi-part" id="rslt_albums" title="<?php echo __('Albums');?>">
       <p class="top-add">
 	<a class="button add" href="<?php echo $p_url;?>&amp;object=album&amp;action=add"><?php echo __('New album');?></a>
       </p>
@@ -132,7 +123,7 @@
       <?php endif;?>
     </div>
 
-    <div class="multi-part" id="rslt_songs">
+    <div class="multi-part" id="rslt_songs" title="<?php echo __('Songs');?>">
       <h3 class="hidden-if-js"><?php echo __('Songs'); ?></h3>
       <p class="top-add">
 	<a class="button add" href="<?php echo $p_url;?>&amp;object=song&amp;action=add"><?php echo __('New song');?></a>
@@ -147,6 +138,10 @@
 	    <tr>
 	      <th>&nbsp;</th>
 	      <th><?php echo __('Title');?></th>
+	      <th><?php echo __('Album');?></th>
+	      <th><?php echo __('Author');?></th>
+	      <th><?php echo __('Singer');?></th>
+	      <th class="nowrap"><?php echo __('Publication date');?></th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -160,6 +155,10 @@
 		  <?php echo html::escapeHTML(text::cutString($songs->title, 50));?>
 		</a>
 	      </td>
+	      <td class="nowrap"><?php //echo html::escapeHTML($songs->author);?></td>
+	      <td class="nowrap"><?php echo html::escapeHTML($songs->author);?></td>
+	      <td class="nowrap"><?php echo html::escapeHTML($songs->singer);?></td>
+	      <td class="nowrap"><?php echo dt::dt2str('%Y', $songs->publication_date);?></td>
 	    </tr>
 	    <?php endwhile;?>
 	  </tbody>
@@ -174,8 +173,21 @@
       </form>
       <?php endif;?>
     </div>
+
+    <div class="multi-part" id="rslt_maintenance" title="<?php echo __('Maintenance');?>">
+      <h3 class="hidden-if-js"><?php echo __('Maintenance'); ?></h3>
+
+      <form action="<?php echo $p_url;?>" method="post" >
+	<p>
+	  <input type="submit" value="<?php echo __('Load songs csv file');?>"/>
+	  <input type="hidden" name="action" value="load"/>
+	  <input type="hidden" name="file" value="songs"/>
+	  <?php echo $core->formNonce();?>
+	</p>
+      </form>
+    </div>
     <?php endif;?>
-    <div class="multi-part" id="rslt_about">
+    <div class="multi-part" id="rslt_about" title="<?php echo __('About');?>">
       <h3 class="hidden-if-js"><?php echo __('About'); ?></h3>
       <p>
 	<?php echo __('If you want more informations on that plugin or have new ideas to develope it, or want to submit a bug or need help (to install or configure it) or for anything else ...');?></p>

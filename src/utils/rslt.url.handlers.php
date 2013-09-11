@@ -19,12 +19,30 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-if (!defined('DC_RC_PATH')) { return; }
+class rsltUrlHandlers extends dcUrlHandlers
+{
+    public static function albums($args) {
+        self::serveDocument('albums.html');
+    }
 
-$this->registerModule(
-		      /* Name */		'RSLT',
-		      /* Description*/	'Restons sur leurs traces',
-		      /* Author */		'Nicolas Roudaire',
-		      /* Version */		'0.0.15',
-		      /* Permissions */	'admin,contentadmin'
-		      );
+    public static function album($args) {
+        global $core, $_ctx;
+        
+        if (empty($args)) {
+            throw new Exception('Page not found', 404);
+        }
+
+        $album_manager = new albumManager($core);
+        $_ctx->album = $album_manager->findByURL($args);
+
+        if ($_ctx->album->isEmpty()) {
+            throw new Exception("Page not found", 404);
+        }
+        
+        self::serveDocument('album.html');
+    }
+
+    public static function song($args) {
+        self::serveDocument('song.html');
+    }    
+}

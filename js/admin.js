@@ -3,5 +3,5 @@ $(function() {
 	dotclear.checkboxesHelpers(this);
     });
 
-    $('.part-tabs').rsltTabs();
+    $.simpleTabs(default_tab, {hashPrefix:'rslt_'});
 });

@@ -38,7 +38,7 @@ if (($action=='remove') && !empty($_POST['authors'])
 }
 
 if (($action=='edit') && !empty($_GET['id'])) {
-  $rs = $author_manager->getById($_GET['id']);
+  $rs = $author_manager->findById($_GET['id']);
   if (!$rs->isEmpty()) {
     $author['firstname'] = $rs->firstname;
     $author['lastname'] = $rs->lastname;

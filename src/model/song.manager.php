@@ -21,8 +21,35 @@
 
 class songManager extends objectManager
 {
-  public function __construct($core) {
-    $fields = array('title');
-    parent::__construct($core, 'song', $fields);
-  }
+    public static $fields = array('title', 'publication_date', 'author', 'singer');
+
+    public function __construct($core) {
+        parent::__construct($core, 'song', self::$fields);
+    }
+
+    public function add($object) {
+        foreach ($this->fields as $field) {
+            if (empty($object[$field])) {
+                throw new Exception(sprintf(__('You must provide %s field', $field)));
+            }
+        }
+        
+        $cur = $this->con->openCursor($this->table);
+        $cur->blog_id = (string) $this->blog->id;
+        
+        foreach ($this->fields as $field) {
+            if ($field=='publication_date') {
+                $cur->$field = date('Y-m-d H:i', strtotime($object[$field].'-01-01 00:00'));
+            } else {
+                $cur->$field = $object[$field];
+            }
+        }
+        
+        $strReq = 'SELECT MAX(id) FROM '.$this->table;
+        $rs = $this->con->select($strReq);
+        $cur->id = (int) $rs->f(0) + 1;
+        
+        $cur->insert();
+        $this->blog->triggerBlog();
+    }
 }

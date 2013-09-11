@@ -37,7 +37,7 @@ if (($action=='remove') && !empty($_POST['albums'])
 }
 
 if (($action=='edit') && !empty($_GET['id'])) {
-  $rs = $album_manager->getById($_GET['id']);
+  $rs = $album_manager->findById($_GET['id']);
   if (!$rs->isEmpty()) {
     $album['title'] = $rs->title;
     $_SESSION['album_id'] = $_GET['id'];

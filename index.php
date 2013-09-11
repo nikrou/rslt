@@ -22,27 +22,34 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 if (!empty($_SESSION['rslt_message'])) {
-  $message = $_SESSION['rslt_message'];
-  unset($_SESSION['rslt_message']);
+    $message = $_SESSION['rslt_message'];
+    unset($_SESSION['rslt_message']);
 }
+
+$is_super_admin = $core->auth->isSuperAdmin();
+$core->blog->settings->addNameSpace('rslt');
+$rslt_active = $core->blog->settings->rslt->active;
+
+$Authors = array('Gildas Arzel', 'Erick Benzi', 'Jacques Veneruso');
 
 $Actions = array('add', 'edit');
 $Objects = array('album', 'author', 'song');
 
+// default controller
+$controller_name = 'controllerConfig.php';
 
 if ((!empty($_REQUEST['action']) && in_array($_REQUEST['action'], $Actions))
-    || !empty($_POST['do_remove'])
-    && !empty($_REQUEST['object']) && in_array($_REQUEST['object'], $Objects)) {
+|| !empty($_POST['do_remove'])
+&& !empty($_REQUEST['object']) && in_array($_REQUEST['object'], $Objects)) {
 
-  if (!empty($_POST['do_remove'])) {
-    $action = 'remove';
-  } else {
-    $action = $_REQUEST['action'];
-  }
-
-  $controller_name = sprintf('controller%s.php', ucfirst($_REQUEST['object']));
-
-  include(dirname(__FILE__).'/src/controller/'.$controller_name);
-} else {
-  include(dirname(__FILE__).'/src/controller/config.php');
+    if (!empty($_POST['do_remove'])) {
+        $action = 'remove';
+    } else {
+        $action = $_REQUEST['action'];
+    }
+    $controller_name = sprintf('controller%s.php', ucfirst($_REQUEST['object']));
+} elseif (!empty($_POST['action']) && ($_POST['action']=='load') && !empty($_POST['file'])) {
+    $controller_name = 'controllerLoad.php';
 }
+
+include(dirname(__FILE__).'/src/controller/'.$controller_name);

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+    <title>{{tpl:lang Thematics}} - {{tpl:BlogName encode_html="1"}}</title>
+    <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+    <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+    <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+    <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+    <meta name="dc.type" content="text" />
+    <meta name="dc.format" content="text/html" />
+    <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+    {{tpl:include src="_head.html"}}
+  </head>
+  <body class="dc-albums">
+    <div id="page">
+      <div id="top">
+	<h1><span><a href="{{tpl:BlogURL}}">{{tpl:BlogName encode_html="1"}}</a></span></h1>
+	<!-- # --BEHAVIOR-- publicTopAfterContent -->
+	{{tpl:SysBehavior behavior="publicTopAfterContent"}}
+      </div>
+
+      <p id="prelude">
+	<a href="#main">{{tpl:lang To content}}</a> |
+	<a href="#blognav">{{tpl:lang To menu}}</a> |
+	<a href="#search">{{tpl:lang To search}}</a>
+      </p>
+
+      <div id="wrapper">
+	<div id="main">
+	  <div id="content">
+	    {{tpl:include src="inc_albums.html"}}
+	  </div> <!-- End #content -->
+	</div> <!-- End #main -->
+	<div id="sidebar">
+	  {{tpl:include src="sidebar.html"}}
+	</div> <!-- End #sidebar -->
+      </div> <!-- End #wrapper -->
+      {{tpl:include src="_footer.html"}}
+    </div> <!-- End #page -->
+  </body>
+</html>

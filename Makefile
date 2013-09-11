@@ -13,7 +13,7 @@ install:
 
 config: clean manifest
 	mkdir -p $(DIST)/$(PLUGIN_NAME)
-	cp -pr src _*.php CHANGELOG js css imgs LICENSE MANIFEST README.md locales BUGS index.php $(DIST)/$(PLUGIN_NAME)/; \
+	cp -pr src default-templates _*.php CHANGELOG js css imgs LICENSE MANIFEST README.md locales BUGS index.php $(DIST)/$(PLUGIN_NAME)/; \
 	find $(DIST) -name '*~' -exec rm \{\} \;
 
 dist: config
@@ -37,7 +37,7 @@ GETTEXT_FORMAT=/usr/bin/msgfmt
 GETTEXT_MERGE=/usr/bin/msgmerge
 
 SEARCH_PATTERN=(*.php|*.tpl)$$
-EXCLUDE_PATTERN=(vendor)
+EXCLUDE_PATTERN=(vendor|target|.dist)
 
 search:
 	@find ./ -type f|egrep '$(SEARCH_PATTERN)'|egrep -v '$(EXCLUDE_PATTERN)'|while read f;do $(XGETTEXT) $$f;done

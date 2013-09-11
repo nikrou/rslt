@@ -25,3 +25,7 @@ $__autoload['objectManager'] = dirname(__FILE__).'/src/model/object.manager.php'
 $__autoload['authorManager'] = dirname(__FILE__).'/src/model/author.manager.php';
 $__autoload['songManager'] = dirname(__FILE__).'/src/model/song.manager.php';
 $__autoload['albumManager'] = dirname(__FILE__).'/src/model/album.manager.php';
+$__autoload['albumSong'] = dirname(__FILE__).'/src/model/album.song.php';
+$__autoload['rsltUrlHandlers'] = dirname(__FILE__).'/src/utils/rslt.url.handlers.php';
+$__autoload['rsltBehaviors'] = dirname(__FILE__).'/src/utils/rslt.behaviors.php';
+$__autoload['rsltTpl'] = dirname(__FILE__).'/src/utils/rslt.tpl.php';

@@ -22,24 +22,6 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $default_tab = 'settings';
-$Tabs = array();
-$Tabs['settings'] = array('label' => __('Settings'), 'class' => '');
-$Tabs['about'] = array('label' => __('About'), 'class' => '');
-
-$core->blog->settings->addNameSpace('rslt');
-$rslt_active = $core->blog->settings->rslt->active;
-$is_super_admin = $core->auth->isSuperAdmin();
-
-if ($rslt_active) {
-  $default_tab = 'authors';
-
-  $Tabs['settings']['class'] = 'pull-right';
-  $Tabs['about']['class'] = 'pull-right';
-
-  $Tabs['authors'] = array('label' =>  __('Authors'), 'class' => '');
-  $Tabs['albums'] = array('label' =>  __('Albums'), 'class' => '');
-  $Tabs['songs'] = array('label' => __('Songs'), 'class' => '');
-}
 
 if (!empty($_POST['saveconfig'])) {
   try {
@@ -87,7 +69,5 @@ if ($rslt_active) {
 } else {
   $default_tab = 'settings';
 }
-
-$Tabs[$default_tab]['class'] .= ' part-tabs-active';
 
 include(dirname(__FILE__).'/../views/index.tpl');

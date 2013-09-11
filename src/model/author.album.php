@@ -19,12 +19,24 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-if (!defined('DC_RC_PATH')) { return; }
+class authorAlbum
+{
+    public function __construct($core) {
+        $this->core = $core;
+        $this->blog = $core->blog;
+        $this->con = $this->blog->con;
+        $this->table = $this->blog->prefix.'rslt_author_album';
+	}
 
-$this->registerModule(
-		      /* Name */		'RSLT',
-		      /* Description*/	'Restons sur leurs traces',
-		      /* Author */		'Nicolas Roudaire',
-		      /* Version */		'0.0.15',
-		      /* Permissions */	'admin,contentadmin'
-		      );
+    public function addAuthorAlbum($author_id, $album_id) {
+        $author_id = (int) $author_id;
+        $album_id = (int) $album_id;
+
+        $cur = $this->con->openCursor($this->table);
+		$cur->author_id = $author_id;
+		$cur->album_id = $album_id;
+        
+		$cur->insert();
+		$this->core->blog->triggerBlog();
+    }
+}
