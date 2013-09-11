@@ -129,48 +129,10 @@
 	<a class="button add" href="<?php echo $p_url;?>&amp;object=song&amp;action=add"><?php echo __('New song');?></a>
       </p>
 
-      <?php if ($songs->isEmpty()):?>
+      <?php if (empty($songs_list)):?>
       <p><strong><?php echo __('No song');?></strong></p>
       <?php else:?>
-      <form action="<?php echo $p_url;?>" method="post">
-	<table class="songs clear" id="songs-list">
-	  <thead>
-	    <tr>
-	      <th>&nbsp;</th>
-	      <th><?php echo __('Title');?></th>
-	      <th><?php echo __('Album');?></th>
-	      <th><?php echo __('Author');?></th>
-	      <th><?php echo __('Singer');?></th>
-	      <th class="nowrap"><?php echo __('Publication date');?></th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <?php while ($songs->fetch()):?>
-	    <tr>
-	      <td>
-		<?php echo form::checkbox(array('songs[]'), $songs->id, '', '', '');?>
-	      </td>
-	      <td class="maximal">
-		<a href="<?php echo $p_url.'&amp;object=song&amp;action=edit&amp;id=',$songs->id;?>">
-		  <?php echo html::escapeHTML(text::cutString($songs->title, 50));?>
-		</a>
-	      </td>
-	      <td class="nowrap"><?php //echo html::escapeHTML($songs->author);?></td>
-	      <td class="nowrap"><?php echo html::escapeHTML($songs->author);?></td>
-	      <td class="nowrap"><?php echo html::escapeHTML($songs->singer);?></td>
-	      <td class="nowrap"><?php echo dt::dt2str('%Y', $songs->publication_date);?></td>
-	    </tr>
-	    <?php endwhile;?>
-	  </tbody>
-	</table>
-	<p class="col checkboxes-helpers"></p>
-	<p>
-	  <?php echo form::hidden('p', 'rslt');?>
-	  <?php echo form::hidden('object', 'song');?>
-	  <input type="submit" name="do_remove" class="delete" value="<?php echo __('Remove selected');?>"/>
-	  <?php echo $core->formNonce();?>
-	</p>
-      </form>
+      <?php $songs_list->display($page, 10, '');?>
       <?php endif;?>
     </div>
 

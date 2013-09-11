@@ -154,14 +154,29 @@ class objectManager
         return $rs;     
     }
 
-    public function getList() {
+   public function getList(array $limit=array()) {
         $strReq =  'SELECT id, url, '.implode(',', self::$fields);
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
       
+        if (!empty($limit)) {
+			$strReq .= $this->con->limit($limit);
+        }
+
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
       
         return $rs;
+    }
+
+    public function getcountList() {
+        $strReq =  'SELECT count(1)';
+        $strReq .= ' FROM '.$this->table;
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
+  
+        return $rs->f(0);
     }
 }

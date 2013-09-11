@@ -51,10 +51,20 @@ try {
   $core->error->add($e->getMessage());
 }
 
+/* pagination */
+$page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
+$nb_per_page =  30;
+
+if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
+  $nb_per_page = (integer) $_GET['nb'];
+}
+$limit = array((($page-1)*$nb_per_page), $nb_per_page);
+
 /* songs */
 try {
   $song_manager = new songManager($core);
-  $songs = $song_manager->getList();
+  $counter = $song_manager->getCountList();
+  $songs_list = new adminSongsList($core, $song_manager->getList($limit), $counter);
 } catch (Exception $e) {
   $core->error->add($e->getMessage());
 }

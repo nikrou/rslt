@@ -19,15 +19,20 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-if (!defined('DC_RC_PATH')) { return; }
+class rsltPager extends pager
+{
+    protected $anchor;
 
-$__autoload['objectManager'] = dirname(__FILE__).'/src/model/object.manager.php';
-$__autoload['authorManager'] = dirname(__FILE__).'/src/model/author.manager.php';
-$__autoload['songManager'] = dirname(__FILE__).'/src/model/song.manager.php';
-$__autoload['albumManager'] = dirname(__FILE__).'/src/model/album.manager.php';
-$__autoload['albumSong'] = dirname(__FILE__).'/src/model/album.song.php';
-$__autoload['rsltUrlHandlers'] = dirname(__FILE__).'/src/utils/rslt.url.handlers.php';
-$__autoload['rsltBehaviors'] = dirname(__FILE__).'/src/utils/rslt.behaviors.php';
-$__autoload['rsltTpl'] = dirname(__FILE__).'/src/utils/rslt.tpl.php';
-$__autoload['adminSongsList'] = dirname(__FILE__).'/src/utils/rslt.admin.songs.list.php';
-$__autoload['rsltPager'] = dirname(__FILE__).'/src/utils/rslt.pager.php';
+    public function __construct($env,$nb_elements,$nb_per_page=10,$nb_pages_per_group=10) {
+        parent::__construct($env,$nb_elements,$nb_per_page,$nb_pages_per_group);
+    }
+
+    public function setAnchor($anchor) {
+        $this->anchor = $anchor;
+    }
+    
+	protected function setURL() {
+        parent::setUrl();
+        $this->page_url .= '#'.$this->anchor;
+    }
+}
