@@ -29,6 +29,13 @@
 	<?php echo form::field('song_author', 100, 255, html::escapeHTML($song['author']), '');?>
       </p>
       <p class="field">
+	<label class="required" for="song_singer">
+	  <abbr title="<?php echo __('Required field');?>">*</abbr>
+	  <?php echo __('Singer:');?>
+	</label>
+	<?php echo form::field('song_singer', 100, 255, html::escapeHTML($song['singer']), '');?>
+      </p>
+      <p class="field">
 	<label class="required" for="song_publication_date">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Publication date:');?>

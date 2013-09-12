@@ -39,7 +39,7 @@ $s->rslt_album
 ->blog_id ('varchar', 32, false)
 ->title('varchar', 255, true, null)
 ->singer('varchar', 255, true, null)
-->publication_date('timestamp', 0, false, 'now()')
+->publication_date('bigint', 0, false)
 ->url('varchar', 255, true, null)
 ->created_at('timestamp', 0, false, 'now()')
 ->updated_at('timestamp', 0, false, 'now()')
@@ -67,7 +67,7 @@ $s->rslt_song
 ->author('varchar', 255, true, null)
 ->compositor('varchar', 255, true, null)
 ->singer('varchar', 255, true, null)
-->publication_date('timestamp', 0, false, 'now()')
+->publication_date('bigint', 0, false)
 ->duration('integer', 0, true)
 ->url('varchar', 255, true, null)
 ->created_at('timestamp', 0, false, 'now()')
@@ -87,7 +87,7 @@ $s->rslt_support
 ->productor('varchar', 255, true, null)
 ->distributor('varchar', 255, true, null)
 ->support_reference('varchar', 255, true, null)
-->publication_date('timestamp', 0, false, 'now()')
+->publication_date('bigint', 0, false)
 ->excerpt('varchar', 255, true, null)
 ->primary('pk_rslt_support', 'id');
 

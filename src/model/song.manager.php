@@ -39,7 +39,7 @@ class songManager extends objectManager
         
         foreach (self::$fields as $field) {
             if ($field=='publication_date') {
-                $cur->$field = date('Y-m-d H:i', strtotime($object[$field].'-01-01 00:00'));
+                $cur->$field = (int) $object[$field];
             } else {
                 $cur->$field = $object[$field];
             }

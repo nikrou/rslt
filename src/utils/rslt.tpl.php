@@ -63,7 +63,7 @@ class rsltTpl
    public static function AlbumPagePublicationDate($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
        
-       return '<?php echo '.sprintf($f, 'dt::dt2str("%Y", $_ctx->album->publication_date)').'; ?>';
+       return '<?php echo '.sprintf($f, '$_ctx->album->publication_date').'; ?>';
    }   
 
    public static function AlbumSongs($attr, $content) {

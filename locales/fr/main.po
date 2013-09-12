@@ -243,3 +243,7 @@ msgstr "Préfixe des pages album"
 #: src/views/index.tpl:43
 msgid "Song page prefix:"
 msgstr "Préfixe des pages chanson"
+
+#, php-format
+msgid "%d songs in database"
+msgstr "%d chansons dans la base de données"

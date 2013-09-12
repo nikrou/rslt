@@ -35,8 +35,7 @@ class albumManager extends objectManager
         $strReq .= ' FROM '.$this->table_song.' as _s';
         $strReq .= ' LEFT JOIN '.$this->table_join.' as _as';
         $strReq .= ' ON _s.id = _as.song_id';
-        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
-      
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';      
         $strReq .= ' AND album_id = '.$album_id;
  
         $rs = $this->con->select($strReq);

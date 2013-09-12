@@ -45,7 +45,7 @@ class objectManager
       
         foreach (self::$fields as $field) {
             if ($field=='publication_date') {
-                $cur->$field = date('Y-m-d H:i', strtotime($object[$field].'-01-01 00:00'));
+                $cur->$field = (int) $object[$field];
             } else {
                 $cur->$field = $object[$field];
             }
@@ -63,6 +63,8 @@ class objectManager
     }
 
     public function update($object) {
+        Log::getInstance()->debug(self::$fields);
+        Log::getInstance()->debug($object);
         foreach (self::$fields as $field) {
             if (empty($object[$field])) {
                 throw new Exception(sprintf(__('You must provide %s field', $field)));
@@ -73,7 +75,7 @@ class objectManager
         $cur->blog_id = (string) $this->blog->id;
         foreach (self::$fields as $field) {
             if ($field=='publication_date') {
-                $cur->$field = date('Y-m-d H:i', strtotime($object[$field].'-01-01 00:00'));
+                $cur->$field = (int) $object[$field];
             } else {
                 $cur->$field = $object[$field];
             }
@@ -159,6 +161,7 @@ class objectManager
         $strReq =  'SELECT id, url, '.implode(',', self::$fields);
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+        $strReq .= ' ORDER BY updated_at ASC';
       
         if (!empty($limit)) {
 			$strReq .= $this->con->limit($limit);

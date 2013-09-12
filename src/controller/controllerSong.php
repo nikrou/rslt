@@ -22,7 +22,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $page_title = __('New song');
-$song = array('title' => '', 'author' => '', 'publication_date' => '');
+$song = array('title' => '', 'author' => '', 'singer' => '', 'publication_date' => '');
 
 $song_manager = new songManager($core);
 
@@ -39,6 +39,7 @@ if (($action=='edit') && !empty($_GET['id'])) {
   if (!$rs->isEmpty()) {
     $song['title'] = $rs->title;
     $song['author'] = $rs->author;
+    $song['singer'] = $rs->singer;
     $song['publication_date'] = $rs->publication_date;
     $_SESSION['song_id'] = $_GET['id'];
   }
@@ -46,7 +47,8 @@ if (($action=='edit') && !empty($_GET['id'])) {
 
 if (!empty($_POST['save_song'])) {
   $song['title'] = $_POST['song_title'];
-  $song['author'] = $_POST['song_auhor'];
+  $song['author'] = $_POST['song_author'];
+  $song['singer'] = $_POST['song_singer'];
   $song['publication_date'] = $_POST['song_publication_date'];
 
   if ($action=='edit') {

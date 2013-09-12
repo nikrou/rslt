@@ -153,6 +153,7 @@
       <p><strong><?php echo __('No song');?></strong></p>
       <?php else:?>
       <form action="<?php echo $p_url;?>" method="post" id="form-songs">
+	<p class="infos"><?php printf(__('%d songs in database'), $songs_counter);?>
 	<?php $songs_list->display($page, 10, '');?>
 	<div class="two-cols clearfix">
 	  <p class="col checkboxes-helpers"></p>

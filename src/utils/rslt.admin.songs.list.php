@@ -81,7 +81,7 @@ class adminSongsList extends adminGenericList
             '<td class="nowrap">&nbsp;</td>'. //html::escapeHTML($songs->author)
             '<td class="nowrap">'.html::escapeHTML($this->rs->author).'</td>'.
             '<td class="nowrap">'.html::escapeHTML($this->rs->singer).'</td>'.
-            '<td class="nowrap">'.dt::dt2str('%Y', $this->rs->publication_date).'</td>'.
+            '<td class="nowrap">'.$this->rs->publication_date.'</td>'.
             '</tr>';
         
         return $res;
