@@ -22,50 +22,51 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $page_title = __('New album');
-$album = array('title' => '',
-	       );
+$album = array('title' => '', 'singer' => '');
 
 $album_manager = new albumManager($core);
 
-if (($action=='remove') && !empty($_POST['albums'])
-    && $_POST['object']=='album') {
-
-  $album_manager->delete($_POST['albums']);
-  $_SESSION['rslt_message'] = __('Album(s) successfully deleted.');
-  $_SESSION['rslt_default_tab'] = 'albums';
-  http::redirect($p_url);
+if (($action=='remove') && !empty($_POST['albums']) && $_POST['object']=='album') {
+    $album_manager->delete($_POST['albums']);
+    $_SESSION['rslt_message'] = __('Album(s) successfully deleted.');
+    $_SESSION['rslt_default_tab'] = 'albums';
+    http::redirect($p_url);
 }
 
 if (($action=='edit') && !empty($_GET['id'])) {
-  $rs = $album_manager->findById($_GET['id']);
-  if (!$rs->isEmpty()) {
-    $album['title'] = $rs->title;
-    $_SESSION['album_id'] = $_GET['id'];
-  }
+    $page_title = __('Edit album');
+
+    $rs = $album_manager->findById($_GET['id']);
+    if (!$rs->isEmpty()) {
+        $album['title'] = $rs->title;
+        $album['singer'] = $rs->singer;
+        $album['publication_date'] = $rs->publication_date;
+        $_SESSION['album_id'] = $_GET['id'];
+    }
 }
 
-if (!empty($_POST['save_album'])
-    && !empty($_POST['album_title'])) {
+if (!empty($_POST['save_album']) && !empty($_POST['album_title'])) {
+	$album['title'] = $_POST['album_title'];
+	$album['singer'] = $_POST['album_singer'];
+	$album['publication_date'] = $_POST['album_publication_date'];
 
-  $album['title'] = $_POST['album_title'];
-
-  if ($action=='edit') {
-    $method = 'update';
-    $message = __('Album has been successfully updated.');
-    $album['id'] = $_SESSION['album_id'];
-    unset($_SESSION['album_id']);
-  } else {
-    $method = 'add';
-    $message = __('Album has been successfully added.');
-  }
-  try {
-    $album_manager->$method($album);
-    $_SESSION['rslt_message'] = $message;
-    $_SESSION['rslt_default_tab'] = 'albums';
-    http::redirect($p_url);
-  } catch (Exception $e) {
-    $core->error->add($e->getMessage());
-  }
+	if ($action=='edit') {
+		$method = 'update';
+		$message = __('Album has been successfully updated.');
+		$album['id'] = $_SESSION['album_id'];
+		unset($_SESSION['album_id']);
+	} else {
+		$method = 'add';
+		$message = __('Album has been successfully added.');
+	}
+	try {
+		$album_manager->$method($album);
+		$_SESSION['rslt_message'] = $message;
+		$_SESSION['rslt_default_tab'] = 'albums';
+		http::redirect($p_url);
+	} catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
 }
 
 include(dirname(__FILE__).'/../views/form_album.tpl');

@@ -22,6 +22,11 @@
 class adminSongsList extends adminGenericList
 {
     public static $anchor = 'songs';
+    private $p_url;
+
+    public function setPluginUrl($p_url) {
+        $this->p_url = $p_url;
+    }
 
     public function display($songs, $nb_per_page, $enclose_block='') {
         $pager = new rsltPager($songs, $this->rs_count, $nb_per_page, 10);
@@ -69,7 +74,7 @@ class adminSongsList extends adminGenericList
             form::checkbox(array('songs[]'), $this->rs->id, '', '', '').
             '</td>'.
             '<td class="maximal">'.
-            '<a href="$p_url&amp;object=song&amp;action=edit&amp;id=$songs->id">'.
+            '<a href="'.sprintf($this->p_url, $this->rs->id).'">'.
             html::escapeHTML(text::cutString($this->rs->title, 50)).
             '</a>'.
             '</td>'.

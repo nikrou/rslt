@@ -2,3 +2,7 @@
 .part-tabs .pull-right {
   float: right;
 }
+
+p.top-add { 
+  margin-bottom: 1em;
+}

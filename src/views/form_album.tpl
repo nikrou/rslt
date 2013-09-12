@@ -15,11 +15,25 @@
 
     <form action="<?php echo $p_url;?>" method="post" id="type-form">
       <p class="field">
-	<label class="required" for="type_label">
+	<label class="required" for="album_title">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Title:');?>
 	</label>
 	<?php echo form::field('album_title', 100, 255, html::escapeHTML($album['title']), '');?>
+      </p>
+      <p class="field">
+	<label class="required" for="album_singer">
+	  <abbr title="<?php echo __('Required field');?>">*</abbr>
+	  <?php echo __('Singer:');?>
+	</label>
+	<?php echo form::field('album_singer', 100, 255, html::escapeHTML($album['singer']), '');?>
+      </p>
+      <p class="field">
+	<label class="required" for="album_publication_date">
+	  <abbr title="<?php echo __('Required field');?>">*</abbr>
+	  <?php echo __('Publication date:');?>
+	</label>
+	<?php echo form::field('album_publication_date', 100, 255, html::escapeHTML($album['publication_date']), '');?>
       </p>
       <p>
 	<?php echo form::hidden('p', 'rslt');?>

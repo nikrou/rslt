@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-11 11:13+0200\n"
+"POT-Creation-Date: 2013-09-12 09:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,7 @@ msgstr ""
 #: src/views/form_author.tpl:19 src/views/form_author.tpl:26
 #: src/views/form_song.tpl:19 src/views/form_song.tpl:26
 #: src/views/form_song.tpl:33 src/views/form_album.tpl:19
+#: src/views/form_album.tpl:26 src/views/form_album.tpl:33
 msgid "Required field"
 msgstr ""
 
@@ -37,7 +38,7 @@ msgid "Lastname"
 msgstr ""
 
 #: src/views/form_author.tpl:36 src/views/form_song.tpl:43
-#: src/views/form_album.tpl:29
+#: src/views/form_album.tpl:29 src/views/form_album.tpl:43
 msgid "Save"
 msgstr ""
 
@@ -54,7 +55,7 @@ msgstr ""
 msgid "Author:"
 msgstr ""
 
-#: src/views/form_song.tpl:34
+#: src/views/form_song.tpl:34 src/views/form_album.tpl:34
 msgid "Publication date:"
 msgstr ""
 
@@ -104,6 +105,7 @@ msgid "No album"
 msgstr ""
 
 #: src/views/index.tpl:97 src/views/index.tpl:140
+#: src/utils/rslt.admin.songs.list.php:42
 msgid "Title"
 msgstr ""
 
@@ -115,43 +117,45 @@ msgstr ""
 msgid "No song"
 msgstr ""
 
-#: src/views/index.tpl:141
+#: src/views/index.tpl:141 src/utils/rslt.admin.songs.list.php:44
 msgid "Author"
 msgstr ""
 
-#: src/views/index.tpl:142
+#: src/views/index.tpl:142 src/utils/rslt.admin.songs.list.php:45
 msgid "Singer"
 msgstr ""
 
-#: src/views/index.tpl:143
+#: src/views/index.tpl:143 src/utils/rslt.admin.songs.list.php:46
 msgid "Publication date"
 msgstr ""
 
-#: src/views/index.tpl:175 src/views/index.tpl:176
+#: src/views/index.tpl:175 src/views/index.tpl:176 src/views/index.tpl:152
+#: src/views/index.tpl:153
 msgid "Maintenance"
 msgstr ""
 
-#: src/views/index.tpl:180
+#: src/views/index.tpl:180 src/views/index.tpl:157
 msgid "Load songs csv file"
 msgstr ""
 
-#: src/views/index.tpl:188 src/views/index.tpl:189
+#: src/views/index.tpl:188 src/views/index.tpl:189 src/views/index.tpl:165
+#: src/views/index.tpl:166
 msgid "About"
 msgstr ""
 
-#: src/views/index.tpl:191
+#: src/views/index.tpl:191 src/views/index.tpl:168
 msgid ""
 "If you want more informations on that plugin or have new ideas to develope "
 "it, or want to submit a bug or need help (to install or configure it) or for "
 "anything else ..."
 msgstr ""
 
-#: src/views/index.tpl:193
+#: src/views/index.tpl:193 src/views/index.tpl:170
 #, php-format
 msgid "Go to %sthe dedicated page%s in"
 msgstr ""
 
-#: src/views/index.tpl:198
+#: src/views/index.tpl:198 src/views/index.tpl:175
 msgid "Made by:"
 msgstr ""
 
@@ -183,15 +187,15 @@ msgstr ""
 msgid "Song has been successfully added."
 msgstr ""
 
-#: src/controller/controllerAlbum.php:34
+#: src/controller/controllerAlbum.php:34 src/controller/controllerAlbum.php:31
 msgid "Album(s) successfully deleted."
 msgstr ""
 
-#: src/controller/controllerAlbum.php:54
+#: src/controller/controllerAlbum.php:54 src/controller/controllerAlbum.php:55
 msgid "Album has been successfully updated."
 msgstr ""
 
-#: src/controller/controllerAlbum.php:59
+#: src/controller/controllerAlbum.php:59 src/controller/controllerAlbum.php:60
 msgid "Album has been successfully added."
 msgstr ""
 
@@ -200,7 +204,37 @@ msgid "Configuration successfully updated."
 msgstr ""
 
 #: src/model/object.manager.php:60 src/model/object.manager.php:88
-#: src/model/song.manager.php:32
+#: src/model/song.manager.php:32 src/model/object.manager.php:39
+#: src/model/object.manager.php:68 src/model/song.manager.php:33
 #, php-format
 msgid "You must provide %s field"
+msgstr ""
+
+#: src/views/form_album.tpl:27
+msgid "Singer:"
+msgstr ""
+
+#: src/views/index.tpl:141
+msgid "Selected songs action:"
+msgstr ""
+
+#: src/views/index.tpl:144
+msgid "ok"
+msgstr ""
+
+#: src/controller/controllerAlbum.php:37
+msgid "Edit album"
+msgstr ""
+
+#: src/controller/controllerConfig.php:66
+msgid "Delete"
+msgstr ""
+
+#: src/utils/rslt.admin.songs.list.php:43
+msgid "Album"
+msgstr ""
+
+#: src/utils/rslt.admin.songs.list.php:55
+#: src/utils/rslt.admin.songs.list.php:67
+msgid "Page(s)"
 msgstr ""

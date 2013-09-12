@@ -129,10 +129,23 @@
 	<a class="button add" href="<?php echo $p_url;?>&amp;object=song&amp;action=add"><?php echo __('New song');?></a>
       </p>
 
-      <?php if (empty($songs_list)):?>
+      <?php if ($songs_counter==0):?>
       <p><strong><?php echo __('No song');?></strong></p>
       <?php else:?>
-      <?php $songs_list->display($page, 10, '');?>
+      <form action="<?php echo $p_url;?>" method="post" id="form-songs">
+	<?php $songs_list->display($page, 10, '');?>
+	<div class="two-cols clearfix">
+	  <p class="col checkboxes-helpers"></p>
+	  <p class="col right">
+	    <label for="songs_action" class="classic">
+	      <?php echo __('Selected songs action:');?>
+	    </label>
+	    <?php echo form::combo('songs_action', $songs_action_combo, '', '');?>
+	    <input type="submit" value="<?php echo __('ok');?>" /></p>
+	    <?php echo $core->formNonce();?>
+	  </p>
+	</div>
+      </form>
       <?php endif;?>
     </div>
 

@@ -53,7 +53,7 @@ try {
 
 /* pagination */
 $page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
-$nb_per_page =  30;
+$nb_per_page =  20;
 
 if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
   $nb_per_page = (integer) $_GET['nb'];
@@ -61,10 +61,15 @@ if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
 $limit = array((($page-1)*$nb_per_page), $nb_per_page);
 
 /* songs */
+$songs_action_combo = array();
+$songs_action_combo[''] = null;
+$songs_action_combo[__('Delete')] = 'delete';
+
 try {
   $song_manager = new songManager($core);
-  $counter = $song_manager->getCountList();
-  $songs_list = new adminSongsList($core, $song_manager->getList($limit), $counter);
+  $songs_counter = $song_manager->getCountList();
+  $songs_list = new adminSongsList($core, $song_manager->getList($limit), $songs_counter);
+  $songs_list->setPluginUrl("$p_url&amp;object=song&amp;action=edit&amp;id=%d");
 } catch (Exception $e) {
   $core->error->add($e->getMessage());
 }
