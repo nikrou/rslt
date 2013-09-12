@@ -1,7 +1,26 @@
 $(function() {
-    $('.checkboxes-helpers').each(function() {
-	dotclear.checkboxesHelpers(this);
-    });
+	$('.checkboxes-helpers').each(function() {
+		dotclear.checkboxesHelpers(this);
+	});
 
-    $.simpleTabs(default_tab, {hashPrefix:'rslt_'});
+	$('#form-songs').submit(function() {
+		var action = $(this).find('select[name="action"]').val();
+		var checked = false;
+		
+		$(this).find('input[name="songs[]"]').each(function() {
+			if (this.checked) {
+				checked = true;
+			}
+		});
+		
+		if (!checked) { return false; }
+		
+		if (action == 'delete') {
+			return window.confirm(rslt_confirm_delete_songs.replace('%s',$('input[name="songs[]"]:checked').size()));
+		}
+		
+		return true;
+	});
+
+	$.simpleTabs(default_tab, {hashPrefix:'rslt_'});
 });

@@ -28,7 +28,21 @@ if (!empty($_POST['saveconfig'])) {
     $rslt_active = (empty($_POST['rslt_active']))?false:true;
     $core->blog->settings->rslt->put('active', $rslt_active, 'boolean');
 
+    if (!empty($_POST['rslt_albums_prefix'])) {
+        $rslt_albums_prefix = trim($_POST['rslt_albums_prefix']);
+        $core->blog->settings->rslt->put('albums_prefix', $rslt_albums_prefix, 'string');
+    } 
+    if (!empty($_POST['rslt_album_prefix'])) {
+        $rslt_album_prefix = trim($_POST['rslt_album_prefix']);
+        $core->blog->settings->rslt->put('album_prefix', $rslt_album_prefix, 'string');
+    } 
+    if (!empty($_POST['rslt_song_prefix'])) {
+        $rslt_song_prefix = trim($_POST['rslt_song_prefix']);
+        $core->blog->settings->rslt->put('song_prefix', $rslt_song_prefix, 'string');
+    } 
+
     $_SESSION['rslt_message'] = __('Configuration successfully updated.');
+    $_SESSION['rslt_default_tab'] = 'settings';
     http::redirect($p_url);
   } catch(Exception $e) {
     $core->error->add($e->getMessage());

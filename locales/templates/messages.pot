@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-12 09:37+0200\n"
+"POT-Creation-Date: 2013-09-12 13:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/views/form_author.tpl:3 src/views/form_author.tpl:9
-#: src/views/index.tpl:41 src/views/index.tpl:42
+#: src/views/index.tpl:41 src/views/index.tpl:42 src/views/index.tpl:57
+#: src/views/index.tpl:58
 msgid "Authors"
 msgstr ""
 
@@ -29,11 +30,11 @@ msgstr ""
 msgid "Required field"
 msgstr ""
 
-#: src/views/form_author.tpl:20 src/views/index.tpl:54
+#: src/views/form_author.tpl:20 src/views/index.tpl:54 src/views/index.tpl:70
 msgid "Firstname"
 msgstr ""
 
-#: src/views/form_author.tpl:27 src/views/index.tpl:54
+#: src/views/form_author.tpl:27 src/views/index.tpl:54 src/views/index.tpl:70
 msgid "Lastname"
 msgstr ""
 
@@ -44,6 +45,7 @@ msgstr ""
 
 #: src/views/form_song.tpl:3 src/views/form_song.tpl:9 src/views/index.tpl:126
 #: src/views/index.tpl:127 src/views/load.tpl:3 src/views/load.tpl:9
+#: src/views/index.tpl:146 src/views/index.tpl:147
 msgid "Songs"
 msgstr ""
 
@@ -60,23 +62,25 @@ msgid "Publication date:"
 msgstr ""
 
 #: src/views/form_album.tpl:3 src/views/form_album.tpl:9
-#: src/views/index.tpl:83 src/views/index.tpl:87
+#: src/views/index.tpl:83 src/views/index.tpl:87 src/views/index.tpl:99
+#: src/views/index.tpl:103
 msgid "Albums"
 msgstr ""
 
-#: src/views/index.tpl:16 src/views/index.tpl:17
+#: src/views/index.tpl:16 src/views/index.tpl:17 src/views/index.tpl:19
+#: src/views/index.tpl:20
 msgid "Settings"
 msgstr ""
 
-#: src/views/index.tpl:20
+#: src/views/index.tpl:20 src/views/index.tpl:23
 msgid "Plugin activation"
 msgstr ""
 
-#: src/views/index.tpl:24
+#: src/views/index.tpl:24 src/views/index.tpl:27
 msgid "Enable RSLT plugin"
 msgstr ""
 
-#: src/views/index.tpl:29
+#: src/views/index.tpl:29 src/views/index.tpl:51
 msgid "Save configuration"
 msgstr ""
 
@@ -85,35 +89,39 @@ msgid "Advanced options"
 msgstr ""
 
 #: src/views/index.tpl:44 src/controller/controllerAuthor.php:24
+#: src/views/index.tpl:60
 msgid "New author"
 msgstr ""
 
-#: src/views/index.tpl:47
+#: src/views/index.tpl:47 src/views/index.tpl:63
 msgid "No author"
 msgstr ""
 
 #: src/views/index.tpl:76 src/views/index.tpl:119 src/views/index.tpl:168
+#: src/views/index.tpl:92 src/views/index.tpl:139
 msgid "Remove selected"
 msgstr ""
 
 #: src/views/index.tpl:85 src/controller/controllerAlbum.php:24
+#: src/views/index.tpl:101
 msgid "New album"
 msgstr ""
 
-#: src/views/index.tpl:90
+#: src/views/index.tpl:90 src/views/index.tpl:106
 msgid "No album"
 msgstr ""
 
 #: src/views/index.tpl:97 src/views/index.tpl:140
-#: src/utils/rslt.admin.songs.list.php:42
+#: src/utils/rslt.admin.songs.list.php:42 src/views/index.tpl:113
 msgid "Title"
 msgstr ""
 
 #: src/views/index.tpl:129 src/controller/controllerSong.php:24
+#: src/views/index.tpl:149
 msgid "New song"
 msgstr ""
 
-#: src/views/index.tpl:133
+#: src/views/index.tpl:133 src/views/index.tpl:153
 msgid "No song"
 msgstr ""
 
@@ -122,6 +130,7 @@ msgid "Author"
 msgstr ""
 
 #: src/views/index.tpl:142 src/utils/rslt.admin.songs.list.php:45
+#: src/views/index.tpl:114
 msgid "Singer"
 msgstr ""
 
@@ -130,32 +139,32 @@ msgid "Publication date"
 msgstr ""
 
 #: src/views/index.tpl:175 src/views/index.tpl:176 src/views/index.tpl:152
-#: src/views/index.tpl:153
+#: src/views/index.tpl:153 src/views/index.tpl:173 src/views/index.tpl:174
 msgid "Maintenance"
 msgstr ""
 
-#: src/views/index.tpl:180 src/views/index.tpl:157
+#: src/views/index.tpl:180 src/views/index.tpl:157 src/views/index.tpl:178
 msgid "Load songs csv file"
 msgstr ""
 
 #: src/views/index.tpl:188 src/views/index.tpl:189 src/views/index.tpl:165
-#: src/views/index.tpl:166
+#: src/views/index.tpl:166 src/views/index.tpl:186 src/views/index.tpl:187
 msgid "About"
 msgstr ""
 
-#: src/views/index.tpl:191 src/views/index.tpl:168
+#: src/views/index.tpl:191 src/views/index.tpl:168 src/views/index.tpl:189
 msgid ""
 "If you want more informations on that plugin or have new ideas to develope "
 "it, or want to submit a bug or need help (to install or configure it) or for "
 "anything else ..."
 msgstr ""
 
-#: src/views/index.tpl:193 src/views/index.tpl:170
+#: src/views/index.tpl:193 src/views/index.tpl:170 src/views/index.tpl:191
 #, php-format
 msgid "Go to %sthe dedicated page%s in"
 msgstr ""
 
-#: src/views/index.tpl:198 src/views/index.tpl:175
+#: src/views/index.tpl:198 src/views/index.tpl:175 src/views/index.tpl:196
 msgid "Made by:"
 msgstr ""
 
@@ -179,11 +188,11 @@ msgstr ""
 msgid "Song(s) successfully deleted."
 msgstr ""
 
-#: src/controller/controllerSong.php:55
+#: src/controller/controllerSong.php:55 src/controller/controllerSong.php:54
 msgid "Song has been successfully updated."
 msgstr ""
 
-#: src/controller/controllerSong.php:60
+#: src/controller/controllerSong.php:60 src/controller/controllerSong.php:59
 msgid "Song has been successfully added."
 msgstr ""
 
@@ -200,6 +209,7 @@ msgid "Album has been successfully added."
 msgstr ""
 
 #: src/controller/controllerConfig.php:31
+#: src/controller/controllerConfig.php:44
 msgid "Configuration successfully updated."
 msgstr ""
 
@@ -214,11 +224,11 @@ msgstr ""
 msgid "Singer:"
 msgstr ""
 
-#: src/views/index.tpl:141
+#: src/views/index.tpl:141 src/views/index.tpl:161
 msgid "Selected songs action:"
 msgstr ""
 
-#: src/views/index.tpl:144
+#: src/views/index.tpl:144 src/views/index.tpl:165
 msgid "ok"
 msgstr ""
 
@@ -227,6 +237,7 @@ msgid "Edit album"
 msgstr ""
 
 #: src/controller/controllerConfig.php:66
+#: src/controller/controllerConfig.php:80
 msgid "Delete"
 msgstr ""
 
@@ -237,4 +248,25 @@ msgstr ""
 #: src/utils/rslt.admin.songs.list.php:55
 #: src/utils/rslt.admin.songs.list.php:67
 msgid "Page(s)"
+msgstr ""
+
+#: src/views/index.tpl:9
+#, php-format
+msgid "Are you sure you want to delete selected songs (%s)?"
+msgstr ""
+
+#: src/views/index.tpl:35
+msgid "Albums page prefix:"
+msgstr ""
+
+#: src/views/index.tpl:39
+msgid "Album page prefix:"
+msgstr ""
+
+#: src/views/index.tpl:43
+msgid "Song page prefix:"
+msgstr ""
+
+#: src/controller/controllerSong.php:31
+msgid "The song has been successfully removed."
 msgstr ""

@@ -26,13 +26,12 @@ $song = array('title' => '', 'author' => '', 'publication_date' => '');
 
 $song_manager = new songManager($core);
 
-if (($action=='remove') && !empty($_POST['songs'])
-    && $_POST['object']=='song') {
-
-  $song_manager->delete($_POST['songs']);
-  $_SESSION['rslt_message'] = __('Song(s) successfully deleted.');
-  $_SESSION['rslt_default_tab'] = 'songs';
-  http::redirect($p_url);
+if (($action=='remove') && !empty($_POST['songs']) && $_POST['object']=='song') {
+    $song_manager->delete($_POST['songs']);
+    $_SESSION['rslt_message'] = __('The song has been successfully removed.', 
+    'The songs have been successfully removed.', count($_POST['songs']));
+    $_SESSION['rslt_default_tab'] = 'songs';
+    http::redirect($p_url);
 }
 
 if (($action=='edit') && !empty($_GET['id'])) {

@@ -29,6 +29,9 @@ if (!empty($_SESSION['rslt_message'])) {
 $is_super_admin = $core->auth->isSuperAdmin();
 $core->blog->settings->addNameSpace('rslt');
 $rslt_active = $core->blog->settings->rslt->active;
+$rslt_albums_prefix = $core->blog->settings->rslt->albums_prefix;
+$rslt_album_prefix = $core->blog->settings->rslt->album_prefix;
+$rslt_song_prefix = $core->blog->settings->rslt->song_prefix;
 
 $Authors = array('Gildas Arzel', 'Erick Benzi', 'Jacques Veneruso');
 
