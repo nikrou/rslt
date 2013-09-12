@@ -94,6 +94,7 @@ class objectManager
         if (!$element->isEmpty()) {
             $object['id'] = $element->id;
             $rs = $this->update($object);
+            $rs->id = $element->id;
         } else {
             $rs = $this->add($object);
         }

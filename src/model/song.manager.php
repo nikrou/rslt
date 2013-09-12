@@ -28,7 +28,7 @@ class songManager extends objectManager
     }
 
     public function add($object) {
-        foreach ($this->fields as $field) {
+        foreach (self::$fields as $field) {
             if (empty($object[$field])) {
                 throw new Exception(sprintf(__('You must provide %s field', $field)));
             }
@@ -37,7 +37,7 @@ class songManager extends objectManager
         $cur = $this->con->openCursor($this->table);
         $cur->blog_id = (string) $this->blog->id;
         
-        foreach ($this->fields as $field) {
+        foreach (self::$fields as $field) {
             if ($field=='publication_date') {
                 $cur->$field = date('Y-m-d H:i', strtotime($object[$field].'-01-01 00:00'));
             } else {
@@ -51,5 +51,7 @@ class songManager extends objectManager
         
         $cur->insert();
         $this->blog->triggerBlog();
+
+        return $cur;
     }
 }

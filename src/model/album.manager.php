@@ -39,7 +39,6 @@ class albumManager extends objectManager
       
         $strReq .= ' AND album_id = '.$album_id;
  
-        Log::getInstance()->debug($strReq);
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
       

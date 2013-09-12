@@ -82,11 +82,11 @@ $s->rslt_album_song
 $s->rslt_support
 ->id ('bigint',	0, false)
 ->blog_id ('varchar', 32, false)
-->type('varchar', 255, true, null)
+->support_type('varchar', 255, true, null)
 ->country('varchar', 255, true, null)
 ->productor('varchar', 255, true, null)
 ->distributor('varchar', 255, true, null)
-->reference('varchar', 255, true, null)
+->support_reference('varchar', 255, true, null)
 ->publication_date('timestamp', 0, false, 'now()')
 ->excerpt('varchar', 255, true, null)
 ->primary('pk_rslt_support', 'id');

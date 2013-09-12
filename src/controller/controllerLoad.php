@@ -46,7 +46,7 @@ if (!empty($_POST['file'])) {
 
                 if (!empty($album_title)) {
                     $album = $album_manager->replaceByTitle(array('title' => $album_title, 'singer' => $data[3], 
-                    'publication_date' => $data[0]));                
+                    'publication_date' => $data[0]));
                     $album_song->add($album->id, $song->id);
                 }
                 
