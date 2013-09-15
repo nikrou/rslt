@@ -27,9 +27,9 @@ if (!empty($_POST['file'])) {
     $filename = sprintf('%s/%s.csv', __DIR__.'/../../data', $_POST['file']);
     if (file_exists($filename)) {
         $song_manager = new songManager($core);
-        $author_manager = new authorManager($core);
         $album_manager = new albumManager($core);
         $album_song = new albumSong($core);
+        $author_song = new authorSong($core);
 
         if (($fh = fopen($filename, 'r')) !== false) {
             $songs = array();
@@ -43,6 +43,13 @@ if (!empty($_POST['file'])) {
 
                 $song = $song_manager->replaceByTitle(array('publication_date' => $data[0], 'title' => $data[1], 
                 'author' => $data[2], 'singer' => $data[3]));
+
+                // find known authors
+                if ((strpos($data[2], ',')!==false) && preg_match_all('`('.implode('|', $Authors).')`', $data[2], $matches)) {
+                    foreach ($matches[0] as $author_title) {
+                        $author_song->add(array_search($author_title, $Authors), $song->id);
+                    }
+                }
 
                 if (!empty($album_title)) {
                     $album = $album_manager->replaceByTitle(array('title' => $album_title, 'singer' => $data[3], 

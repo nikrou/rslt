@@ -19,11 +19,28 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-class authorManager extends objectManager
+class authorSong
 {
-    public static $fields = array('firstname', 'lastname');
-    
     public function __construct($core) {
-        parent::__construct($core, 'author', self::$fields);
+        $this->core = $core;
+        $this->blog = $core->blog;
+        $this->con = $this->blog->con;
+        $this->table = $this->blog->prefix.'rslt_author_song';
+	}
+
+    public function add($author_id, $song_id) {
+        $author_id = (int) $author_id;
+        $song_id = (int) $song_id;
+
+        $cur = $this->con->openCursor($this->table);
+		$cur->author_id = $author_id;
+		$cur->song_id = $song_id;
+
+        try {
+            $cur->insert();
+        } catch (Exception $e) {
+            // row exists ?
+        } 
+		$this->core->blog->triggerBlog();
     }
 }

@@ -36,7 +36,7 @@ class songManager extends objectManager
         
         $cur = $this->con->openCursor($this->table);
         $cur->blog_id = (string) $this->blog->id;
-        
+
         foreach (self::$fields as $field) {
             if ($field=='publication_date') {
                 $cur->$field = (int) $object[$field];

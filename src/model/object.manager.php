@@ -21,7 +21,7 @@
 
 class objectManager
 {
-    public static $fields = array();
+    public $object_fields = array();
 
     public function __construct($core, $object_name, $fields) {
         $this->core = $core;
@@ -30,11 +30,11 @@ class objectManager
         $this->table = $this->blog->prefix.'rslt_'.$object_name;
 
         $this->object_name = $object_name;
-        self::$fields = $fields;
+        $this->object_fields = $fields;
     }
   
     public function add($object) {
-        foreach (self::$fields as $field) {
+        foreach ($this->object_fields as $field) {
             if (empty($object[$field])) {
                 throw new Exception(sprintf(__('You must provide %s field', $field)));
             }
@@ -43,7 +43,7 @@ class objectManager
         $cur = $this->con->openCursor($this->table);
         $cur->blog_id = (string) $this->blog->id;
       
-        foreach (self::$fields as $field) {
+        foreach ($this->object_fields as $field) {
             if ($field=='publication_date') {
                 $cur->$field = (int) $object[$field];
             } else {
@@ -63,9 +63,7 @@ class objectManager
     }
 
     public function update($object) {
-        Log::getInstance()->debug(self::$fields);
-        Log::getInstance()->debug($object);
-        foreach (self::$fields as $field) {
+        foreach ($this->object_fields as $field) {
             if (empty($object[$field])) {
                 throw new Exception(sprintf(__('You must provide %s field', $field)));
             }
@@ -73,13 +71,14 @@ class objectManager
       
         $cur = $this->con->openCursor($this->table);
         $cur->blog_id = (string) $this->blog->id;
-        foreach (self::$fields as $field) {
+        foreach ($this->object_fields as $field) {
             if ($field=='publication_date') {
                 $cur->$field = (int) $object[$field];
             } else {
                 $cur->$field = $object[$field];
             }
         }
+
         if (empty($cur->url)) {
             $cur->url = text::str2URL((string) $object['title']);
         }
@@ -120,7 +119,7 @@ class objectManager
     }
 
     public function findById($id) {
-        $strReq =  'SELECT id, url, '.implode(',', self::$fields);
+        $strReq =  'SELECT id, url, '.implode(',', $this->object_fields);
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
         $strReq .= ' AND id='.$this->con->escape($id);
@@ -132,10 +131,9 @@ class objectManager
     }
 
     public function findByTitle($title) {
-        $strReq =  'SELECT id, url, '.implode(',', self::$fields);
+        $strReq =  'SELECT id, url, '.implode(',', $this->object_fields);
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
-
         $strReq .= ' AND title = \''.$this->con->escape($title).'\'';
       
         $rs = $this->con->select($strReq);
@@ -145,7 +143,7 @@ class objectManager
     }
 
     public function findByURL($url) {
-        $strReq =  'SELECT id, url, '.implode(',', self::$fields);
+        $strReq =  'SELECT id, url, '.implode(',', $this->object_fields);
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
 
@@ -158,7 +156,7 @@ class objectManager
     }
 
    public function getList(array $limit=array()) {
-        $strReq =  'SELECT id, url, '.implode(',', self::$fields);
+        $strReq =  'SELECT id, url, '.implode(',', $this->object_fields);
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
         $strReq .= ' ORDER BY updated_at ASC';

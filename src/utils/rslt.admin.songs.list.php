@@ -28,7 +28,7 @@ class adminSongsList extends adminGenericList
         $this->p_url = $p_url;
     }
 
-    public function display($songs, $nb_per_page, $enclose_block='') {
+    public function display($songs, $nb_per_page) {
         $pager = new rsltPager($songs, $this->rs_count, $nb_per_page, 10);
         $pager->setAnchor(self::$anchor);
         $pager->html_prev = $this->html_prev;
@@ -48,10 +48,6 @@ class adminSongsList extends adminGenericList
             '</thead>'.
             '<tbody>%s</tbody></table>';
         
-        if ($enclose_block) {
-            $html_block = sprintf($enclose_block, $html_block);
-        }
-
         echo '<p class="pagination">'.__('Page(s)').' : '.$pager->getLinks().'</p>';
 
         $blocks = explode('%s',$html_block);

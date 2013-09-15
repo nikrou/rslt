@@ -45,20 +45,10 @@ $s->rslt_album
 ->updated_at('timestamp', 0, false, 'now()')
 ->primary('pk_rslt_album', 'id');
 
-$s->rslt_author
-->id ('bigint',	0, false)
-->blog_id ('varchar', 32, false)
-->firstname('varchar', 255, true, null)
-->lastname('varchar', 255, true, null)
-->url('varchar', 255, true, null)
-->created_at('timestamp', 0, false, 'now()')
-->updated_at('timestamp', 0, false, 'now()')
-->primary('pk_rslt_author', 'id');
-
-$s->rslt_author_album
+$s->rslt_author_song
 ->author_id('bigint', 0, false)
-->album_id('bigint', 0, false)
-->primary('pk_rslt_author_album', 'author_id', 'album_id');
+->song_id('bigint', 0, false)
+->primary('pk_rslt_author_song', 'author_id', 'song_id');
 
 $s->rslt_song
 ->id ('bigint',	0, false)

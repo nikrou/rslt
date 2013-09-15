@@ -49,14 +49,6 @@ if (!empty($_POST['saveconfig'])) {
   }
 }
 
-/* authors */
-try {
-  $author_manager = new authorManager($core);
-  $authors = $author_manager->getList();
-} catch (Exception $e) {
-  $core->error->add($e->getMessage());
-}
-
 /* albums */
 try {
   $album_manager = new albumManager($core);
@@ -67,7 +59,7 @@ try {
 
 /* pagination */
 $page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
-$nb_per_page =  20;
+$nb_per_page =  10;
 
 if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
   $nb_per_page = (integer) $_GET['nb'];

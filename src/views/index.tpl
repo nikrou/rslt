@@ -59,40 +59,14 @@
       <p class="top-add">
 	<a class="button add" href="<?php echo $p_url;?>&amp;object=author&amp;action=add"><?php echo __('New author');?></a>
       </p>
-      <?php if ($authors->isEmpty()):?>
+      <?php if (empty($Authors)):?>
       <p><strong><?php echo __('No author');?></strong></p>
       <?php else:?>
-      <form action="<?php echo $p_url;?>" method="post">
-	<table class="clear authors" id="authors-list">
-	  <thead>
-	    <tr>
-	      <th>&nbsp;</th>
-	      <th><?php echo __('Firstname'), ' - ', __('Lastname');?></th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <?php while ($authors->fetch()):?>
-	    <tr>
-	      <td>
-		<?php echo form::checkbox(array('authors[]'), $authors->id, '', '', '');?>
-	      </td>
-	      <td class="maximal">
-		<a href="<?php echo $p_url.'&amp;object=author&amp;action=edit&amp;id=',$authors->id;?>">
-		<?php echo html::escapeHTML(text::cutString($authors->firstname, 50));?>&nbsp;-&nbsp;
-		<?php echo html::escapeHTML(text::cutString($authors->lastname, 50));?>
-	      </td>
-	    </tr>
-	    <?php endwhile;?>
-	  </tbody>
-	</table>
-	<p class="col checkboxes-helpers"></p>
-	<p>
-	  <?php echo form::hidden('p', 'rslt');?>
-	  <?php echo form::hidden('object', 'author');?>
-	  <input type="submit" name="do_remove" class="delete" value="<?php echo __('Remove selected');?>"/>
-	  <?php echo $core->formNonce();?>
-	</p>
-      </form>
+      <?php foreach ($Authors as $author):?>
+      <ul>
+	<li><?php echo $author;?></li>
+      </ul>
+      <?php endforeach;?>
       <?php endif;?>
     </div>
 
@@ -154,7 +128,7 @@
       <?php else:?>
       <form action="<?php echo $p_url;?>" method="post" id="form-songs">
 	<p class="infos"><?php printf(__('%d songs in database'), $songs_counter);?>
-	<?php $songs_list->display($page, 10, '');?>
+	<?php $songs_list->display($page, $nb_per_page);?>
 	<div class="two-cols clearfix">
 	  <p class="col checkboxes-helpers"></p>
 	  <p class="col right">

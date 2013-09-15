@@ -33,7 +33,7 @@ $rslt_albums_prefix = $core->blog->settings->rslt->albums_prefix;
 $rslt_album_prefix = $core->blog->settings->rslt->album_prefix;
 $rslt_song_prefix = $core->blog->settings->rslt->song_prefix;
 
-$Authors = array('Gildas Arzel', 'Erick Benzi', 'Jacques Veneruso');
+$Authors = array(1 => 'Gildas Arzel', 'Erick Benzi', 'Jacques Veneruso');
 
 $Actions = array('add', 'edit');
 $Objects = array('album', 'author', 'song');
