@@ -6,3 +6,8 @@
 p.top-add { 
   margin-bottom: 1em;
 }
+
+/*** fix deprecated ***/
+.pagination a {
+  display: inline;
+}

@@ -100,7 +100,7 @@ class objectManager
         $rs = $this->findByTitleAndPublicationDate($object['title'], $object['publication_date']);
         $cur = $this->openCursor();
 
-        if (!$rs_title->isEmpty()) {
+        if (!$rs->isEmpty()) {
             foreach ($object as $field => $value) {
                 $cur->$field = $value;
             }

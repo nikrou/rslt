@@ -40,6 +40,7 @@ $s->rslt_album
 ->title('varchar', 255, true, null)
 ->singer('text', 0, true, null)
 ->url('varchar', 255, true, null)
+->publication_date('bigint', 0, false)
 ->created_at('timestamp', 0, false, 'now()')
 ->updated_at('timestamp', 0, false, 'now()')
 ->unique('uk_album_url','url')

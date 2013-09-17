@@ -31,8 +31,8 @@ class adminSongsList extends adminGenericList
     public function display($songs, $nb_per_page) {
         $pager = new rsltPager($songs, $this->rs_count, $nb_per_page, 10);
         $pager->setAnchor(self::$anchor);
-        $pager->html_prev = $this->html_prev;
-        $pager->html_next = $this->html_next;
+        $pager->html_prev = __('&#171;prev.');
+        $pager->html_next = __('next&#187;');
 
         $html_block = 
             '<table class="songs clear" id="songs-list">'.

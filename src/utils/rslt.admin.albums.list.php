@@ -31,8 +31,8 @@ class adminAlbumsList extends adminGenericList
     public function display($albums, $nb_per_page) {
         $pager = new rsltPager($albums, $this->rs_count, $nb_per_page, 10);
         $pager->setAnchor(self::$anchor);
-        $pager->html_prev = $this->html_prev;
-        $pager->html_next = $this->html_next;
+        $pager->html_prev = __('&#171;prev.');
+        $pager->html_next = __('next&#187;');
 
         $html_block = 
             '<table class="albums clear" id="albums-list">'.
@@ -72,7 +72,6 @@ class adminAlbumsList extends adminGenericList
             html::escapeHTML(text::cutString($this->rs->title, 50)).
             '</a>'.
             '</td>'.
-            '<td class="nowrap">&nbsp;</td>'.
             '<td class="nowrap">'.html::escapeHTML(text::cutString($this->rs->singer,50)).'</td>'.
             '<td class="nowrap">'.$this->rs->publication_date.'</td>'.
             '</tr>';
