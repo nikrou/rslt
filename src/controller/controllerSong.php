@@ -22,7 +22,8 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $page_title = __('New song');
-$song = array('title' => '', 'author' => '', 'singer' => '', 'publication_date' => '');
+$song = array('title' => '', 'author' => '', 'compositor' => '', 'adaptator' => '',
+'singer' => '', 'publication_date' => '', 'editor' => '', 'url' => '');
 
 $song_manager = new songManager($core);
 
@@ -35,39 +36,46 @@ if (($action=='remove') && !empty($_POST['songs']) && $_POST['object']=='song') 
 }
 
 if (($action=='edit') && !empty($_GET['id'])) {
-  $rs = $song_manager->findById($_GET['id']);
-  if (!$rs->isEmpty()) {
-    $song['title'] = $rs->title;
-    $song['author'] = $rs->author;
-    $song['singer'] = $rs->singer;
-    $song['publication_date'] = $rs->publication_date;
-    $_SESSION['song_id'] = $_GET['id'];
-  }
+    $rs = $song_manager->findById($_GET['id']);
+    if (!$rs->isEmpty()) {
+        $song['title'] = $rs->title;
+        $song['author'] = $rs->author;
+        $song['compositor'] = $rs->compositor;
+        $song['adaptator'] = $rs->adaptator;
+        $song['singer'] = $rs->singer;
+        $song['editor'] = $rs->editor;
+        $song['url'] = $rs->url;
+        $song['publication_date'] = $rs->publication_date;
+        $_SESSION['song_id'] = $_GET['id'];
+    }
 }
 
 if (!empty($_POST['save_song'])) {
-  $song['title'] = $_POST['song_title'];
-  $song['author'] = $_POST['song_author'];
-  $song['singer'] = $_POST['song_singer'];
-  $song['publication_date'] = $_POST['song_publication_date'];
-
-  if ($action=='edit') {
-    $method = 'update';
-    $message = __('Song has been successfully updated.');
-    $song['id'] = $_SESSION['song_id'];
-    unset($_SESSION['song_id']);
-  } else {
-    $method = 'add';
-    $message = __('Song has been successfully added.');
-  }
-  try {
-    $song_manager->$method($song);
-    $_SESSION['rslt_message'] = $message;
-    $_SESSION['rslt_default_tab'] = 'songs';
-    http::redirect($p_url);
-  } catch (Exception $e) {
-    $core->error->add($e->getMessage());
-  }
+    $cur = $song_manager->openCursor();
+    $cur->title = (string) $_POST['song_title'];
+    $cur->author = (string) $_POST['song_author'];
+    $cur->compositor = (string) $_POST['song_compositor'];
+    $cur->adaptator = (string) $_POST['song_adaptator'];
+    $cur->singer = (string) $_POST['song_singer'];
+    $cur->editor = (string) $_POST['song_editor'];
+    $cur->publication_date = (int) $_POST['song_publication_date'];
+    $cur->url = (string) $_POST['song_url'];
+ 
+    try {
+        if ($action=='edit') {
+            $song_manager->update($_SESSION['song_id'], $cur);
+            $message = __('Song has been successfully updated.');
+            unset($_SESSION['song_id']);
+        } else {
+            $song_manager->add($cur);
+            $message = __('Song has been successfully added.');
+        }
+        $_SESSION['rslt_message'] = $message;
+        $_SESSION['rslt_default_tab'] = 'songs';
+        http::redirect($p_url);
+    } catch (Exception $e) {
+        $core->error->add($e->getMessage());
+    }
 }
 
 include(dirname(__FILE__).'/../views/form_song.tpl');

@@ -7,6 +7,7 @@
     <script type="text/javascript">
       var default_tab = "<?php echo $default_tab;?>";
       var rslt_confirm_delete_songs = "<?php echo __('Are you sure you want to delete selected songs (%s)?');?>";
+      var rslt_confirm_delete_albums = "<?php echo __('Are you sure you want to delete selected albums (%s)?');?>";
     </script>
   </head>
   <body>
@@ -76,43 +77,24 @@
       </p>
       <h3 class="hidden-if-js"><?php echo __('Albums');?></h3>
 
-      <?php if ($albums->isEmpty()):?>
+      <?php if ($albums_counter==0):?>
       <p><strong><?php echo __('No album');?></strong></p>
       <?php else:?>
-      <form action="<?php echo $p_url;?>" method="post">
-	<table class="albums clear" id="albums-list">
-	  <thead>
-	    <tr>
-	      <th>&nbsp;</th>
-	      <th><?php echo __('Title');?></th>
-	      <th><?php echo __('Singer');?></th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <?php while ($albums->fetch()):?>
-	    <tr>
-	      <td>
-		<?php echo form::checkbox(array('albums[]'), $albums->id, '', '', '');?>
-	      </td>
-	      <td class="maximal">
-		<a href="<?php echo $p_url.'&amp;object=album&amp;action=edit&amp;id=',$albums->id;?>">
-		  <?php echo html::escapeHTML(text::cutString($albums->title, 50));?>
-		</a>
-	      </td>
-	      <td class="nowrap">
-		<?php echo html::escapeHTML($albums->singer);?>		
-	      </td>
-	    </tr>
-	    <?php endwhile;?>
-	  </tbody>
-	</table>
-	<p class="col checkboxes-helpers"></p>
-	<p>
-	  <?php echo form::hidden('p', 'rslt');?>
-	  <?php echo form::hidden('object', 'album');?>
-	  <input type="submit" name="do_remove" class="delete" value="<?php echo __('Remove selected');?>"/>
-	  <?php echo $core->formNonce();?>
-	</p>
+      <form action="<?php echo $p_url;?>" method="post" id="form-albums">
+	<p class="infos"><?php printf(__('%d albums in database'), $albums_counter);?>
+	<?php $albums_list->display($page, $nb_per_page);?>
+	<div class="two-cols clearfix">
+	  <p class="col checkboxes-helpers"></p>
+	  <p class="col right">
+	    <label for="albums_action" class="classic">
+	      <?php echo __('Selected albums action:');?>
+	    </label>
+	    <?php echo form::combo('action', $albums_action_combo, '', '');?>
+	    <input type="hidden" name="object" value="album"/>
+	    <input type="submit" name="do_remove" value="<?php echo __('ok');?>"/>
+	    <?php echo $core->formNonce();?>
+	  </p>
+	</div>
       </form>
       <?php endif;?>
     </div>
@@ -153,6 +135,27 @@
 	  <input type="submit" value="<?php echo __('Load songs csv file');?>"/>
 	  <input type="hidden" name="action" value="load"/>
 	  <input type="hidden" name="file" value="songs"/>
+	  <input type="hidden" name="object" value="song"/>	  
+	  <?php echo $core->formNonce();?>
+	</p>
+      </form>
+
+      <form action="<?php echo $p_url;?>" method="post" >
+	<p>
+	  <input type="submit" value="<?php echo __('Load albums csv file');?>"/>
+	  <input type="hidden" name="action" value="load"/>
+	  <input type="hidden" name="file" value="albums"/>
+	  <input type="hidden" name="object" value="album"/>	  
+	  <?php echo $core->formNonce();?>
+	</p>
+      </form>
+
+      <form action="<?php echo $p_url;?>" method="post" >
+	<p>
+	  <input type="submit" value="<?php echo __('Load songs in albums csv file');?>"/>
+	  <input type="hidden" name="action" value="load"/>
+	  <input type="hidden" name="file" value="albums_songs"/>
+	  <input type="hidden" name="object" value="album_song"/>	  
 	  <?php echo $core->formNonce();?>
 	</p>
       </form>

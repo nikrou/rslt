@@ -1,8 +1,6 @@
 rslt/CHANGELOG.md
 rslt/js/jquery.tabs.js
 rslt/js/admin.js
-rslt/tools/csv.php
-rslt/tools/make-csv.php
 rslt/BUGS
 rslt/index.php
 rslt/LICENSE
@@ -19,13 +17,13 @@ rslt/src/controller/controllerConfig.php
 rslt/src/utils/rslt.tpl.php
 rslt/src/utils/rslt.admin.songs.list.php
 rslt/src/utils/rslt.url.handlers.php
+rslt/src/utils/rslt.admin.albums.list.php
 rslt/src/utils/rslt.pager.php
 rslt/src/utils/rslt.behaviors.php
 rslt/src/model/object.manager.php
 rslt/src/model/song.manager.php
-rslt/src/model/author.manager.php
+rslt/src/model/reference.song.php
 rslt/src/model/album.song.php
-rslt/src/model/author.album.php
 rslt/src/model/album.manager.php
 rslt/locales/en/help.html
 rslt/locales/en/resources.php

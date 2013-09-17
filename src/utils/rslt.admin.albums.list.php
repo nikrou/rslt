@@ -19,33 +19,28 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-class adminSongsList extends adminGenericList
+class adminAlbumsList extends adminGenericList
 {
-    public static $anchor = 'songs';
+    public static $anchor = 'albums';
     private $p_url;
 
     public function setPluginUrl($p_url) {
         $this->p_url = $p_url;
     }
 
-    public function display($songs, $nb_per_page) {
-        $pager = new rsltPager($songs, $this->rs_count, $nb_per_page, 10);
+    public function display($albums, $nb_per_page) {
+        $pager = new rsltPager($albums, $this->rs_count, $nb_per_page, 10);
         $pager->setAnchor(self::$anchor);
         $pager->html_prev = $this->html_prev;
         $pager->html_next = $this->html_next;
 
         $html_block = 
-            '<table class="songs clear" id="songs-list">'.
+            '<table class="albums clear" id="albums-list">'.
             '<thead>'.
             '<tr>'.
             '<th>&nbsp;</th>'.
             '<th>'. __('Title').'</th>'.
-            '<th>'. __('Album').'</th>'.
-            '<th>'.__('Author').'</th>'.
-            '<th>'.__('Compositor').'</th>'.
-            '<th>'.__('Adaptator').'</th>'.
             '<th>'.__('Singer').'</th>'.
-            '<th>'.__('Editor').'</th>'.
             '<th class="nowrap">'.__('Publication date').'</th>'.
             '</tr>'.
             '</thead>'.
@@ -70,7 +65,7 @@ class adminSongsList extends adminGenericList
         $res = 
             '<tr>'.
             '<td>'.
-            form::checkbox(array('songs[]'), $this->rs->id, '', '', '').
+            form::checkbox(array('albums[]'), $this->rs->id, '', '', '').
             '</td>'.
             '<td class="maximal">'.
             '<a href="'.sprintf($this->p_url, $this->rs->id).'">'.
@@ -78,11 +73,7 @@ class adminSongsList extends adminGenericList
             '</a>'.
             '</td>'.
             '<td class="nowrap">&nbsp;</td>'.
-            '<td class="nowrap">'.html::escapeHTML($this->rs->author).'</td>'.
-            '<td class="nowrap">'.html::escapeHTML($this->rs->compositor).'</td>'.
-            '<td class="nowrap">'.html::escapeHTML($this->rs->adaptator).'</td>'.
             '<td class="nowrap">'.html::escapeHTML(text::cutString($this->rs->singer,50)).'</td>'.
-            '<td class="nowrap">'.html::escapeHTML($this->rs->editor).'</td>'.
             '<td class="nowrap">'.$this->rs->publication_date.'</td>'.
             '</tr>';
         

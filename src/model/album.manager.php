@@ -21,10 +21,12 @@
 
 class albumManager extends objectManager
 {
-    public static $fields = array('title', 'singer', 'publication_date');
+    public static $fields = array('title', 'singer', 'publication_date', 'url');
+
+    public static $required_fields = array('title', 'singer', 'publication_date');
 
     public function __construct($core) {        
-        parent::__construct($core, 'album', self::$fields);
+        parent::__construct($core, 'album', self::$required_fields, self::$fields);
 
         $this->table_song = $this->blog->prefix.'rslt_song';
         $this->table_join = $this->blog->prefix.'rslt_album_song';

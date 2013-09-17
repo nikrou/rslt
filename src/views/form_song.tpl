@@ -22,6 +22,13 @@
 	<?php echo form::field('song_title', 100, 255, html::escapeHTML($song['title']), '');?>
       </p>
       <p class="field">
+	<label class="required" for="song_url">
+	  <abbr title="<?php echo __('Required field');?>">*</abbr>
+	  <?php echo __('URL:');?>
+	</label>
+	<?php echo form::field('song_url', 100, 255, html::escapeHTML($song['url']), '');?>
+      </p>
+      <p class="field">
 	<label class="required" for="song_author">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Author:');?>
@@ -29,11 +36,32 @@
 	<?php echo form::field('song_author', 100, 255, html::escapeHTML($song['author']), '');?>
       </p>
       <p class="field">
+	<label class="required" for="song_compositor">
+	  <abbr title="<?php echo __('Required field');?>">*</abbr>
+	  <?php echo __('Compositor:');?>
+	</label>
+	<?php echo form::field('song_compositor', 100, 255, html::escapeHTML($song['compositor']), '');?>
+      </p>
+      <p class="field">
+	<label class="required" for="song_adaptator">
+	  <abbr title="<?php echo __('Required field');?>">*</abbr>
+	  <?php echo __('Adaptator:');?>
+	</label>
+	<?php echo form::field('song_adaptator', 100, 255, html::escapeHTML($song['adaptator']), '');?>
+      </p>
+      <p class="field">
 	<label class="required" for="song_singer">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Singer:');?>
 	</label>
 	<?php echo form::field('song_singer', 100, 255, html::escapeHTML($song['singer']), '');?>
+      </p>
+      <p class="field">
+	<label class="required" for="song_editor">
+	  <abbr title="<?php echo __('Required field');?>">*</abbr>
+	  <?php echo __('Editor:');?>
+	</label>
+	<?php echo form::field('song_editor', 100, 255, html::escapeHTML($song['editor']), '');?>
       </p>
       <p class="field">
 	<label class="required" for="song_publication_date">

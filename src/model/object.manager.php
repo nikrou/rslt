@@ -22,68 +22,55 @@
 class objectManager
 {
     public $object_fields = array();
+    public $object_required_fields = array();
 
-    public function __construct($core, $object_name, $fields) {
+    public function __construct($core, $object_name, $required_fields, $fields) {
         $this->core = $core;
         $this->blog = $core->blog;
         $this->con = $this->blog->con;
         $this->table = $this->blog->prefix.'rslt_'.$object_name;
 
         $this->object_name = $object_name;
+        $this->object_required = $required_fields;
         $this->object_fields = $fields;
     }
+
+    public function openCursor() {
+        return $this->con->openCursor($this->table);
+    }
   
-    public function add($object) {
-        foreach ($this->object_fields as $field) {
-            if (empty($object[$field])) {
+    public function add($cur) {
+        foreach ($this->object_required_fields as $field) {
+            if ($cur->$field = '') {
                 throw new Exception(sprintf(__('You must provide %s field', $field)));
             }
         }
-
-        $cur = $this->con->openCursor($this->table);
+        
         $cur->blog_id = (string) $this->blog->id;
-      
-        foreach ($this->object_fields as $field) {
-            if ($field=='publication_date') {
-                $cur->$field = (int) $object[$field];
-            } else {
-                $cur->$field = $object[$field];
-            }
+        if ($cur->url == '') {
+            $cur->url = text::tidyURL((string) $cur->title, false);
         }
-        $cur->url = text::str2URL((string) $object['title']);
 
-        $strReq = 'SELECT MAX(id) FROM '.$this->table;
-        $rs = $this->con->select($strReq);
-        $cur->id = (int) $rs->f(0) + 1;
-      
-        $cur->insert();
+        try {
+            $rs = $this->con->select('SELECT MAX(id) FROM '.$this->table);
+            $cur->id = (int) $rs->f(0) + 1;
+            $cur->insert();
+            $this->con->unlock();
+        } catch (Exception $e) {
+            $this->con->unlock();
+			throw $e;
+        }
         $this->blog->triggerBlog();
 
         return $cur;
     }
 
-    public function update($object) {
-        foreach ($this->object_fields as $field) {
-            if (empty($object[$field])) {
-                throw new Exception(sprintf(__('You must provide %s field', $field)));
-            }
-        }
-      
-        $cur = $this->con->openCursor($this->table);
-        $cur->blog_id = (string) $this->blog->id;
-        foreach ($this->object_fields as $field) {
-            if ($field=='publication_date') {
-                $cur->$field = (int) $object[$field];
-            } else {
-                $cur->$field = $object[$field];
-            }
+    public function update($id, $cur) {
+        if ($cur->url == '') {
+            $cur->url = text::tidyURL((string) $cur->title, false);
         }
 
-        if (empty($cur->url)) {
-            $cur->url = text::str2URL((string) $object['title']);
-        }
-
-        $cur->update('WHERE id = '.(int) $object['id']." AND blog_id = '".$this->con->escape($this->blog->id)."'");
+        $cur->update('WHERE id = '.(int) $id." AND blog_id = '".$this->con->escape($this->blog->id)."'");
         $this->blog->triggerBlog();
 
         return $cur;
@@ -91,13 +78,44 @@ class objectManager
 
     // replace by finding existing object with same title
     public function replaceByTitle($object) {
-        $element = $this->findByTitle($object['title']);
-        if (!$element->isEmpty()) {
-            $object['id'] = $element->id;
-            $rs = $this->update($object);
-            $rs->id = $element->id;
+        $rs = $this->findByTitle($object['title']);
+        $cur = $this->openCursor();
+        
+        if (!$rs->isEmpty()) {
+            foreach ($object as $field => $value) {
+                $cur->$field = $value;
+            }
+            $this->update($cur->id, $cur);
         } else {
-            $rs = $this->add($object);
+            foreach ($object as $field => $value) {
+                $cur->$field = $value;
+            }
+            $this->add($cur);
+        }
+
+        return $cur;
+    }
+
+    public function replaceByTitleAndPublicationDate($object) {
+        $rs = $this->findByTitleAndPublicationDate($object['title'], $object['publication_date']);
+        $cur = $this->openCursor();
+
+        if (!$rs_title->isEmpty()) {
+            foreach ($object as $field => $value) {
+                $cur->$field = $value;
+            }
+            $cur->url = $rs->url;
+            $this->update($rs->id, $cur);
+        } else {
+            foreach ($object as $field => $value) {
+                $cur->$field = $value;
+            }
+            
+            $rs = $this->findByURL(text::tidyURL((string) $object['title'], false));
+            if (!$rs->isEmpty()) {
+                $cur->url = $rs->publication_date . '-' .$rs->url;
+            }
+            $this->add($cur);
         }
 
         return $rs;
@@ -108,7 +126,7 @@ class objectManager
             return false;
         }
 
-        $cur = $this->con->openCursor($this->table);
+        $cur = $this->openCursor();
         $strReq = 'DELETE FROM '.$this->table;
         if (count($ids)==1) {
             $strReq .= ' WHERE id = '.$ids[0];
@@ -135,6 +153,19 @@ class objectManager
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
         $strReq .= ' AND title = \''.$this->con->escape($title).'\'';
+
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
+      
+        return $rs;     
+    }
+
+    public function findByTitleAndPublicationDate($title, $publication_date) {
+        $strReq =  'SELECT id, url, '.implode(',', $this->object_fields);
+        $strReq .= ' FROM '.$this->table;
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+        $strReq .= ' AND title = \''.$this->con->escape($title).'\'';
+        $strReq .= ' AND publication_date = '.(int) $this->con->escape($publication_date);
       
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();

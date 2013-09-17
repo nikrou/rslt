@@ -21,14 +21,18 @@
 
 class songManager extends objectManager
 {
-    public static $fields = array('title', 'publication_date', 'author', 'singer');
+    public static $fields = array('title', 'publication_date', 'author', 'compositor', 'adaptator',
+    'singer', 'editor', 'original_title', 'url');
+
+    public static $require_fields = array('title', 'publication_date', 'author', 'singer');
 
     public function __construct($core) {
-        parent::__construct($core, 'song', self::$fields);
+        parent::__construct($core, 'song', self::$require_fields, self::$fields);
     }
 
+/*
     public function add($object) {
-        foreach (self::$fields as $field) {
+        foreach (self::$require_fields as $field) {
             if (empty($object[$field])) {
                 throw new Exception(sprintf(__('You must provide %s field', $field)));
             }
@@ -41,7 +45,7 @@ class songManager extends objectManager
             if ($field=='publication_date') {
                 $cur->$field = (int) $object[$field];
             } else {
-                $cur->$field = $object[$field];
+                $cur->$field = isset($object[$field])?$object[$field]:'';
             }
         }
         
@@ -54,4 +58,5 @@ class songManager extends objectManager
 
         return $cur;
     }
+*/
 }

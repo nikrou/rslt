@@ -38,35 +38,41 @@ $s->rslt_album
 ->id ('bigint',	0, false)
 ->blog_id ('varchar', 32, false)
 ->title('varchar', 255, true, null)
-->singer('varchar', 255, true, null)
-->publication_date('bigint', 0, false)
+->singer('text', 0, true, null)
 ->url('varchar', 255, true, null)
 ->created_at('timestamp', 0, false, 'now()')
 ->updated_at('timestamp', 0, false, 'now()')
+->unique('uk_album_url','url')
 ->primary('pk_rslt_album', 'id');
 
-$s->rslt_author_song
+$s->rslt_reference_song
 ->author_id('bigint', 0, false)
 ->song_id('bigint', 0, false)
-->primary('pk_rslt_author_song', 'author_id', 'song_id');
+->role('varchar',255,false)
+->primary('pk_rslt_author_song_role', 'author_id', 'song_id', 'role');
 
 $s->rslt_song
 ->id ('bigint',	0, false)
 ->blog_id ('varchar', 32, false)
 ->title('varchar', 255, true, null)
+->original_title('varchar', 255, true, null)
 ->author('varchar', 255, true, null)
 ->compositor('varchar', 255, true, null)
-->singer('varchar', 255, true, null)
+->adaptator('varchar', 255, true, null)
+->singer('text', 0, true, null)
+->editor('varchar', 255, true, null)
 ->publication_date('bigint', 0, false)
-->duration('integer', 0, true)
 ->url('varchar', 255, true, null)
 ->created_at('timestamp', 0, false, 'now()')
 ->updated_at('timestamp', 0, false, 'now()')
+->unique('uk_song_year','title','publication_date')
+->unique('uk_song_url','url')
 ->primary('pk_rslt_song', 'id');
 
 $s->rslt_album_song
 ->album_id('bigint', 0, false)
 ->song_id('bigint', 0, false)
+->rank('bigint', 0, false)
 ->primary('pk_rslt_album_song', 'album_id', 'song_id');
 
 $s->rslt_support
@@ -80,6 +86,17 @@ $s->rslt_support
 ->publication_date('bigint', 0, false)
 ->excerpt('varchar', 255, true, null)
 ->primary('pk_rslt_support', 'id');
+
+// index
+$s->rslt_album->index('idx_album_title',	'btree', 'title');
+$s->rslt_album->index('idx_album_url', 'btree', 'url');
+$s->rslt_song->index('idx_song_url', 'btree', 'url');
+
+// foreign keys
+$s->rslt_album->reference('fk_album_blog','blog_id','blog','blog_id','cascade','cascade');
+$s->rslt_song->reference('fk_song_blog','blog_id','blog','blog_id','cascade','cascade');
+$s->rslt_support->reference('fk_support_blog','blog_id','blog','blog_id','cascade','cascade');
+$s->rslt_reference_song->reference('fk_reference_song','song_id','rslt_song','id','cascade','cascade');
 
 $si = new dbStruct($core->con, $core->prefix);
 $changes = $si->synchronize($s);

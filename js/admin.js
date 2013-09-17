@@ -22,5 +22,24 @@ $(function() {
 		return true;
 	});
 
+	$('#form-albums').submit(function() {
+		var action = $(this).find('select[name="action"]').val();
+		var checked = false;
+		
+		$(this).find('input[name="albums[]"]').each(function() {
+			if (this.checked) {
+				checked = true;
+			}
+		});
+		
+		if (!checked) { return false; }
+		
+		if (action == 'delete') {
+			return window.confirm(rslt_confirm_delete_albums.replace('%s',$('input[name="albums[]"]:checked').size()));
+		}
+		
+		return true;
+	});
+
 	$.simpleTabs(default_tab, {hashPrefix:'rslt_'});
 });

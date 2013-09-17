@@ -19,22 +19,23 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-class authorSong
+class referenceSong
 {
     public function __construct($core) {
         $this->core = $core;
         $this->blog = $core->blog;
         $this->con = $this->blog->con;
-        $this->table = $this->blog->prefix.'rslt_author_song';
+        $this->table = $this->blog->prefix.'rslt_reference_song';
 	}
 
-    public function add($author_id, $song_id) {
+    public function add($author_id, $song_id, $role) {
         $author_id = (int) $author_id;
         $song_id = (int) $song_id;
 
         $cur = $this->con->openCursor($this->table);
 		$cur->author_id = $author_id;
 		$cur->song_id = $song_id;
+        $cur->role = $role;
 
         try {
             $cur->insert();

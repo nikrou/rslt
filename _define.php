@@ -25,6 +25,6 @@ $this->registerModule(
 		      /* Name */		'RSLT',
 		      /* Description*/	'Restons sur leurs traces',
 		      /* Author */		'Nicolas Roudaire',
-		      /* Version */		'0.0.20',
+		      /* Version */		'0.0.28',
 		      /* Permissions */	'admin,contentadmin'
 		      );

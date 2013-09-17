@@ -34,7 +34,7 @@ dist-clean:
 ##
 XGETTEXT=/usr/bin/xgettext -k__ -j -L PHP --from-code=utf-8 -o locales/templates/messages.pot
 GETTEXT_FORMAT=/usr/bin/msgfmt
-GETTEXT_MERGE=/usr/bin/msgmerge
+GETTEXT_MERGE=/usr/bin/msgmerge -U
 
 SEARCH_PATTERN=(*.php|*.tpl)$$
 EXCLUDE_PATTERN=(vendor|target|.dist)

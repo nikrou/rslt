@@ -49,14 +49,6 @@ if (!empty($_POST['saveconfig'])) {
   }
 }
 
-/* albums */
-try {
-  $album_manager = new albumManager($core);
-  $albums = $album_manager->getList();
-} catch (Exception $e) {
-  $core->error->add($e->getMessage());
-}
-
 /* pagination */
 $page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
 $nb_per_page =  10;
@@ -65,6 +57,20 @@ if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
   $nb_per_page = (integer) $_GET['nb'];
 }
 $limit = array((($page-1)*$nb_per_page), $nb_per_page);
+
+/* albums */
+$albums_action_combo = array();
+$albums_action_combo[''] = null;
+$albums_action_combo[__('Delete')] = 'delete';
+
+try {
+  $album_manager = new albumManager($core);
+  $albums_counter = $album_manager->getCountList();
+  $albums_list = new adminAlbumsList($core, $album_manager->getList($limit), $albums_counter);
+  $albums_list->setPluginUrl("$p_url&amp;object=album&amp;action=edit&amp;id=%d");
+} catch (Exception $e) {
+  $core->error->add($e->getMessage());
+}
 
 /* songs */
 $songs_action_combo = array();

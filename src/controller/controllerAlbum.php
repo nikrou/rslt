@@ -22,13 +22,14 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $page_title = __('New album');
-$album = array('title' => '', 'singer' => '');
+$album = array('title' => '', 'singer' => '', 'url', 'publication_date');
 
 $album_manager = new albumManager($core);
 
 if (($action=='remove') && !empty($_POST['albums']) && $_POST['object']=='album') {
     $album_manager->delete($_POST['albums']);
-    $_SESSION['rslt_message'] = __('Album(s) successfully deleted.');
+    $_SESSION['rslt_message'] = __('The album has been successfully deleted.', 
+    'The albums have been successfully deleted.', count($_POST['albums']));
     $_SESSION['rslt_default_tab'] = 'albums';
     http::redirect($p_url);
 }
@@ -41,26 +42,27 @@ if (($action=='edit') && !empty($_GET['id'])) {
         $album['title'] = $rs->title;
         $album['singer'] = $rs->singer;
         $album['publication_date'] = $rs->publication_date;
+        $album['url'] = $rs->url;
         $_SESSION['album_id'] = $_GET['id'];
     }
 }
 
-if (!empty($_POST['save_album']) && !empty($_POST['album_title'])) {
-	$album['title'] = $_POST['album_title'];
-	$album['singer'] = $_POST['album_singer'];
-	$album['publication_date'] = $_POST['album_publication_date'];
+if (!empty($_POST['save_album'])) {
+    $cur = $album_manager->openCursor();
+	$cur->title = (string) $_POST['album_title'];
+	$cur->singer = (string) $_POST['album_singer'];
+	$cur->publication_date = (string) $_POST['album_publication_date'];
+	$cur->url = (string) $_POST['album_url'];
 
-	if ($action=='edit') {
-		$method = 'update';
-		$message = __('Album has been successfully updated.');
-		$album['id'] = $_SESSION['album_id'];
-		unset($_SESSION['album_id']);
-	} else {
-		$method = 'add';
-		$message = __('Album has been successfully added.');
-	}
 	try {
-		$album_manager->$method($album);
+        if ($action=='edit') {
+            $album_manager->update($_SESSION['album_id'], $cur);
+            $message = __('Album has been successfully updated.');
+            unset($_SESSION['album_id']);
+        } else {
+            $album_manager->add($cur);
+            $message = __('Album has been successfully added.');
+        }
 		$_SESSION['rslt_message'] = $message;
 		$_SESSION['rslt_default_tab'] = 'albums';
 		http::redirect($p_url);
