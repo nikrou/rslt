@@ -40,6 +40,4 @@ $(function() {
 		
 		return true;
 	});
-
-	$.simpleTabs(default_tab, {hashPrefix:'rslt_'});
 });

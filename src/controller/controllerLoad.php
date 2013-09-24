@@ -35,38 +35,41 @@ if (!empty($_POST['file']) && !empty($_POST['object'])) {
             if ($_POST['object']=='song') {
                 // "Année de publication";"Titre";"Auteur";"Compositeur";"Adaptateur";"Interprète";"Editeur";"Titre original"
                 while (($data = fgetcsv($fh, 1000, ';', '"')) !== false) {
-                    if (empty($data)) {
+                    if (empty($data) || !is_array($data)) {
                         continue;
                     }
-                    $publication_date = trim($data[0]);
-                    $title = trim($data[1]);
-                    $author = trim($data[2]);
-                    $compositor = trim($data[3]);
-                    $adaptator = trim($data[4]);
-                    $singer = trim($data[5]);
-                    $editor = trim($data[6]);
-                    $original_title = trim($data[7]);
+                    $publication_date = isset($data[0])?trim($data[0]):'';
+                    $title = isset($data[1])?trim($data[1]):'';
+                    $author = isset($data[2])?trim($data[2]):'';
+                    $compositor = isset($data[3])?trim($data[3]):'';
+                    $adaptator = isset($data[4])?trim($data[4]):'';
+                    $singer = isset($data[5])?trim($data[5]):'';
+                    $editor = isset($data[6])?trim($data[6]):'';
+                    $original_title = isset($data[7])?trim($data[7]):'';
+                    if (empty($title) || empty($publication_date)) {
+                        continue;
+                    }
 
                     $song = $song_manager->replaceByTitleAndPublicationDate(array('publication_date' => $publication_date, 'title' => $title,
                     'author' => $author, 'compositor' => $compositor, 'adaptator' => $adaptator, 'singer' => $singer, 
                     'editor' => $editor, 'original_title' => $original_title));
 
                     // find known authors
-                    if ((strpos($author, ',')!==false) && preg_match_all('`('.implode('|', $Authors).')`', $author, $matches)) {
+                    if (preg_match_all('`('.implode('|', $Authors).')`', $author, $matches)) {
                         foreach ($matches[0] as $author_title) {
                             $reference_song->add(array_search($author_title, $Authors), $song->id, 'author');
                         }
                     }
 
                     // find known compositors
-                    if ((strpos($compositor, ',')!==false) && preg_match_all('`('.implode('|', $Authors).')`', $compositor, $matches)) {
+                    if (preg_match_all('`('.implode('|', $Authors).')`', $compositor, $matches)) {
                         foreach ($matches[0] as $author_title) {
                             $reference_song->add(array_search($author_title, $Authors), $song->id, 'compositor');
                         }
                     }
 
                     // find known adaptators
-                    if ((strpos($adaptator, ',')!==false) && preg_match_all('`('.implode('|', $Authors).')`', $adaptator, $matches)) {
+                    if (preg_match_all('`('.implode('|', $Authors).')`', $adaptator, $matches)) {
                         foreach ($matches[0] as $author_title) {
                             $reference_song->add(array_search($author_title, $Authors), $song->id, 'adaptator');
                         }

@@ -7,7 +7,40 @@ p.top-add {
   margin-bottom: 1em;
 }
 
-/*** fix deprecated ***/
-.pagination a {
-  display: inline;
+/* filters */
+.filters-form {
+  border: 1px dashed #999;
+  border-radius: .5em;
+  margin-bottom: 2em;
+  padding: .5em 1em 0;
+}
+.filters-form .table {
+  width: 100%;
+  padding: 0;
+  margin-bottom: 1em;
+  margin-top: .5em;
+}
+.filters-form .cell {
+  padding: 0 2em 0 0;
+}
+.filters-form .filters-sibling-cell {
+  padding-top: 3.8em;
+}
+.filters-form .filters-options {
+  padding-left: 2em;
+  border-left: 1px solid #ccc;
+}
+.filters-form label.ib, span.ib {
+  width:7em;
+}
+.filters-form label.ibw, span.ibw {
+  width: 9em;
+  display: inline-block;
+}
+.filters-form select {
+  width: 14em;
+}
+.filters-form h4 {
+  margin-top: 0;
+  margin-bottom: 2em;
 }

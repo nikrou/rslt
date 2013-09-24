@@ -106,6 +106,8 @@ class objectManager
             }
             $cur->url = $rs->url;
             $this->update($rs->id, $cur);
+
+            return $rs;
         } else {
             foreach ($object as $field => $value) {
                 $cur->$field = $value;
@@ -115,10 +117,11 @@ class objectManager
             if (!$rs->isEmpty()) {
                 $cur->url = $rs->publication_date . '-' .$rs->url;
             }
-            $this->add($cur);
-        }
 
-        return $rs;
+            $this->add($cur);
+
+            return $cur;
+        }
     }
 
     public function delete(array $ids=array()) {

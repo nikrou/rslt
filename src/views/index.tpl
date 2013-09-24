@@ -2,13 +2,12 @@
   <head>
     <title>Restons sur leurs traces</title>
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
-    <script type="text/javascript" src="index.php?pf=rslt/js/jquery.tabs.js"></script>
-    <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
+    <?php echo dcPage::jsPageTabs($default_tab);?>
     <script type="text/javascript">
-      var default_tab = "<?php echo $default_tab;?>";
       var rslt_confirm_delete_songs = "<?php echo __('Are you sure you want to delete selected songs (%s)?');?>";
       var rslt_confirm_delete_albums = "<?php echo __('Are you sure you want to delete selected albums (%s)?');?>";
     </script>
+    <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
   </head>
   <body>
     <h2><?php echo html::escapeHTML($core->blog->name);?> &gt; RSLT</h2>
@@ -17,7 +16,7 @@
     <?php endif;?>
 
     <?php if ($is_super_admin):?>
-    <div class="multi-part" id="rslt_settings" title="<?php echo __('Settings');?>">
+    <div class="multi-part" id="settings" title="<?php echo __('Settings');?>">
       <h3 class="hidden-if-js"><?php echo __('Settings');?></h3>
       <form action="<?php echo $p_url;?>" method="post" enctype="multipart/form-data">
 	<div class="fieldset">
@@ -55,7 +54,7 @@
     </div>
     <?php endif;?>
     <?php if ($rslt_active):?>
-    <div class="multi-part" id="rslt_authors" title="<?php echo __('Authors');?>">
+    <div class="multi-part" id="authors" title="<?php echo __('Authors');?>">
       <h3 class="hidden-if-js"><?php echo __('Authors');?></h3>
       <p class="top-add">
 	<a class="button add" href="<?php echo $p_url;?>&amp;object=author&amp;action=add"><?php echo __('New author');?></a>
@@ -71,7 +70,7 @@
       <?php endif;?>
     </div>
 
-    <div class="multi-part" id="rslt_albums" title="<?php echo __('Albums');?>">
+    <div class="multi-part" id="albums" title="<?php echo __('Albums');?>">
       <p class="top-add">
 	<a class="button add" href="<?php echo $p_url;?>&amp;object=album&amp;action=add"><?php echo __('New album');?></a>
       </p>
@@ -99,7 +98,7 @@
       <?php endif;?>
     </div>
 
-    <div class="multi-part" id="rslt_songs" title="<?php echo __('Songs');?>">
+    <div class="multi-part" id="songs" title="<?php echo __('Songs');?>">
       <h3 class="hidden-if-js"><?php echo __('Songs');?></h3>
       <p class="top-add">
 	<a class="button add" href="<?php echo $p_url;?>&amp;object=song&amp;action=add"><?php echo __('New song');?></a>
@@ -108,6 +107,54 @@
       <?php if ($songs_counter==0):?>
       <p><strong><?php echo __('No song');?></strong></p>
       <?php else:?>
+      <form action="<?php echo $p_url;?>" method="get" id="filters-songs-form" class="filters-form">
+	<div class="table">
+	  <div class="cell">
+	    <h4><?php echo __('Filters');?></h4>
+	    <p>
+	      <label for="author_id" class="ib"><?php echo __('Author:');?></label>
+	      <?php echo form::combo('author_id', $authors_combo, $author_id);?>
+	    </p>
+	    <p>
+	      <label for="compositor_id" class="ib"><?php echo __('Compositor:');?></label>
+	      <?php echo form::combo('compositor_id', $compositors_combo, $compositor_id);?>
+	    </p>
+	    <p>
+	      <label for="adaptator_id" class="ib"><?php echo __('Adaptator:');?></label>
+	      <?php echo form::combo('adaptator_id', $adaptators_combo, $adaptator_id);?>
+	    </p>
+	  </div>
+	
+	  <div class="cell filters-sibling-cell">
+	    <p>
+	      <label for="editor_id" class="ib"><?php echo __('Editor:');?></label>
+	      <?php echo form::combo('editor_id', $editors_combo, $editor_id);?>
+	    </p>
+	    <p>
+	      <label for="singer_id" class="ib"><?php echo __('Singer:');?></label>
+	      <?php echo form::combo('singer_id', $singers_combo, $singer_id);?>
+	    </p>
+	  </div>
+	
+	  <div class="cell filters-options">
+	    <h4><?php echo __('Display options');?></h4>
+	    <p><label for="sortby" class="ib"><?php echo __('Order by:');?></label>
+	    <?php echo form::combo('sortby', $sortby_combo, $sortby);?>
+	    </p>
+	    <p><label for="order" class="ib"><?php echo __('Sort:');?></label>
+	    <?php echo form::combo('order',$order_combo,$order);?>
+	    </p>
+	    <p>
+	      <span class="label ib"><?php echo __('Show');?></span> 
+	      <label for="nb" class="classic">
+		<?php echo form::field('nb',3,3,$nb_per_page), __('songs per page');?>
+	      </label>
+	    </p>
+	  </div>
+	</div>
+	<p><input class="clearfix" type="submit" value="<?php echo __('Apply filters and display options');?>"/></p>
+      </form>
+
       <form action="<?php echo $p_url;?>" method="post" id="form-songs">
 	<p class="infos"><?php printf(__('%d songs in database'), $songs_counter);?>
 	<?php $songs_list->display($page, $nb_per_page);?>
@@ -127,7 +174,7 @@
       <?php endif;?>
     </div>
 
-    <div class="multi-part" id="rslt_maintenance" title="<?php echo __('Maintenance');?>">
+    <div class="multi-part" id="maintenance" title="<?php echo __('Maintenance');?>">
       <h3 class="hidden-if-js"><?php echo __('Maintenance');?></h3>
 
       <form action="<?php echo $p_url;?>" method="post" >
@@ -161,7 +208,7 @@
       </form>
     </div>
     <?php endif;?>
-    <div class="multi-part" id="rslt_about" title="<?php echo __('About');?>">
+    <div class="multi-part" id="about" title="<?php echo __('About');?>">
       <h3 class="hidden-if-js"><?php echo __('About');?></h3>
       <p>
 	<?php echo __('If you want more informations on that plugin or have new ideas to develope it, or want to submit a bug or need help (to install or configure it) or for anything else ...');?></p>

@@ -77,6 +77,19 @@ $songs_action_combo = array();
 $songs_action_combo[''] = null;
 $songs_action_combo[__('Delete')] = 'delete';
 
+/* filters */
+$author_id = $compositor_id = $adaptator_id = $singer_id = $editor_id = $publication_date = null;
+
+$authors_combo = array();
+$compositors_combo = array();
+$adaptators_combo = array();
+$editors_combo = array();
+$singers_combo = array();
+
+$sortby = $order = null;
+$sortby_combo = array();
+$order_combo = array();
+
 try {
   $song_manager = new songManager($core);
   $songs_counter = $song_manager->getCountList();
