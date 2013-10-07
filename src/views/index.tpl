@@ -6,6 +6,7 @@
     <script type="text/javascript">
       var rslt_confirm_delete_songs = "<?php echo __('Are you sure you want to delete selected songs (%s)?');?>";
       var rslt_confirm_delete_albums = "<?php echo __('Are you sure you want to delete selected albums (%s)?');?>";
+      var rslt_filters = {show:"<?php echo __('Show filters?');?>",hide:"<?php echo __('Hide filters?');?>"};
     </script>
     <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
   </head>
@@ -104,10 +105,8 @@
 	<a class="button add" href="<?php echo $p_url;?>&amp;object=song&amp;action=add"><?php echo __('New song');?></a>
       </p>
 
-      <?php if ($songs_counter==0):?>
-      <p><strong><?php echo __('No song');?></strong></p>
-      <?php else:?>
-      <form action="<?php echo $p_url;?>" method="get" id="filters-songs-form" class="filters-form">
+      <p><a id="filters-songs" class="form-control" href="#"><?php echo __('Show filters');?></a></p>
+      <form action="<?php echo $p_url;?>#songs" method="get" id="filters-songs-form" class="filters-form<?php if (!$active_filters):?> hide<?php endif;?>">
 	<div class="table">
 	  <div class="cell">
 	    <h4><?php echo __('Filters');?></h4>
@@ -152,9 +151,15 @@
 	    </p>
 	  </div>
 	</div>
-	<p><input class="clearfix" type="submit" value="<?php echo __('Apply filters and display options');?>"/></p>
+	<p>
+	  <input class="clearfix" type="submit" value="<?php echo __('Apply filters and display options');?>"/>
+	  <?php echo form::hidden('p','rslt');?>
+	</p>
       </form>
 
+      <?php if ($songs_counter==0):?>
+      <p><strong><?php echo __('No song');?></strong></p>
+      <?php else:?>
       <form action="<?php echo $p_url;?>" method="post" id="form-songs">
 	<p class="infos"><?php printf(__('%d songs in database'), $songs_counter);?>
 	<?php $songs_list->display($page, $nb_per_page);?>

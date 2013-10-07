@@ -30,33 +30,26 @@ class songManager extends objectManager
         parent::__construct($core, 'song', self::$require_fields, self::$fields);
     }
 
-/*
-    public function add($object) {
-        foreach (self::$require_fields as $field) {
-            if (empty($object[$field])) {
-                throw new Exception(sprintf(__('You must provide %s field', $field)));
-            }
-        }
-        
-        $cur = $this->con->openCursor($this->table);
-        $cur->blog_id = (string) $this->blog->id;
-
-        foreach (self::$fields as $field) {
-            if ($field=='publication_date') {
-                $cur->$field = (int) $object[$field];
-            } else {
-                $cur->$field = isset($object[$field])?$object[$field]:'';
-            }
-        }
-        
-        $strReq = 'SELECT MAX(id) FROM '.$this->table;
-        $rs = $this->con->select($strReq);
-        $cur->id = (int) $rs->f(0) + 1;
-        
-        $cur->insert();
-        $this->blog->triggerBlog();
-
-        return $cur;
+    public function getEditors() {
+        return $this->getElements('editor');
     }
-*/
+
+    public function getSingers() {
+        return $this->getElements('singer');
+    }
+
+    protected function getElements($field) {
+        $strReq =  'SELECT distinct('.$field.')';
+        $strReq .= ' FROM '.$this->table;
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+      
+        if (!empty($limit)) {
+			$strReq .= $this->con->limit($limit);
+        }
+
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
+      
+        return $rs;
+    }
 }

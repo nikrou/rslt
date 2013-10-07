@@ -19,13 +19,19 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
+class rsltDashboard
+{
+	public static function adminDashboardFavorites($core,$favs)
+	{
+		$favs->register('rslt', array(
+			'title' => __('RSLT'),
+			'url' => 'plugin.php?p=rslt',
+			'small-icon' => 'index.php?pf=rslt/icon.png',
+			'large-icon' => 'index.php?pf=rslt/icon-big.png',
+			'permissions' => 'contentadmin'
+		));
+	}
+}
 
-$core->addBehavior('adminDashboardFavorites',array('rsltDashboard','adminDashboardFavorites'));
 
-$_menu['Blog']->addItem('RSLT',
-'plugin.php?p=rslt',
-'index.php?pf=rslt/imgs/icon.png',
-preg_match('/plugin.php\?p=rslt/', $_SERVER['REQUEST_URI']),
-$core->auth->check('admin,contentadmin', $core->blog->id)
-);
+

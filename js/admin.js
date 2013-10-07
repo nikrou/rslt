@@ -3,6 +3,20 @@ $(function() {
 		dotclear.checkboxesHelpers(this);
 	});
 
+
+	$('#filters-songs')
+		.show()
+		.click(function(e) {
+			e.preventDefault();
+			$('#filters-songs-form').toggleClass('hide');
+			if ($('#filters-songs-form').is(':hidden')) {
+				$(this).text(rslt_filters.show);
+			} else {
+				$(this).text(rslt_filters.hide);
+			}
+		});
+
+
 	$('#form-songs').submit(function() {
 		var action = $(this).find('select[name="action"]').val();
 		var checked = false;

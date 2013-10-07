@@ -19,13 +19,14 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
-
-$core->addBehavior('adminDashboardFavorites',array('rsltDashboard','adminDashboardFavorites'));
-
-$_menu['Blog']->addItem('RSLT',
-'plugin.php?p=rslt',
-'index.php?pf=rslt/imgs/icon.png',
-preg_match('/plugin.php\?p=rslt/', $_SERVER['REQUEST_URI']),
-$core->auth->check('admin,contentadmin', $core->blog->id)
-);
+class rsltAdminCombo
+{
+    public static function makeCombo($rs, $field) {
+		$combo = array('' => '');
+		while ($rs->fetch()) {
+            $combo[$rs->$field] = $rs->$field;
+		}
+        
+		return $combo;
+	}
+}

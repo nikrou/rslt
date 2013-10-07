@@ -189,15 +189,28 @@ class objectManager
         return $rs;     
     }
 
-   public function getList(array $limit=array()) {
+    public function getList(array $params=array(), array $limit=array()) {
         $strReq =  'SELECT id, url, '.implode(',', $this->object_fields);
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+
+        // apply filters
+        if (!empty($params)) {
+            foreach ($params as $field => $value) {
+                if (in_array($field, $this->object_fields)) {
+                    $strReq .= sprintf(' AND %s = \'%s\'', $field, $value);
+                }
+            }
+        }
+
+        // apply order
         $strReq .= ' ORDER BY updated_at ASC';
       
         if (!empty($limit)) {
 			$strReq .= $this->con->limit($limit);
         }
+
+        Log::getInstance()->debug($strReq);
 
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
@@ -205,10 +218,17 @@ class objectManager
         return $rs;
     }
 
-    public function getcountList() {
+   public function getcountList(array $params=array()) {
         $strReq =  'SELECT count(1)';
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+
+        // apply filters
+        foreach ($params as $field => $value) {
+            if (in_array($field, $this->object_fields)) {
+                $strReq .= sprintf(' AND %s = \'%s\'', $field, $value);
+            }
+        }
 
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();

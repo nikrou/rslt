@@ -21,8 +21,8 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
-if (!$core->blog->settings->rslt->active) {
-  return;
+if (empty($core->blog->settings->rslt) || !$core->blog->settings->rslt->active) {
+    return;
 } 
 
 // public urls
