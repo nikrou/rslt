@@ -36,7 +36,7 @@ $rslt_song_prefix = $core->blog->settings->rslt->song_prefix;
 $Authors = array(1 => 'Gildas Arzel', 'Erick Benzi', 'Jacques Veneruso');
 
 $Actions = array('add', 'edit');
-$Objects = array('album', 'author', 'song');
+$Objects = array('album', 'song');
 
 // default controller
 $controller_name = 'controllerConfig.php';

@@ -22,7 +22,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $page_title = __('New album');
-$album = array('title' => '', 'singer' => '', 'url', 'publication_date');
+$album = array('title' => '', 'singer' => '', 'url' => '', 'publication_date' => '');
 
 $album_manager = new albumManager($core);
 

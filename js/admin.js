@@ -8,6 +8,7 @@ $(function() {
 		.show()
 		.click(function(e) {
 			e.preventDefault();
+			$(this).toggleClass('open', $('#filters-songs-form').is(':hidden'));
 			$('#filters-songs-form').toggleClass('hide');
 			if ($('#filters-songs-form').is(':hidden')) {
 				$(this).text(rslt_filters.show);

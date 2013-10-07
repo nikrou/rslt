@@ -6,7 +6,7 @@
     <script type="text/javascript">
       var rslt_confirm_delete_songs = "<?php echo __('Are you sure you want to delete selected songs (%s)?');?>";
       var rslt_confirm_delete_albums = "<?php echo __('Are you sure you want to delete selected albums (%s)?');?>";
-      var rslt_filters = {show:"<?php echo __('Show filters?');?>",hide:"<?php echo __('Hide filters?');?>"};
+      var rslt_filters = {show:"<?php echo __('Show filters');?>",hide:"<?php echo __('Hide filters');?>"};
     </script>
     <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
   </head>
@@ -57,9 +57,6 @@
     <?php if ($rslt_active):?>
     <div class="multi-part" id="authors" title="<?php echo __('Authors');?>">
       <h3 class="hidden-if-js"><?php echo __('Authors');?></h3>
-      <p class="top-add">
-	<a class="button add" href="<?php echo $p_url;?>&amp;object=author&amp;action=add"><?php echo __('New author');?></a>
-      </p>
       <?php if (empty($Authors)):?>
       <p><strong><?php echo __('No author');?></strong></p>
       <?php else:?>
@@ -105,7 +102,15 @@
 	<a class="button add" href="<?php echo $p_url;?>&amp;object=song&amp;action=add"><?php echo __('New song');?></a>
       </p>
 
-      <p><a id="filters-songs" class="form-control" href="#"><?php echo __('Show filters');?></a></p>
+      <p>
+	<a id="filters-songs" class="form-control<?php if ($active_filters):?> open<?php endif;?>" href="#">
+	  <?php if ($active_filters):?>
+	  <?php echo __('Hide filters');?>
+	  <?php else:?>
+	  <?php echo __('Show filters');?>
+	  <?php endif;?>
+	</a>
+      </p>
       <form action="<?php echo $p_url;?>#songs" method="get" id="filters-songs-form" class="filters-form<?php if (!$active_filters):?> hide<?php endif;?>">
 	<div class="table">
 	  <div class="cell">
