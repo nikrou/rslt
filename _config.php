@@ -19,35 +19,38 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+if (!defined('DC_CONTEXT_MODULE')) { return; }
 
-if (!empty($_SESSION['rslt_message'])) {
-    $message = $_SESSION['rslt_message'];
-    unset($_SESSION['rslt_message']);
-}
-
-$is_super_admin = $core->auth->isSuperAdmin();
 $core->blog->settings->addNameSpace('rslt');
+$is_super_admin = $core->auth->isSuperAdmin();
 $rslt_active = $core->blog->settings->rslt->active;
 $rslt_albums_prefix = $core->blog->settings->rslt->albums_prefix;
 $rslt_album_prefix = $core->blog->settings->rslt->album_prefix;
 $rslt_song_prefix = $core->blog->settings->rslt->song_prefix;
 
-$Authors = array(1 => 'Gildas Arzel', 'Erick Benzi', 'Jacques Veneruso');
-
-$Actions = array('add', 'edit');
-$Objects = array('album', 'song');
-
-// default controller
-$controller_name = 'controllerIndex.php';
-
-if (!empty($_REQUEST['object']) && in_array($_REQUEST['object'], $Objects)) {
-    if (!empty($_REQUEST['action'])) {
-        $action = $_REQUEST['action'];
+if (!empty($_POST['save'])) {
+    try {
+        $rslt_active = (empty($_POST['rslt_active']))?false:true;
+        $core->blog->settings->rslt->put('active', $rslt_active, 'boolean');
+        
+        if (!empty($_POST['rslt_albums_prefix'])) {
+            $rslt_albums_prefix = trim($_POST['rslt_albums_prefix']);
+            $core->blog->settings->rslt->put('albums_prefix', $rslt_albums_prefix, 'string');
+        }
+        if (!empty($_POST['rslt_album_prefix'])) {
+            $rslt_album_prefix = trim($_POST['rslt_album_prefix']);
+            $core->blog->settings->rslt->put('album_prefix', $rslt_album_prefix, 'string');
+        }
+        if (!empty($_POST['rslt_song_prefix'])) {
+            $rslt_song_prefix = trim($_POST['rslt_song_prefix']);
+            $core->blog->settings->rslt->put('song_prefix', $rslt_song_prefix, 'string');
+        }
+        
+		dcPage::addSuccessNotice(__('Configuration successfully updated.'));
+		http::redirect($list->getURL('module=rslt&conf=1'));
+    } catch(Exception $e) {
+        $core->error->add($e->getMessage());
     }
-    $controller_name = sprintf('controller%s.php', ucfirst($_REQUEST['object']));
-} elseif (!empty($_POST['action']) && ($_POST['action']=='load') && !empty($_POST['file'])) {
-    $controller_name = 'controllerLoad.php';
 }
 
-include(dirname(__FILE__).'/src/controller/'.$controller_name);
+include(dirname(__FILE__).'/src/views/config.tpl');
