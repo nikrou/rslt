@@ -210,8 +210,6 @@ class objectManager
 			$strReq .= $this->con->limit($limit);
         }
 
-        Log::getInstance()->debug($strReq);
-
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
       
@@ -224,9 +222,11 @@ class objectManager
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
 
         // apply filters
-        foreach ($params as $field => $value) {
-            if (in_array($field, $this->object_fields)) {
-                $strReq .= sprintf(' AND %s = \'%s\'', $field, $value);
+        if (!empty($params)) {
+            foreach ($params as $field => $value) {
+                if (in_array($field, $this->object_fields)) {
+                    $strReq .= sprintf(' AND %s = \'%s\'', $field, $value);
+                }
             }
         }
 

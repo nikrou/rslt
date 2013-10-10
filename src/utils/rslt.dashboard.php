@@ -26,8 +26,8 @@ class rsltDashboard
 		$favs->register('rslt', array(
 			'title' => __('RSLT'),
 			'url' => 'plugin.php?p=rslt',
-			'small-icon' => 'index.php?pf=rslt/icon.png',
-			'large-icon' => 'index.php?pf=rslt/icon-big.png',
+			'small-icon' => 'index.php?pf=rslt/imgs/icon.png',
+			'large-icon' => 'index.php?pf=rslt/imgs/icon-big.png',
 			'permissions' => 'contentadmin'
 		));
 	}

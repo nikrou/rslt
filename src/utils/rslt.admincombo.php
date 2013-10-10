@@ -24,7 +24,7 @@ class rsltAdminCombo
     public static function makeCombo($rs, $field) {
 		$combo = array('' => '');
 		while ($rs->fetch()) {
-            $combo[$rs->$field] = $rs->$field;
+            $combo[$rs->$field] = html::escapeHTML($rs->$field);
 		}
         
 		return $combo;

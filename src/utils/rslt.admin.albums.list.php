@@ -30,11 +30,11 @@ class adminAlbumsList extends adminGenericList
 
     public function display($albums, $nb_per_page) {
         $pager = new rsltPager($albums, $this->rs_count, $nb_per_page, 10);
+        $pager->setVarPage('page_albums');
         $pager->setAnchor(self::$anchor);
-        $pager->html_prev = __('&#171;prev.');
-        $pager->html_next = __('next&#187;');
 
         $html_block = 
+			'<div class="table-outer">'.
             '<table class="albums clear" id="albums-list">'.
             '<thead>'.
             '<tr>'.
@@ -44,9 +44,10 @@ class adminAlbumsList extends adminGenericList
             '<th class="nowrap">'.__('Publication date').'</th>'.
             '</tr>'.
             '</thead>'.
-            '<tbody>%s</tbody></table>';
+            '<tbody>%s</tbody></table>'.
+            '</div>';
         
-        echo '<p class="pagination">'.__('Page(s)').' : '.$pager->getLinks().'</p>';
+        echo $pager->getLinks();
 
         $blocks = explode('%s',$html_block);
         
@@ -58,7 +59,7 @@ class adminAlbumsList extends adminGenericList
 
         echo $blocks[1];
 
-        echo '<p class="pagination">'.__('Page(s)').' : '.$pager->getLinks().'</p>';
+        echo $pager->getLinks();
     }
 
     private function postLine() {

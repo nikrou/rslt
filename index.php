@@ -41,13 +41,8 @@ $Objects = array('album', 'song');
 // default controller
 $controller_name = 'controllerConfig.php';
 
-if ((!empty($_REQUEST['action']) && in_array($_REQUEST['action'], $Actions))
-|| !empty($_POST['do_remove'])
-&& !empty($_REQUEST['object']) && in_array($_REQUEST['object'], $Objects)) {
-
-    if (!empty($_POST['do_remove'])) {
-        $action = 'remove';
-    } else {
+if (!empty($_REQUEST['object']) && in_array($_REQUEST['object'], $Objects)) {
+    if (!empty($_REQUEST['action'])) {
         $action = $_REQUEST['action'];
     }
     $controller_name = sprintf('controller%s.php', ucfirst($_REQUEST['object']));

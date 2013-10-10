@@ -49,16 +49,16 @@ if (!empty($_POST['saveconfig'])) {
     }
 }
 
-/* pagination */
-$page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
-$nb_per_page =  10;
-
-if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
-    $nb_per_page = (integer) $_GET['nb'];
-}
-$limit = array((($page-1)*$nb_per_page), $nb_per_page);
-
 /* albums */
+/* pagination */
+$page_albums = !empty($_GET['page_albums']) ? (integer) $_GET['page_albums'] : 1;
+$nb_per_page_albums =  10;
+
+if (!empty($_GET['nba']) && (integer) $_GET['nba'] > 0) {
+    $nb_per_page_albums = (integer) $_GET['nba'];
+}
+$limit_albums = array((($page_albums-1)*$nb_per_page_albums), $nb_per_page_albums);
+
 $albums_action_combo = array();
 $albums_action_combo[''] = null;
 $albums_action_combo[__('Delete')] = 'delete';
@@ -66,16 +66,26 @@ $albums_action_combo[__('Delete')] = 'delete';
 try {
     $album_manager = new albumManager($core);
     $albums_counter = $album_manager->getCountList();
-    $albums_list = new adminAlbumsList($core, $album_manager->getList($limit), $albums_counter);
+    $albums_list = new adminAlbumsList($core, $album_manager->getList(array(), $limit_albums), $albums_counter);
     $albums_list->setPluginUrl("$p_url&amp;object=album&amp;action=edit&amp;id=%d");
 } catch (Exception $e) {
     $core->error->add($e->getMessage());
 }
 
 /* songs */
+/* pagination */
+$page_songs = !empty($_GET['page_songs']) ? (integer) $_GET['page_songs'] : 1;
+$nb_per_page_songs =  10;
+
+if (!empty($_GET['nbs']) && (integer) $_GET['nbs'] > 0) {
+    $nb_per_page_songs = (integer) $_GET['nbs'];
+}
+$limit_songs = array((($page_songs-1)*$nb_per_page_songs), $nb_per_page_songs);
+
 $songs_action_combo = array();
 $songs_action_combo[''] = null;
 $songs_action_combo[__('Delete')] = 'delete';
+$songs_action_combo[__('Associate to album')] = 'associate_to_album';
 
 /* filters */
 $active_filters = false;
@@ -90,8 +100,8 @@ $compositors_combo = array_merge(array('' => ''), array_flip($Authors));
 $adaptators_combo = array_merge(array('' => ''), array_flip($Authors));
 $editors_combo = rsltAdminCombo::makeCombo($song_manager->getEditors(), 'editor');
 $singers_combo = rsltAdminCombo::makeCombo($song_manager->getSingers(), 'singer');
-$sortby_combo = array();
-$order_combo = array();
+$sortby_combo = array('' => '');
+$order_combo = array('' => '');
 
 if (!empty($_GET['editor_id']) && !empty($editors_combo[$_GET['editor_id']])) {
     $editor_id = $_GET['editor_id'];
@@ -125,7 +135,7 @@ if (!empty($_GET['adaptator_id']) && !empty($Authors[$_GET['adaptator_id']])) {
 
 try {
     $songs_counter = $song_manager->getCountList($filters_params);
-    $songs_list = new adminSongsList($core, $song_manager->getList($filters_params, $limit), $songs_counter);
+    $songs_list = new adminSongsList($core, $song_manager->getList($filters_params, $limit_songs), $songs_counter);
     $songs_list->setPluginUrl("$p_url&amp;object=song&amp;action=edit&amp;id=%d");
 } catch (Exception $e) {
     $core->error->add($e->getMessage());
@@ -143,3 +153,4 @@ if ($rslt_active) {
 }
 
 include(dirname(__FILE__).'/../views/index.tpl');
+

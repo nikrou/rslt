@@ -19,7 +19,7 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-class rsltPager extends pager
+class rsltPager extends dcPager
 {
     protected $anchor;
 
@@ -30,9 +30,14 @@ class rsltPager extends pager
     public function setAnchor($anchor) {
         $this->anchor = $anchor;
     }
+
+    public function setVarPage($var_page) {
+        $this->var_page = $var_page;
+    }
     
-	protected function setURL() {
+	public function setURL() {
         parent::setUrl();
         $this->page_url .= '#'.$this->anchor;
+        $this->form_action .= '#'.$this->anchor;
     }
 }

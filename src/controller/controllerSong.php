@@ -78,4 +78,10 @@ if (!empty($_POST['save_song'])) {
     }
 }
 
-include(dirname(__FILE__).'/../views/form_song.tpl');
+if (in_array($action, array('associate_to_album'))) {
+    $songs = $song_manager->getList($_POST['songs']);
+    
+    include(dirname(__FILE__).'/../views/songs_list.tpl');
+} else {
+    include(dirname(__FILE__).'/../views/form_song.tpl');
+}

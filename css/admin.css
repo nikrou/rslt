@@ -6,6 +6,9 @@
 p.top-add { 
   margin-bottom: 1em;
 }
+.pager { 
+  margin: 1em 0 1em 0;
+}
 
 /* filters */
 .filters-form {

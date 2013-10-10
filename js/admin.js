@@ -7,7 +7,6 @@ $(function() {
 	$('#filters-songs')
 		.show()
 		.click(function(e) {
-			e.preventDefault();
 			$(this).toggleClass('open', $('#filters-songs-form').is(':hidden'));
 			$('#filters-songs-form').toggleClass('hide');
 			if ($('#filters-songs-form').is(':hidden')) {
@@ -15,6 +14,7 @@ $(function() {
 			} else {
 				$(this).text(rslt_filters.hide);
 			}
+			e.preventDefault();
 		});
 
 

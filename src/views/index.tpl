@@ -77,18 +77,19 @@
       <?php if ($albums_counter==0):?>
       <p><strong><?php echo __('No album');?></strong></p>
       <?php else:?>
+      <p class="infos"><?php printf(__('%d albums in database'), $albums_counter);?></p>
+      <?php $albums_list->display($page_albums, $nb_per_page_albums);?>
+
       <form action="<?php echo $p_url;?>" method="post" id="form-albums">
-	<p class="infos"><?php printf(__('%d albums in database'), $albums_counter);?>
-	<?php $albums_list->display($page, $nb_per_page);?>
 	<div class="two-cols clearfix">
 	  <p class="col checkboxes-helpers"></p>
 	  <p class="col right">
 	    <label for="albums_action" class="classic">
 	      <?php echo __('Selected albums action:');?>
 	    </label>
-	    <?php echo form::combo('action', $albums_action_combo, '', '');?>
+	    <?php echo form::combo(array('action','albums_action'), $albums_action_combo, '', '');?>
 	    <input type="hidden" name="object" value="album"/>
-	    <input type="submit" name="do_remove" value="<?php echo __('ok');?>"/>
+	    <input type="submit" name="do_action" value="<?php echo __('ok');?>"/>
 	    <?php echo $core->formNonce();?>
 	  </p>
 	</div>
@@ -150,8 +151,8 @@
 	    </p>
 	    <p>
 	      <span class="label ib"><?php echo __('Show');?></span> 
-	      <label for="nb" class="classic">
-		<?php echo form::field('nb',3,3,$nb_per_page), __('songs per page');?>
+	      <label for="nbs" class="classic">
+		<?php echo form::field('nbs',3,3,$nb_per_page_songs), __('songs per page');?>
 	      </label>
 	    </p>
 	  </div>
@@ -165,22 +166,22 @@
       <?php if ($songs_counter==0):?>
       <p><strong><?php echo __('No song');?></strong></p>
       <?php else:?>
-      <form action="<?php echo $p_url;?>" method="post" id="form-songs">
-	<p class="infos"><?php printf(__('%d songs in database'), $songs_counter);?>
-	<?php $songs_list->display($page, $nb_per_page);?>
-	<div class="two-cols clearfix">
-	  <p class="col checkboxes-helpers"></p>
-	  <p class="col right">
-	    <label for="songs_action" class="classic">
-	      <?php echo __('Selected songs action:');?>
-	    </label>
-	    <?php echo form::combo('action', $songs_action_combo, '', '');?>
-	    <input type="hidden" name="object" value="song"/>
-	    <input type="submit" name="do_remove" value="<?php echo __('ok');?>"/>
-	    <?php echo $core->formNonce();?>
-	  </p>
-	</div>
-      </form>
+      <p class="infos"><?php printf(__('%d songs in database'), $songs_counter);?></p>
+      <?php 
+      $songs_list->display($page_songs, $nb_per_page_songs, 
+      '<form action="'.$p_url.'" method="post" id="form-songs">'.'%s'.
+	'<div class="two-cols clearfix">'.
+	  '<p class="col checkboxes-helpers"></p>'.
+	  '<p class="col right">'.
+	    '<label for="songs_action" class="classic">'. __('Selected songs action:').'</label>'.
+	    form::combo(array('action','songs_action'), $songs_action_combo, '', '').
+	    '<input type="hidden" name="object" value="song"/>'.
+	    '<input type="submit" name="do_action" value="'.__('ok').'"/>'.
+	    $core->formNonce().
+	  '</p>'.
+	'</div>'.
+      '</form>');
+      ?>
       <?php endif;?>
     </div>
 

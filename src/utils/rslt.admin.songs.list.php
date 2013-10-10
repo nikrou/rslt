@@ -28,13 +28,13 @@ class adminSongsList extends adminGenericList
         $this->p_url = $p_url;
     }
 
-    public function display($songs, $nb_per_page) {
+    public function display($songs, $nb_per_page, $enclose_block) {
         $pager = new rsltPager($songs, $this->rs_count, $nb_per_page, 10);
+        $pager->setVarPage('page_songs');
         $pager->setAnchor(self::$anchor);
-        $pager->html_prev = __('&#171;prev.');
-        $pager->html_next = __('next&#187;');
 
         $html_block = 
+			'<div class="table-outer">'.
             '<table class="songs clear" id="songs-list">'.
             '<thead>'.
             '<tr>'.
@@ -49,9 +49,14 @@ class adminSongsList extends adminGenericList
             '<th class="nowrap">'.__('Publication date').'</th>'.
             '</tr>'.
             '</thead>'.
-            '<tbody>%s</tbody></table>';
+            '<tbody>%s</tbody></table>'.
+            '</div>';
         
-        echo '<p class="pagination">'.__('Page(s)').' : '.$pager->getLinks().'</p>';
+        echo $pager->getLinks();
+
+        if ($enclose_block) {
+            $html_block = sprintf($enclose_block, $html_block);
+        }
 
         $blocks = explode('%s',$html_block);
         
@@ -63,7 +68,7 @@ class adminSongsList extends adminGenericList
 
         echo $blocks[1];
 
-        echo '<p class="pagination">'.__('Page(s)').' : '.$pager->getLinks().'</p>';
+        echo $pager->getLinks();
     }
 
     private function postLine() {
