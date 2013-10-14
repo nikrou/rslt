@@ -73,7 +73,7 @@ $s->rslt_song
 $s->rslt_album_song
 ->album_id('bigint', 0, false)
 ->song_id('bigint', 0, false)
-->rank('bigint', 0, false)
+->rank('bigint', 0, true)
 ->primary('pk_rslt_album_song', 'album_id', 'song_id');
 
 $s->rslt_support

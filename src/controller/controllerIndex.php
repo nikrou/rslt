@@ -22,6 +22,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $default_tab = 'songs';
+$rslt_albums_service = sprintf('%s&object=album', $p_url);
 
 /* albums */
 /* pagination */

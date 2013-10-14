@@ -28,7 +28,7 @@ class adminAlbumsList extends adminGenericList
         $this->p_url = $p_url;
     }
 
-    public function display($albums, $nb_per_page) {
+    public function display($albums, $nb_per_page, $enclose_block) {
         $pager = new rsltPager($albums, $this->rs_count, $nb_per_page, 10);
         $pager->setVarPage('page_albums');
         $pager->setAnchor(self::$anchor);
@@ -48,6 +48,10 @@ class adminAlbumsList extends adminGenericList
             '</div>';
         
         echo $pager->getLinks();
+
+        if ($enclose_block) {
+            $html_block = sprintf($enclose_block, $html_block);
+        }
 
         $blocks = explode('%s',$html_block);
         

@@ -351,3 +351,6 @@ msgstr "Nombre de chansons par page"
 #: src/views/index.tpl:163
 msgid "Apply filters and display options"
 msgstr "Appliquer les filtres et options d'affichage"
+
+msgid "Associate to album"
+msgstr "Associer à l'album"

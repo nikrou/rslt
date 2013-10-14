@@ -21,9 +21,10 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
-if (empty($core->blog->settings->rslt) || !$core->blog->settings->rslt->active) {
+$self_ns = $core->blog->settings->addNamespace('rslt');
+if (!$self_ns->active) {
     return;
-} 
+}
 
 // public urls
 $albums_prefix = $core->blog->settings->rslt->albums_prefix;
@@ -51,4 +52,3 @@ $core->tpl->addValue('AlbumPagePublicationDate', array('rsltTpl', 'AlbumPagePubl
 $core->tpl->addBlock('AlbumSongs', array('rsltTpl', 'AlbumSongs'));
 $core->tpl->addValue('SongTitle', array('rsltTpl', 'SongTitle'));
 $core->tpl->addValue('SongAuthor', array('rsltTpl', 'SongAuthor'));
-

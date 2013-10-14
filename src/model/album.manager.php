@@ -38,7 +38,19 @@ class albumManager extends objectManager
         $strReq .= ' LEFT JOIN '.$this->table_join.' as _as';
         $strReq .= ' ON _s.id = _as.song_id';
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';      
-        $strReq .= ' AND album_id = '.$album_id;
+        $strReq .= ' AND album_id = '.$this->con->escape($album_id);
+ 
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
+      
+        return $rs;
+    }
+
+    public function findByTitle($title) {
+        $strReq =  'SELECT id, '.implode(',', $this->object_fields);
+        $strReq .= ' FROM '.$this->table;
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+        $strReq .= sprintf(' AND title ilike \'%s%%\'', $this->con->escape($title));
  
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();

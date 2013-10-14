@@ -41,13 +41,13 @@ $Objects = array('album', 'song');
 // default controller
 $controller_name = 'controllerIndex.php';
 
-if (!empty($_REQUEST['object']) && in_array($_REQUEST['object'], $Objects)) {
+if (!empty($_POST['action']) && ($_POST['action']=='load') && !empty($_POST['file'])) {
+    $controller_name = 'controllerLoad.php';
+} elseif (!empty($_REQUEST['object']) && in_array($_REQUEST['object'], $Objects)) {
     if (!empty($_REQUEST['action'])) {
         $action = $_REQUEST['action'];
     }
     $controller_name = sprintf('controller%s.php', ucfirst($_REQUEST['object']));
-} elseif (!empty($_POST['action']) && ($_POST['action']=='load') && !empty($_POST['file'])) {
-    $controller_name = 'controllerLoad.php';
 }
 
 include(dirname(__FILE__).'/src/controller/'.$controller_name);

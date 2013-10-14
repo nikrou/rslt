@@ -27,10 +27,27 @@ $song = array('title' => '', 'author' => '', 'compositor' => '', 'adaptator' => 
 
 $song_manager = new songManager($core);
 
-if (($action=='remove') && !empty($_POST['songs']) && $_POST['object']=='song') {
+if (!empty($_POST['songs']) && ($_POST['object']=='song') && ($_POST['action']=='associate_to_album') && !empty($_POST['album_id'])) {
+    $album_id = (int) $_POST['album_id'];
+    $album_song_manager = new albumSong($core);
+
+	try {
+        foreach ($_POST['songs'] as $song_id) {
+            $album_song_manager->add($album_id, $song_id);
+        }
+        $_SESSION['rslt_message'] = __('The song has been successfully added to album.',
+        'The songs have been successfully added to album.', count($_POST['songs']));
+        $_SESSION['rslt_default_tab'] = 'songs';
+        http::redirect($p_url);
+    } catch (Exception $e) {
+		$core->error->add($e->getMessage());
+    }
+}
+
+if (($action=='delete') && !empty($_POST['songs']) && $_POST['object']=='song') {
     $song_manager->delete($_POST['songs']);
-    $_SESSION['rslt_message'] = __('The song has been successfully removed.', 
-    'The songs have been successfully removed.', count($_POST['songs']));
+    $_SESSION['rslt_message'] = __('The song has been successfully deleted.', 
+    'The songs have been successfully deleted.', count($_POST['songs']));
     $_SESSION['rslt_default_tab'] = 'songs';
     http::redirect($p_url);
 }
@@ -78,10 +95,4 @@ if (!empty($_POST['save_song'])) {
     }
 }
 
-if (in_array($action, array('associate_to_album'))) {
-    $songs = $song_manager->getList($_POST['songs']);
-    
-    include(dirname(__FILE__).'/../views/songs_list.tpl');
-} else {
-    include(dirname(__FILE__).'/../views/form_song.tpl');
-}
+include(dirname(__FILE__).'/../views/form_song.tpl');

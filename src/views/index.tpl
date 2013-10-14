@@ -3,11 +3,14 @@
     <title>Restons sur leurs traces</title>
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
     <?php echo dcPage::jsPageTabs($default_tab);?>
+    <?php //echo dcPage::jsLoad('js/jquery/jquery.autocomplete.js');?>
     <script type="text/javascript">
       var rslt_confirm_delete_songs = "<?php echo __('Are you sure you want to delete selected songs (%s)?');?>";
       var rslt_confirm_delete_albums = "<?php echo __('Are you sure you want to delete selected albums (%s)?');?>";
       var rslt_filters = {show:"<?php echo __('Show filters');?>",hide:"<?php echo __('Hide filters');?>"};
+      var rslt_albums_service = "<?php echo $rslt_albums_service;?>";
     </script>
+    <script type="text/javascript" src="index.php?pf=rslt/js/jquery.ui.autocomplete.js"></script>
     <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
   </head>
   <body>
@@ -40,22 +43,21 @@
       <p><strong><?php echo __('No album');?></strong></p>
       <?php else:?>
       <p class="infos"><?php printf(__('%d albums in database'), $albums_counter);?></p>
-      <?php $albums_list->display($page_albums, $nb_per_page_albums);?>
-
-      <form action="<?php echo $p_url;?>" method="post" id="form-albums">
-	<div class="two-cols clearfix">
-	  <p class="col checkboxes-helpers"></p>
-	  <p class="col right">
-	    <label for="albums_action" class="classic">
-	      <?php echo __('Selected albums action:');?>
-	    </label>
-	    <?php echo form::combo(array('action','albums_action'), $albums_action_combo, '', '');?>
-	    <input type="hidden" name="object" value="album"/>
-	    <input type="submit" name="do_action" value="<?php echo __('ok');?>"/>
-	    <?php echo $core->formNonce();?>
-	  </p>
-	</div>
-      </form>
+      <?php
+	 $albums_list->display($page_albums, $nb_per_page_albums,
+      '<form action="'.$p_url.'" method="post" id="form-albums">'.'%s'.
+	'<div class="two-cols clearfix">'.
+	  '<p class="col checkboxes-helpers"></p>'.
+	  '<p class="col right">'.
+	    '<label for="albums_action" class="classic">'. __('Selected albums action:').'</label>'.
+	    form::combo(array('action','albums_action'), $albums_action_combo, '', '').
+	    '<input type="submit" name="do_action" value="'.__('ok').'"/>'.
+	    '<input type="hidden" name="object" value="album"/>'.
+	    $core->formNonce().
+	    '</p>'.
+	'</div>'.
+      '</form>');
+      ?>
       <?php endif;?>
     </div>
 
@@ -137,10 +139,13 @@
 	  '<p class="col right">'.
 	    '<label for="songs_action" class="classic">'. __('Selected songs action:').'</label>'.
 	    form::combo(array('action','songs_action'), $songs_action_combo, '', '').
-	    '<input type="hidden" name="object" value="song"/>'.
+	    '<input type="text" name="album_input" id="album-input"/>'.
+	    '<input type="hidden" name="album_id" id="album-id" value=""/>'.
 	    '<input type="submit" name="do_action" value="'.__('ok').'"/>'.
+	    '<div id="albums_selection"></div>'.
+	    '<input type="hidden" name="object" value="song"/>'.
 	    $core->formNonce().
-	  '</p>'.
+	    '</p>'.
 	'</div>'.
       '</form>');
       ?>

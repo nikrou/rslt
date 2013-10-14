@@ -198,7 +198,7 @@ class objectManager
         if (!empty($params)) {
             foreach ($params as $field => $value) {
                 if (in_array($field, $this->object_fields)) {
-                    $strReq .= sprintf(' AND %s = \'%s\'', $field, $value);
+                    $strReq .= sprintf(' AND %s = \'%s\'', $field, $this->con->escape($value));
                 }
             }
         }
@@ -225,7 +225,7 @@ class objectManager
         if (!empty($params)) {
             foreach ($params as $field => $value) {
                 if (in_array($field, $this->object_fields)) {
-                    $strReq .= sprintf(' AND %s = \'%s\'', $field, $value);
+                    $strReq .= sprintf(' AND %s = \'%s\'', $field, $this->con->escape($value));
                 }
             }
         }

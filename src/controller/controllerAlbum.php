@@ -26,7 +26,18 @@ $album = array('title' => '', 'singer' => '', 'url' => '', 'publication_date' =>
 
 $album_manager = new albumManager($core);
 
-if (($action=='remove') && !empty($_POST['albums']) && $_POST['object']=='album') {
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_GET['term'])) {
+    header('Content-type: application/json');
+    $albums = $album_manager->findByTitle($_GET['term']);
+    $response = array();
+    while ($albums->fetch()) {
+        $response[] = array('label' => $albums->title, 'id' => $albums->id);
+    }
+    echo json_encode($response);
+    exit();
+}
+
+if (($action=='delete') && !empty($_POST['albums']) && $_POST['object']=='album') {
     $album_manager->delete($_POST['albums']);
     $_SESSION['rslt_message'] = __('The album has been successfully deleted.', 
     'The albums have been successfully deleted.', count($_POST['albums']));
