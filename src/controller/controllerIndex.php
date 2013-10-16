@@ -21,8 +21,34 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-$default_tab = 'songs';
+$default_tab = 'settings';
 $rslt_albums_service = sprintf('%s&object=album', $p_url);
+
+if (!empty($_POST['saveconfig'])) {
+    try {
+        $rslt_active = (empty($_POST['rslt_active']))?false:true;
+        $core->blog->settings->rslt->put('active', $rslt_active, 'boolean');
+        
+        if (!empty($_POST['rslt_albums_prefix'])) {
+            $rslt_albums_prefix = trim($_POST['rslt_albums_prefix']);
+            $core->blog->settings->rslt->put('albums_prefix', $rslt_albums_prefix, 'string');
+        }
+        if (!empty($_POST['rslt_album_prefix'])) {
+            $rslt_album_prefix = trim($_POST['rslt_album_prefix']);
+            $core->blog->settings->rslt->put('album_prefix', $rslt_album_prefix, 'string');
+        }
+        if (!empty($_POST['rslt_song_prefix'])) {
+            $rslt_song_prefix = trim($_POST['rslt_song_prefix']);
+            $core->blog->settings->rslt->put('song_prefix', $rslt_song_prefix, 'string');
+        }
+        
+        $_SESSION['rslt_message'] = __('Configuration successfully updated.');
+        $_SESSION['rslt_default_tab'] = 'settings';
+        http::redirect($p_url);
+    } catch(Exception $e) {
+        $core->error->add($e->getMessage());
+    }
+}
 
 /* albums */
 /* pagination */
@@ -121,10 +147,10 @@ if ($rslt_active) {
         $default_tab = $_SESSION['rslt_default_tab'];
         unset($_SESSION['rslt_default_tab']);
     } else {
-        $default_tab = 'songs';
+        $default_tab = 'settings';
     }
 } else {
-    $default_tab = 'about';
+    $default_tab = 'settings';
 }
 
 include(dirname(__FILE__).'/../views/index.tpl');

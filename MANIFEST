@@ -5,7 +5,6 @@ rslt/js/jquery.ui.autocomplete.js
 rslt/BUGS
 rslt/index.php
 rslt/LICENSE
-rslt/src/views/config.tpl
 rslt/src/views/form_song.tpl
 rslt/src/views/form_album.tpl
 rslt/src/views/index.tpl
@@ -41,7 +40,6 @@ rslt/default-templates/inc_album.html
 rslt/default-templates/song.html
 rslt/default-templates/albums.html
 rslt/default-templates/inc_albums.html
-rslt/_config.php
 rslt/_install.php
 rslt/css/admin.css
 rslt/css/rslt.css
