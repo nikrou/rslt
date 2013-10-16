@@ -13,7 +13,7 @@ install:
 
 config: clean manifest
 	mkdir -p $(DIST)/$(PLUGIN_NAME)
-	cp -pr src default-templates _*.php CHANGELOG js css imgs LICENSE MANIFEST README.md locales BUGS index.php $(DIST)/$(PLUGIN_NAME)/; \
+	cp -pr src default-templates _*.php CHANGELOG.md js css imgs LICENSE MANIFEST README.md locales BUGS index.php $(DIST)/$(PLUGIN_NAME)/; \
 	find $(DIST) -name '*~' -exec rm \{\} \;
 
 dist: config

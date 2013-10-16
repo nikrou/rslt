@@ -76,7 +76,21 @@ class rsltTpl
         $res .= '<?php endwhile; $_ctx->songs = null;?>';
         
         return $res;
-    }
+   }
+
+   public static function AlbumSongsHeader($attr, $content) {
+       return
+           "<?php if (\$_ctx->songs->isStart()) : ?>".
+           $content.
+           "<?php endif; ?>";
+   }
+
+   public static function AlbumSongsFooter($attr, $content) {
+       return
+           "<?php if (\$_ctx->songs->isEnd()) : ?>".
+           $content.
+           "<?php endif; ?>";
+   }
 
    public static function SongTitle($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
@@ -90,4 +104,42 @@ class rsltTpl
        return '<?php echo '.sprintf($f, '$_ctx->songs->author').'; ?>';
    }   
 
+   public static function SongData($attr) {
+       $f = $GLOBALS['core']->tpl->getFilters($attr);
+
+       return '<?php echo '.sprintf($f, 'Authors::getSongData($_ctx->songs)').';?>';
+   }
+
+   // Authors
+   /*
+   ** Authors in current album
+   */
+   public static function AlbumSongsAuthors($attr, $content) {
+       $res = '';
+       $res .= "<?php\n";
+       $res .= '$_ctx->song_authors = $_ctx->album_manager->getSongAuthors($_ctx->album->id);'."\n";
+       $res .= 'foreach ($_ctx->song_authors as $_ctx->song_author_id => $_ctx->song_author):?>';
+       $res .= $content;
+       $res .= '<?php endforeach;unset($_ctx->song_authors,$_ctx->song_author_id,$_ctx->song_author);?>';
+       
+       return $res;
+   }
+
+   public static function AuthorId($attr) {
+       $f = $GLOBALS['core']->tpl->getFilters($attr);
+       
+       return '<?php echo '.sprintf($f, '$_ctx->song_author_id').';?>';
+   }
+
+   public static function AuthorURL($attr) {
+       $f = $GLOBALS['core']->tpl->getFilters($attr);
+       
+       return '<?php echo '.sprintf($f, '$_ctx->song_author[\'url\']').'; ?>';
+   }
+
+   public static function AuthorDisplayName($attr) {
+       $f = $GLOBALS['core']->tpl->getFilters($attr);
+       
+       return '<?php echo '.sprintf($f, '$_ctx->song_author[\'display\']').'; ?>';
+   }
 }

@@ -55,23 +55,23 @@ if (!empty($_POST['file']) && !empty($_POST['object'])) {
                     'editor' => $editor, 'original_title' => $original_title));
 
                     // find known authors
-                    if (preg_match_all('`('.implode('|', $Authors).')`', $author, $matches)) {
+                    if (preg_match_all('`('.implode('|', Authors::getAll()).')`', $author, $matches)) {
                         foreach ($matches[0] as $author_title) {
-                            $reference_song->add(array_search($author_title, $Authors), $song->id, 'author');
+                            $reference_song->add(Authors::getAuthorId($author_title), $song->id, 'author');
                         }
                     }
 
                     // find known compositors
-                    if (preg_match_all('`('.implode('|', $Authors).')`', $compositor, $matches)) {
+                    if (preg_match_all('`('.implode('|', Authors::getAll()).')`', $compositor, $matches)) {
                         foreach ($matches[0] as $author_title) {
-                            $reference_song->add(array_search($author_title, $Authors), $song->id, 'compositor');
+                            $reference_song->add(Authors::getAuthorId($author_title), $song->id, 'compositor');
                         }
                     }
 
                     // find known adaptators
-                    if (preg_match_all('`('.implode('|', $Authors).')`', $adaptator, $matches)) {
+                    if (preg_match_all('`('.implode('|', Authors::getAll()).')`', $adaptator, $matches)) {
                         foreach ($matches[0] as $author_title) {
-                            $reference_song->add(array_search($author_title, $Authors), $song->id, 'adaptator');
+                            $reference_song->add(Authors::getAuthorId($author_title), $song->id, 'adaptator');
                         }
                     }
                 }

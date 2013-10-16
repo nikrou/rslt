@@ -19,33 +19,45 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+class Authors
+{
+    protected static $list = array(1 => 'Gildas Arzel', 'Erick Benzi', 'Jacques Veneruso');
 
-if (!empty($_SESSION['rslt_message'])) {
-    $message = $_SESSION['rslt_message'];
-    unset($_SESSION['rslt_message']);
-}
-
-$is_super_admin = $core->auth->isSuperAdmin();
-$core->blog->settings->addNameSpace('rslt');
-$rslt_active = $core->blog->settings->rslt->active;
-$rslt_albums_prefix = $core->blog->settings->rslt->albums_prefix;
-$rslt_album_prefix = $core->blog->settings->rslt->album_prefix;
-$rslt_song_prefix = $core->blog->settings->rslt->song_prefix;
-
-$Actions = array('add', 'edit');
-$Objects = array('album', 'song');
-
-// default controller
-$controller_name = 'controllerIndex.php';
-
-if (!empty($_POST['action']) && ($_POST['action']=='load') && !empty($_POST['file'])) {
-    $controller_name = 'controllerLoad.php';
-} elseif (!empty($_REQUEST['object']) && in_array($_REQUEST['object'], $Objects)) {
-    if (!empty($_REQUEST['action'])) {
-        $action = $_REQUEST['action'];
+    public static function getAll() {
+        return self::$list;
     }
-    $controller_name = sprintf('controller%s.php', ucfirst($_REQUEST['object']));
-}
 
-include(dirname(__FILE__).'/src/controller/'.$controller_name);
+    public static function getAuthorId($name) {
+        return array_search($name, self::$list);
+    }
+
+   public static function getName($id) {
+        return self::$list[$id];
+    }
+
+    public static function getAuthorURL($name) {
+        return text::tidyURL($name, false);
+    }
+
+    public static function getAuthorFromURL($author_url) {
+        foreach (self::$list as $author) {
+            if (text::tidyURL($author)==$author_url) {
+                return $author;
+            }
+        }
+
+        return '';
+    }
+
+    public static function getSongData($rs_song) {
+        $subject = $rs_song->author .' '. $rs_song->compositor .' '. $rs_song->adaptator;
+        $pattern = '`('.implode('|', self::$list).')`';
+        $res = '';
+
+        if (preg_match_all($pattern, $subject, $matches)) {
+            $res = implode(' ', array_map(array('self', 'getAuthorURL'), array_unique($matches[1])));
+        }
+
+        return $res;
+    }
+}

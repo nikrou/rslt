@@ -31,7 +31,7 @@ class rsltUrlHandlers extends dcUrlHandlers
         if (empty($args)) {
             throw new Exception('Page not found', 404);
         }
-
+        
         $album_manager = new albumManager($core);
         $_ctx->album = $album_manager->findByURL($args);
 

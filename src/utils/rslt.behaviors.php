@@ -24,4 +24,16 @@ class rsltBehaviors
     public static function addTplPath($core) {
         $core->tpl->setPath($core->tpl->getPath(), __DIR__.'/../../default-templates');
     }
+
+    public static function publicHeadContent($core) {
+        if (in_array($core->url->type, array('album'))) {
+            $plugin_root = html::stripHostURL($core->blog->getQmarkURL().'pf=rslt');
+
+            $res = sprintf('<script type="text/javascript" src="%s"></script>',
+            $plugin_root.'/js/jquery.rslt.js'
+            );
+
+            echo $res;
+        }
+    }
 }

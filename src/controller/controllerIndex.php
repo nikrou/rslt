@@ -70,9 +70,9 @@ $author_id = $compositor_id = $adaptator_id = $singer_id = $editor_id = $publica
 $sortby = $order = null;
 $filters_params = array();
 
-$authors_combo = array_merge(array('' => ''), array_flip($Authors));
-$compositors_combo = array_merge(array('' => ''), array_flip($Authors));
-$adaptators_combo = array_merge(array('' => ''), array_flip($Authors));
+$authors_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
+$compositors_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
+$adaptators_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
 $editors_combo = rsltAdminCombo::makeCombo($song_manager->getEditors(), 'editor');
 $singers_combo = rsltAdminCombo::makeCombo($song_manager->getSingers(), 'singer');
 $sortby_combo = array('' => '');
@@ -90,21 +90,21 @@ if (!empty($_GET['singer_id']) && !empty($singers_combo[$_GET['singer_id']])) {
     $active_filters = true;
 }
 
-if (!empty($_GET['author_id']) && !empty($Authors[$_GET['author_id']])) {
+if (!empty($_GET['author_id']) && !empty(Authors::getAuthorId($_GET['author_id']))) {
     $author_id = $_GET['author_id'];
-    $filters_params['author'] = $Authors[$author_id];
+    $filters_params['author'] = Authors::getAuthorId($author_id);
     $active_filters = true;
 }
 
-if (!empty($_GET['compositor_id']) && !empty($Authors[$_GET['compositor_id']])) {
+if (!empty($_GET['compositor_id']) && !empty(Authors::getAuthorId($_GET['compositor_id']))) {
     $compositor_id = $_GET['compositor_id'];
-    $filters_params['compositor'] = $Authors[$compositor_id];
+    $filters_params['compositor'] = Authors::getAuthorId($compositor_id);
     $active_filters = true;
 }
 
-if (!empty($_GET['adaptator_id']) && !empty($Authors[$_GET['adaptator_id']])) {
+if (!empty($_GET['adaptator_id']) && !empty(Authors::getAuthorId($_GET['adaptator_id']))) {
     $adaptator_id = $_GET['adaptator_id'];
-    $filters_params['adaptator'] = $Authors[$adaptator_id];
+    $filters_params['adaptator'] = Authors::getAuthorId($adaptator_id);
     $active_filters = true;
 }
 

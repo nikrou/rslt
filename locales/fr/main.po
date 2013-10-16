@@ -354,3 +354,6 @@ msgstr "Appliquer les filtres et options d'affichage"
 
 msgid "Associate to album"
 msgstr "Associer à l'album"
+
+msgid "Filter"
+msgstr "Filtre"

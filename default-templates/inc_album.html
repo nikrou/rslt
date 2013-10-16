@@ -1,12 +1,20 @@
 <div class="album">
   <h2>{{tpl:AlbumPageTitle}}</h2>
-  <p>Un album en particulier</p>
   <p>{{tpl:lang Author}} : {{tpl:AlbumPageSinger}}</p>
   <p>{{tpl:lang Publication date}} : {{tpl:AlbumPagePublicationDate}}</p>
+
+  <h3>Bio express</h3>
+
+  <h3>Tracklist</h3>
+  {{tpl:include src="inc_authors_filter.html"}}
+
+  <tpl:AlbumSongs>
+    <tpl:AlbumSongsHeader><ol class="songs"></tpl:AlbumSongsHeader>
+    <li data-song="{{tpl:SongData}}">{{tpl:SongTitle}}&nbsp;-&nbsp;{{tpl:SongAuthor}}</li>
+    <tpl:AlbumSongsFooter></ol></tpl:AlbumSongsFooter>
+  </tpl:AlbumSongs>
   
-  <ol>
-    <tpl:AlbumSongs>
-      <li>{{tpl:SongTitle}}&nbsp;-&nbsp;{{tpl:SongAuthor}}</li>
-    </tpl:AlbumSongs>
-  </ol>
+  <h3>Crédits</h3>
+
+  <h3>Support</h3>
 </div>

@@ -1,0 +1,12 @@
+<div class="author-filter">
+  <form action="#" method="GET">
+    <ul>{{tpl:lang Filter}}
+      <tpl:AlbumSongsAuthors>
+	<li>
+	  <input type="checkbox" id="author-id-{{tpl:AuthorId}}" name="author_url" value="{{tpl:AuthorURL}}"/>
+	  <label for="author-id-{{tpl:AuthorId}}">{{tpl:AuthorDisplayName}}</label>
+	</li>
+      </tpl:AlbumSongsAuthors>
+    </ul>
+  </form>
+</div>

@@ -29,13 +29,14 @@ class albumManager extends objectManager
         parent::__construct($core, 'album', self::$required_fields, self::$fields);
 
         $this->table_song = $this->blog->prefix.'rslt_song';
-        $this->table_join = $this->blog->prefix.'rslt_album_song';
+        $this->table_album_song = $this->blog->prefix.'rslt_album_song';
+        $this->table_reference_song = $this->blog->prefix.'rslt_reference_song';
     }
 
     public function getSongs($album_id) {
         $strReq =  'SELECT id, url, '.implode(',', songManager::$fields);
         $strReq .= ' FROM '.$this->table_song.' as _s';
-        $strReq .= ' LEFT JOIN '.$this->table_join.' as _as';
+        $strReq .= ' LEFT JOIN '.$this->table_album_song.' as _as';
         $strReq .= ' ON _s.id = _as.song_id';
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';      
         $strReq .= ' AND album_id = '.$this->con->escape($album_id);
@@ -44,6 +45,32 @@ class albumManager extends objectManager
         $rs = $rs->toStatic();
       
         return $rs;
+    }
+
+    // return array
+    public function getSongAuthors($album_id) {
+        $authors = array();
+
+        $strReq =  'SELECT _rs.author_id';
+        $strReq .= ' FROM '.$this->table_song.' as _s';
+        $strReq .= ' LEFT JOIN '.$this->table_album_song.' as _as';
+        $strReq .= ' ON _s.id = _as.song_id';
+        $strReq .= ' LEFT JOIN '.$this->table_reference_song.' as _rs';
+        $strReq .= ' ON _s.id = _rs.song_id';
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+        $strReq .= ' AND album_id = '.$this->con->escape($album_id);
+ 
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
+        while ($rs->fetch()) {
+            $author_name = Authors::getName($rs->author_id);
+            $authors[$rs->author_id] = array(
+                'display' => $author_name,
+                'url' => Authors::getAuthorURL($author_name)
+            );
+        }
+
+        return $authors;
     }
 
     public function findByTitle($title) {
