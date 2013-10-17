@@ -100,37 +100,37 @@ $authors_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
 $compositors_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
 $adaptators_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
 $editors_combo = rsltAdminCombo::makeCombo($song_manager->getEditors(), 'editor');
-$singers_combo = rsltAdminCombo::makeCombo($song_manager->getSingers(), 'singer');
+$singers_combo = rsltAdminCombo::makeComboSinger($song_manager->getSingers(), 'singer');
 $sortby_combo = array('' => '');
 $order_combo = array('' => '');
 
 if (!empty($_GET['editor_id']) && !empty($editors_combo[$_GET['editor_id']])) {
     $editor_id = $_GET['editor_id'];
-    $filters_params['editor'] = $editor_id;
+    $filters_params['equal']['editor'] = $editor_id;
     $active_filters = true;
 }
 
 if (!empty($_GET['singer_id']) && !empty($singers_combo[$_GET['singer_id']])) {
     $singer_id = $_GET['singer_id'];
-    $filters_params['singer'] = $singer_id;
+    $filters_params['like']['singer'] = $singer_id;
     $active_filters = true;
 }
 
-if (!empty($_GET['author_id']) && !empty(Authors::getAuthorId($_GET['author_id']))) {
+if (!empty($_GET['author_id']) && !empty(Authors::getName($_GET['author_id']))) {
     $author_id = $_GET['author_id'];
-    $filters_params['author'] = Authors::getAuthorId($author_id);
+    $filters_params['like']['author'] = Authors::getName($author_id);
     $active_filters = true;
 }
 
-if (!empty($_GET['compositor_id']) && !empty(Authors::getAuthorId($_GET['compositor_id']))) {
+if (!empty($_GET['compositor_id']) && !empty(Authors::getName($_GET['compositor_id']))) {
     $compositor_id = $_GET['compositor_id'];
-    $filters_params['compositor'] = Authors::getAuthorId($compositor_id);
+    $filters_params['like']['compositor'] = Authors::getName($compositor_id);
     $active_filters = true;
 }
 
-if (!empty($_GET['adaptator_id']) && !empty(Authors::getAuthorId($_GET['adaptator_id']))) {
+if (!empty($_GET['adaptator_id']) && !empty(Authors::getName($_GET['adaptator_id']))) {
     $adaptator_id = $_GET['adaptator_id'];
-    $filters_params['adaptator'] = Authors::getAuthorId($adaptator_id);
+    $filters_params['like']['adaptator'] = Authors::getName($adaptator_id);
     $active_filters = true;
 }
 
@@ -138,6 +138,7 @@ try {
     $songs_counter = $song_manager->getCountList($filters_params);
     $songs_list = new adminSongsList($core, $song_manager->getList($filters_params, $limit_songs), $songs_counter);
     $songs_list->setPluginUrl("$p_url&amp;object=song&amp;action=edit&amp;id=%d");
+    $songs_list->setAlbumUrl("$p_url&amp;object=album&amp;action=edit&amp;id=%d");
 } catch (Exception $e) {
     $core->error->add($e->getMessage());
 }

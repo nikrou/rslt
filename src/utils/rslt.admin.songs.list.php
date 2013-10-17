@@ -28,6 +28,10 @@ class adminSongsList extends adminGenericList
         $this->p_url = $p_url;
     }
 
+    public function setAlbumUrl($url) {
+        $this->album_url = $url;
+    }
+
     public function display($songs, $nb_per_page, $enclose_block) {
         $pager = new rsltPager($songs, $this->rs_count, $nb_per_page, 10);
         $pager->setVarPage('page_songs');
@@ -72,6 +76,12 @@ class adminSongsList extends adminGenericList
     }
 
     private function postLine() {
+        $album = '';
+
+        if ($this->rs->album_id) {
+            $album = sprintf('<a href="'.$this->album_url.'">%s</a>', $this->rs->album_id, $this->rs->album_title);
+        }
+
         $res = 
             '<tr>'.
             '<td>'.
@@ -82,7 +92,7 @@ class adminSongsList extends adminGenericList
             html::escapeHTML(text::cutString($this->rs->title, 50)).
             '</a>'.
             '</td>'.
-            '<td class="nowrap">&nbsp;</td>'.
+            '<td class="nowrap">'.$album.'</td>'.
             '<td class="nowrap">'.html::escapeHTML($this->rs->author).'</td>'.
             '<td class="nowrap">'.html::escapeHTML($this->rs->compositor).'</td>'.
             '<td class="nowrap">'.html::escapeHTML($this->rs->adaptator).'</td>'.

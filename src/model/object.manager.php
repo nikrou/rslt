@@ -195,10 +195,18 @@ class objectManager
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
 
         // apply filters
-        if (!empty($params)) {
-            foreach ($params as $field => $value) {
+        if (!empty($params['equal'])) {
+            foreach ($params['equal'] as $field => $value) {
                 if (in_array($field, $this->object_fields)) {
                     $strReq .= sprintf(' AND %s = \'%s\'', $field, $this->con->escape($value));
+                }
+            }
+        }
+
+        if (!empty($params['like'])) {
+            foreach ($params['like'] as $field => $value) {
+                if (in_array($field, $this->object_fields)) {
+                    $strReq .= sprintf(' AND %s like \'%%%s%%\'', $field, $this->con->escape($value));
                 }
             }
         }
@@ -222,10 +230,18 @@ class objectManager
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
 
         // apply filters
-        if (!empty($params)) {
-            foreach ($params as $field => $value) {
+        if (!empty($params['equal'])) {
+            foreach ($params['equal'] as $field => $value) {
                 if (in_array($field, $this->object_fields)) {
                     $strReq .= sprintf(' AND %s = \'%s\'', $field, $this->con->escape($value));
+                }
+            }
+        }
+
+        if (!empty($params['like'])) {
+            foreach ($params['like'] as $field => $value) {
+                if (in_array($field, $this->object_fields)) {
+                    $strReq .= sprintf(' AND %s like \'%%%s%%\'', $field, $this->con->escape($value));
                 }
             }
         }

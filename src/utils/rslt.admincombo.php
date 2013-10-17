@@ -29,4 +29,21 @@ class rsltAdminCombo
         
 		return $combo;
 	}
+
+    public static function makeComboSinger($rs, $field) {
+		$combo = array('' => '');
+		while ($rs->fetch()) {
+            if (strpos($rs->$field, ',')) {
+                $elements = explode(',', $rs->$field);
+                foreach ($elements as $element) {
+                    $combo[$element] = html::escapeHTML($element);
+                }
+            } else {
+                $combo[$rs->$field] = html::escapeHTML($rs->$field);
+            }
+		}
+        $combo = array_unique($combo);
+        
+		return $combo;
+	}
 }

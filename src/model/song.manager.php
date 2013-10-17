@@ -28,6 +28,9 @@ class songManager extends objectManager
 
     public function __construct($core) {
         parent::__construct($core, 'song', self::$require_fields, self::$fields);
+
+        $this->table_album_song = $this->blog->prefix.'rslt_album_song';
+        $this->table_album = $this->blog->prefix.'rslt_album';
     }
 
     public function getEditors() {
@@ -52,4 +55,45 @@ class songManager extends objectManager
       
         return $rs;
     }
+
+    public function getList(array $params=array(), array $limit=array()) {
+        $strReq =  'SELECT _s.id, _s.'.implode(',_s.', $this->object_fields);
+        $strReq .= ' , _a.id AS album_id, _a.title AS album_title';
+        $strReq .= ' FROM '.$this->table.' AS _s';
+        $strReq .= ' LEFT JOIN '.$this->table_album_song.' AS _as';
+        $strReq .= ' ON _as.song_id = _s.id';
+        $strReq .= ' LEFT JOIN '.$this->table_album.' AS _a';
+        $strReq .= ' ON _as.album_id = _a.id';        
+        $strReq .= ' WHERE _s.blog_id = \''.$this->con->escape($this->blog->id).'\'';
+
+        // apply filters
+        if (!empty($params['equal'])) {
+            foreach ($params['equal'] as $field => $value) {
+                if (in_array($field, $this->object_fields)) {
+                    $strReq .= sprintf(' AND _s.%s = \'%s\'', $field, $this->con->escape($value));
+                }
+            }
+        }
+
+        if (!empty($params['like'])) {
+            foreach ($params['like'] as $field => $value) {
+                if (in_array($field, $this->object_fields)) {
+                    $strReq .= sprintf(' AND _s.%s like \'%%%s%%\'', $field, $this->con->escape($value));
+                }
+            }
+        }
+
+        // apply order
+        $strReq .= ' ORDER BY _s.updated_at ASC';
+      
+        if (!empty($limit)) {
+			$strReq .= $this->con->limit($limit);
+        }
+
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
+      
+        return $rs;
+    }
+
 }
