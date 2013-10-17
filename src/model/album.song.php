@@ -43,4 +43,25 @@ class albumSong
         } 
 		$this->core->blog->triggerBlog();
     }
+
+    public function updateRanks($album_id, $songs) {
+        foreach ($songs as $song_id => $rank) {
+            $cur = $this->con->openCursor($this->table);
+            $cur->rank = (int) $rank;
+            $where = sprintf(' WHERE album_id = %d AND song_id = %d', (int) $album_id, (int) $song_id);
+            try {
+                $cur->update($where);
+            } catch (Exception $e) {
+            } 
+        }        
+		$this->core->blog->triggerBlog();
+    }
+
+    public function removeFromAlbum($album_id, $songs) {
+        $fmt = 'DELETE FROM %s WHERE album_id = %s AND song_id IN (%s)';
+        try {
+            $this->con->execute(sprintf($fmt, $this->table, $album_id, implode(',', $songs)));
+        } catch (Exception $e) {
+        } 
+    }
 }

@@ -34,13 +34,17 @@ class albumManager extends objectManager
     }
 
     public function getSongs($album_id) {
-        $strReq =  'SELECT id, url, '.implode(',', songManager::$fields);
+        $strReq =  'SELECT id, url, rank, '.implode(',', songManager::$fields);
         $strReq .= ' FROM '.$this->table_song.' as _s';
         $strReq .= ' LEFT JOIN '.$this->table_album_song.' as _as';
         $strReq .= ' ON _s.id = _as.song_id';
+        $strReq .= ' LEFT JOIN '.$this->table_reference_song.' as _rs';
+        $strReq .= ' ON _s.id = _rs.song_id';
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';      
         $strReq .= ' AND album_id = '.$this->con->escape($album_id);
- 
+        $strReq .= ' GROUP BY id, rank';
+        $strReq .= ' ORDER BY rank asc';
+
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
       
@@ -71,6 +75,38 @@ class albumManager extends objectManager
         }
 
         return $authors;
+    }
+
+    public function getList(array $params=array(), array $limit=array()) {
+        $strReq =  'SELECT id, url, '.implode(',', $this->object_fields);
+        $strReq .= ' ,count(_as.song_id) as count_songs';
+        $strReq .= ' FROM '.$this->table.' as _a';
+        $strReq .= ' LEFT JOIN '.$this->table_album_song.' as _as';
+        $strReq .= ' ON _as.album_id = _a.id';
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+
+        // apply filters
+        if (!empty($params)) {
+            foreach ($params as $field => $value) {
+                if (in_array($field, $this->object_fields)) {
+                    $strReq .= sprintf(' AND %s = \'%s\'', $field, $this->con->escape($value));
+                }
+            }
+        }
+
+        $strReq .= ' GROUP BY _a.id';
+
+        // apply order
+        $strReq .= ' ORDER BY updated_at ASC';
+      
+        if (!empty($limit)) {
+			$strReq .= $this->con->limit($limit);
+        }
+
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
+      
+        return $rs;
     }
 
     public function findByTitle($title) {

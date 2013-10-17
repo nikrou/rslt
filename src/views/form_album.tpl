@@ -2,6 +2,11 @@
   <head>
     <title><?php echo $page_title.' - '.__('Albums'); ?></title>
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
+    <?php echo dcPage::jsLoad('js/jquery/jquery-ui.custom.js');?>
+    <script type="text/javascript">
+      var rslt_confirm_remove_songs_from_album = "<?php echo __('Are you sure you want to remove selected songs from album (%s)?');?>";
+    </script>
+    <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
   </head>
   <body>
     <h2>
@@ -13,7 +18,7 @@
     <p class="message"><?php echo $message;?></p>
     <?php endif;?>
 
-    <form action="<?php echo $p_url;?>" method="post" id="type-form">
+    <form action="<?php echo $p_url;?>" method="post" id="album-form">
       <p class="field">
 	<label class="required" for="album_title">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
@@ -50,6 +55,43 @@
 	<input type="submit" name="save_album" value="<?php echo __('Save'); ?>"/>
       </p>
     </form>
+
+    <?php if (!empty($songs) && !$songs->isEmpty()):?>
+    <h3><?php echo __('Songs in album');?></h3>
+    <form action="<?php echo $p_url;?>" method="post" id="songs-rank-form">
+      <div class="songs">
+	<ul>
+	  <?php while ($songs->fetch()):?>
+	  <li>
+	    <input type="checkbox" name="songs[]" value="<?php echo (int) $songs->id;?>"/>
+	    <input type="text" size="2" name="position[<?php echo $songs->id;?>]" value="<?php echo (int) $songs->rank;?>"/>
+	    <?php echo $songs->title;?>&nbsp;-&nbsp;<?php echo $songs->singer;?>
+	  </li>
+	  <?php endwhile;?>
+	</ul>
+      </div>
+      <div class="two-cols clearfix">
+	<div class="col">
+	  <p class="form-note hidden-if-no-js"><?php echo __('To rearrange songs order, move items by drag and drop, then click on “Save songs order” button.');?></p>
+	  <p>
+	    <span class="hidden-if-no-js">
+	      <input type="submit" name="save_order" class="disabled" disabled="disabled" id="save-set-order" value="<?php echo __('Save songs order');?>"/>
+	    </span> 
+	    <?php echo form::hidden(array('p',''), 'rslt');?>
+	    <?php echo form::hidden(array('object',''), 'album');?>
+	    <?php echo form::hidden(array('album_id',''), $album['id']);?>
+	    <?php echo $core->formNonce();?>
+	  </p>
+	</div>
+	<div class="col">
+	  <p class="checkboxes-helpers"></p>
+	  <input type="submit" id="remove-songs" name="remove" class="delete" value="<?php echo __('Remove selected songs from album');?>"/>
+	</div>
+      </div>
+    </form>    
+    <?php else:?>
+    <p><?php echo __('No song in that album');?></p>
+    <?php endif;?>
   </body>
 </html>
 

@@ -3,7 +3,6 @@
     <title>Restons sur leurs traces</title>
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
     <?php echo dcPage::jsPageTabs($default_tab);?>
-    <?php //echo dcPage::jsLoad('js/jquery/jquery.autocomplete.js');?>
     <script type="text/javascript">
       var rslt_confirm_delete_songs = "<?php echo __('Are you sure you want to delete selected songs (%s)?');?>";
       var rslt_confirm_delete_albums = "<?php echo __('Are you sure you want to delete selected albums (%s)?');?>";

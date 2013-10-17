@@ -42,6 +42,7 @@ class adminAlbumsList extends adminGenericList
             '<th>'. __('Title').'</th>'.
             '<th>'.__('Singer').'</th>'.
             '<th class="nowrap">'.__('Publication date').'</th>'.
+            '<th>'.__('Songs').'</th>'.
             '</tr>'.
             '</thead>'.
             '<tbody>%s</tbody></table>'.
@@ -79,6 +80,7 @@ class adminAlbumsList extends adminGenericList
             '</td>'.
             '<td class="nowrap">'.html::escapeHTML(text::cutString($this->rs->singer,50)).'</td>'.
             '<td class="nowrap">'.$this->rs->publication_date.'</td>'.
+            '<td class="nowrap">'.$this->rs->count_songs.'</td>'.
             '</tr>';
         
         return $res;

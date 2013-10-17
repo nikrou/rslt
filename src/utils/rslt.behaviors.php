@@ -26,14 +26,16 @@ class rsltBehaviors
     }
 
     public static function publicHeadContent($core) {
+        $res = '';
+        $plugin_root = html::stripHostURL($core->blog->getQmarkURL().'pf=rslt');
+        $fmt = '<script type="text/javascript" src="%s/%s"></script>'."\n";
+
+        $res .= sprintf($fmt, $plugin_root, 'js/jquery.js');
+
         if (in_array($core->url->type, array('album'))) {
-            $plugin_root = html::stripHostURL($core->blog->getQmarkURL().'pf=rslt');
-
-            $res = sprintf('<script type="text/javascript" src="%s"></script>',
-            $plugin_root.'/js/jquery.rslt.js'
-            );
-
-            echo $res;
-        }
+            $res .= sprintf($fmt, $plugin_root, 'js/jquery.rslt.js');
+        }        
+        
+        echo $res;
     }
 }

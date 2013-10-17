@@ -24,6 +24,8 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 $page_title = __('New album');
 $album = array('title' => '', 'singer' => '', 'url' => '', 'publication_date' => '');
 
+$action = 'edit';
+$songs = null;
 $album_manager = new albumManager($core);
 
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_GET['term'])) {
@@ -35,6 +37,35 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_GET['term'])) {
     }
     echo json_encode($response);
     exit();
+}
+
+if (!empty($_POST['remove']) && !empty($_POST['songs']) && !empty($_POST['album_id'])) {
+    $album_song_manager = new albumSong($core);
+    try {
+        $album_song_manager->removeFromAlbum($_POST['album_id'], $_POST['songs']);
+        $_SESSION['rslt_default_tab'] = 'albums';
+        $_SESSION['rslt_message'] = __('The song has been removed from album.', 
+        'The songs have been removed from album', count($_POST['songs'])
+        ); 
+        http::redirect($p_url);
+    } catch (Exception $e) {
+		$core->error->add($e->getMessage());
+    }
+    
+    $_SESSION['rslt_default_tab'] = 'albums';
+    http::redirect($p_url);
+}
+
+if (!empty($_POST['save_order']) && !empty($_POST['position']) && !empty($_POST['album_id'])) {
+    $album_song_manager = new albumSong($core);
+    try {
+        $album_song_manager->updateRanks($_POST['album_id'], $_POST['position']);
+        $_SESSION['rslt_message'] = __('The order of songs in album has been saved.'); 
+        $_SESSION['rslt_default_tab'] = 'albums';
+        http::redirect($p_url);
+    } catch (Exception $e) {
+		$core->error->add($e->getMessage());
+    }
 }
 
 if (($action=='delete') && !empty($_POST['albums']) && $_POST['object']=='album') {
@@ -50,12 +81,15 @@ if (($action=='edit') && !empty($_GET['id'])) {
 
     $rs = $album_manager->findById($_GET['id']);
     if (!$rs->isEmpty()) {
+        $album['id'] = (int) $_GET['id'];
         $album['title'] = $rs->title;
         $album['singer'] = $rs->singer;
         $album['publication_date'] = $rs->publication_date;
         $album['url'] = $rs->url;
         $_SESSION['album_id'] = $_GET['id'];
     }
+
+    $songs = $album_manager->getSongs($_GET['id']);
 }
 
 if (!empty($_POST['save_album'])) {

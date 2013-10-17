@@ -357,3 +357,16 @@ msgstr "Associer à l'album"
 
 msgid "Filter"
 msgstr "Filtre"
+
+msgid "No song in that album"
+msgstr "Pas de chanson dans cet album"
+
+msgid "To rearrange songs order, move items by drag and drop, then click on “Save songs order” button."
+msgstr "Pour modifier l'ordre des chansons, déplacez les items par glisser-déposer"
+" puis cliquez sur le bouton “Enregistrer l'ordre des chansons“."
+
+msgid "Songs in album"
+msgstr "Chansons dans l'album"
+ 
+msgid "Save songs order"
+msgstr "Enregistrer l'ordre des chansons"

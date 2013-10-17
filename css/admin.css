@@ -44,7 +44,30 @@ p.top-add {
   margin-bottom: 2em;
 }
 
-/***********************************/
+/* songs in album page */
+.songs ul {
+  list-style: none;
+  margin-top: 2em;
+  padding: 0;
+}
+
+.songs ul li {
+  position: relative;
+  margin: .66em 0;
+  padding: .66em 1em;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.songs ul li input[type="checkbox"] {
+  margin-top: 6px;
+}
+
+.songs.ui-sortable ul li { 
+  cursor: move;
+}
+
+/* autocomplete */
 .ui-helper-hidden, .ui-helper-hidden-accessible {
   display: none;
 }

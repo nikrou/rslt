@@ -1,13 +1,31 @@
-$(function($) {
-	$('.author-filter input').click(function(e) {
+$(function() {
+	$('.author-filter').on('click', 'input', function(e) {
 		if ($(this).is(':checked')) {
 			var author = $(this).val();
-			$('.songs li:visible').filter(function() {
-				return !($(this).attr('data-song').indexOf(author)!=-1);
-			}).hide().addClass('show-'+author);
+			$('.songs li').each(function() {
+				if ($(this).attr('data-song').indexOf(author)==-1) {
+					if ($(this).attr('class')===undefined || !$(this).attr('class').match(/show-/)) {
+						$(this).hide();
+					}
+				} else {
+					$(this).addClass('show-'+author).show();
+				}
+			});
 		} else {
 			var author = $(this).val();
-			var lis = $('.songs li.show-'+author).show().removeClass('show-'+author);
+			if ($('input:checked').length==0) {
+				$('.songs li').show();
+			} else {
+				$('.songs li').each(function() {
+					if ($(this).attr('data-song').indexOf(author)!=-1) {
+						$(this).removeClass('show-'+author);
+					}
+					if ($(this).attr('class')===undefined || !$(this).attr('class') 
+					    || !$(this).attr('class').match(/show-/)) {
+						$(this).hide();
+					}
+				});			
+			}
 		}
 	});
 });
