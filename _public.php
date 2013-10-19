@@ -65,4 +65,3 @@ $core->tpl->addBlock('AlbumSongsAuthors', array('rsltTpl', 'AlbumSongsAuthors'))
 $core->tpl->addValue('AuthorId', array('rsltTpl', 'AuthorId'));
 $core->tpl->addValue('AuthorURL', array('rsltTpl', 'AuthorURL'));
 $core->tpl->addValue('AuthorDisplayName', array('rsltTpl', 'AuthorDisplayName'));
-$core->tpl->addValue('AuthorFilterAction', array('rsltTpl', 'AuthorFilterAction'));

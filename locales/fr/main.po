@@ -116,7 +116,7 @@ msgstr "Auteur"
 #: src/views/index.tpl:114 src/utils/rslt.admin.songs.list.php:47
 #: src/utils/rslt.admin.albums.list.php:43
 msgid "Singer"
-msgstr "Chanteur"
+msgstr "Interprète"
 
 #: src/views/index.tpl:143 src/utils/rslt.admin.songs.list.php:46
 #: src/utils/rslt.admin.songs.list.php:49
@@ -231,7 +231,7 @@ msgstr "Vous devez remplir le champ %s"
 #: src/views/form_album.tpl:27 src/views/form_song.tpl:55
 #: src/views/form_album.tpl:34 src/views/index.tpl:141
 msgid "Singer:"
-msgstr "Chanteur : "
+msgstr "Interprète : "
 
 #: src/views/index.tpl:141 src/views/index.tpl:161 src/views/index.tpl:118
 #: src/views/index.tpl:178

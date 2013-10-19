@@ -95,6 +95,7 @@ $song_manager = new songManager($core);
 $author_id = $compositor_id = $adaptator_id = $singer_id = $editor_id = $publication_date = null;
 $sortby = $order = null;
 $filters_params = array();
+$q= '';
 
 $authors_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
 $compositors_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
@@ -103,6 +104,12 @@ $editors_combo = rsltAdminCombo::makeCombo($song_manager->getEditors(), 'editor'
 $singers_combo = rsltAdminCombo::makeComboSinger($song_manager->getSingers(), 'singer');
 $sortby_combo = array('' => '');
 $order_combo = array('' => '');
+
+if (!empty($_GET['q'])) {
+    $q = $_GET['q'];
+    $filters_params['like']['q'] = $q;
+    $active_filters = true;
+}
 
 if (!empty($_GET['editor_id']) && !empty($editors_combo[$_GET['editor_id']])) {
     $editor_id = $_GET['editor_id'];

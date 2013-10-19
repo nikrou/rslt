@@ -116,6 +116,24 @@
       <form action="<?php echo $p_url;?>#songs" method="get" id="filters-songs-form" class="filters-form<?php if (!$active_filters):?> hide<?php endif;?>">
 	<div class="table">
 	  <div class="cell">
+	    <h4><?php echo __('Search');?></h4>
+	    <p>
+	      <label for="q" class="ib"><?php echo __('Search by title:');?></label>
+	      <?php echo form::field('q',20,255,html::escapeHTML($q));?><br>
+	      <span class="form-note">You can use wildcards (? or *) for search.</span>
+	    </p>
+	    <h4><?php echo __('Filters');?></h4>
+	    <p>
+	      <label for="editor_id" class="ib"><?php echo __('Editor:');?></label>
+	      <?php echo form::combo('editor_id', $editors_combo, $editor_id);?>
+	    </p>
+	    <p>
+	      <label for="singer_id" class="ib"><?php echo __('Singer:');?></label>
+	      <?php echo form::combo('singer_id', $singers_combo, $singer_id);?>
+	    </p>
+	  </div>
+
+	  <div class="cell">
 	    <h4><?php echo __('Filters');?></h4>
 	    <p>
 	      <label for="author_id" class="ib"><?php echo __('Author:');?></label>
@@ -130,19 +148,8 @@
 	      <?php echo form::combo('adaptator_id', $adaptators_combo, $adaptator_id);?>
 	    </p>
 	  </div>
-	
-	  <div class="cell filters-sibling-cell">
-	    <p>
-	      <label for="editor_id" class="ib"><?php echo __('Editor:');?></label>
-	      <?php echo form::combo('editor_id', $editors_combo, $editor_id);?>
-	    </p>
-	    <p>
-	      <label for="singer_id" class="ib"><?php echo __('Singer:');?></label>
-	      <?php echo form::combo('singer_id', $singers_combo, $singer_id);?>
-	    </p>
-	  </div>
-	
-	  <div class="cell filters-options">
+		
+	  <div class="cell">
 	    <h4><?php echo __('Display options');?></h4>
 	    <p><label for="sortby" class="ib"><?php echo __('Order by:');?></label>
 	    <?php echo form::combo('sortby', $sortby_combo, $sortby);?>
