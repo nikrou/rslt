@@ -4,10 +4,12 @@
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
     <?php echo dcPage::jsPageTabs($default_tab);?>
     <script type="text/javascript">
+      //<![CDATA[
       var rslt_confirm_delete_songs = "<?php echo __('Are you sure you want to delete selected songs (%s)?');?>";
       var rslt_confirm_delete_albums = "<?php echo __('Are you sure you want to delete selected albums (%s)?');?>";
       var rslt_filters = {show:"<?php echo __('Show filters');?>",hide:"<?php echo __('Hide filters');?>"};
       var rslt_albums_service = "<?php echo $rslt_albums_service;?>";
+      //]]>
     </script>
     <script type="text/javascript" src="index.php?pf=rslt/js/jquery.ui.autocomplete.js"></script>
     <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
@@ -49,7 +51,7 @@
 	</div>
 	<?php endif;?>
 	<p>
-	  <?php echo form::hidden('p','rslt');?>
+	  <input type="hidden" name="p" value="rslt"/>
 	  <?php echo $core->formNonce();?>
 	  <input type="submit" name="saveconfig" value="<?php echo __('Save configuration');?>" />
 	</p>
@@ -75,6 +77,53 @@
 	<a class="button add" href="<?php echo $p_url;?>&amp;object=album&amp;action=add"><?php echo __('New album');?></a>
       </p>
       <h3 class="hidden-if-js"><?php echo __('Albums');?></h3>
+
+      <p>
+	<span class="filters-form-control<?php if ($active_albums_filters):?> open<?php endif;?>">
+	  <?php if ($active_albums_filters):?>
+	  <?php echo __('Hide filters');?>
+	  <?php else:?>
+	  <?php echo __('Show filters');?>
+	  <?php endif;?>
+	</span>
+      </p>
+      <form action="<?php echo $p_url;?>#albums" method="get" id="filters-albums-form" class="filters-form<?php if (!$active_albums_filters):?> hide<?php endif;?>">
+	<div class="table">
+	  <div class="cell">
+	    <h4><?php echo __('Search');?></h4>
+	    <p>
+	      <label for="aq" class="ib"><?php echo __('Title:');?></label>
+	      <?php echo form::field('aq',20,255,html::escapeHTML($aq));?><br/>
+	      <span class="form-note"><?php echo __('You can use wildcards (? or *) for search.');?></span>
+	    </p>
+	    <h4><?php echo __('Filters');?></h4>
+	    <p>
+	      <label for="publication_date_id" class="ib"><?php echo __('Publication date:');?></label>
+	      <?php echo form::combo('publication_date_id', $publication_date_combo, $publication_date_id);?>
+	    </p>
+	  </div>
+		
+	  <div class="cell">
+	    <h4><?php echo __('Display options');?></h4>
+	    <p><label for="sortby_album" class="ib"><?php echo __('Sort by:');?></label>
+	    <?php echo form::combo('sortby_album', $sortby_albums_combo, $sortby_album);?>
+	    </p>
+	    <p><label for="order_album" class="ib"><?php echo __('Order:');?></label>
+	    <?php echo form::combo('order_album',$order_combo, $order_album);?>
+	    </p>
+	    <p>
+	      <span class="label ib"><?php echo __('Show');?></span> 
+	      <label for="nbs" class="classic">
+		<?php echo form::field('nba',3,3,$nb_per_page_albums), __('albums per page');?>
+	      </label>
+	    </p>
+	  </div>
+	</div>
+	<p>
+	  <input class="clearfix" type="submit" value="<?php echo __('Apply filters and display options');?>"/>
+	  <input type="hidden" name="p" value="rslt"/>
+	</p>
+      </form>
 
       <?php if ($albums_counter==0):?>
       <p><strong><?php echo __('No album');?></strong></p>
@@ -105,22 +154,22 @@
       </p>
 
       <p>
-	<a id="filters-songs" class="form-control<?php if ($active_filters):?> open<?php endif;?>" href="#">
-	  <?php if ($active_filters):?>
+	<span class="filters-form-control<?php if ($active_songs_filters):?> open<?php endif;?>">
+	  <?php if ($active_songs_filters):?>
 	  <?php echo __('Hide filters');?>
 	  <?php else:?>
 	  <?php echo __('Show filters');?>
 	  <?php endif;?>
-	</a>
+	</span>
       </p>
-      <form action="<?php echo $p_url;?>#songs" method="get" id="filters-songs-form" class="filters-form<?php if (!$active_filters):?> hide<?php endif;?>">
+      <form action="<?php echo $p_url;?>#songs" method="get" id="filters-songs-form" class="filters-form<?php if (!$active_songs_filters):?> hide<?php endif;?>">
 	<div class="table">
 	  <div class="cell">
 	    <h4><?php echo __('Search');?></h4>
 	    <p>
-	      <label for="q" class="ib"><?php echo __('Search by title:');?></label>
-	      <?php echo form::field('q',20,255,html::escapeHTML($q));?><br>
-	      <span class="form-note">You can use wildcards (? or *) for search.</span>
+	      <label for="sq" class="ib"><?php echo __('Title:');?></label>
+	      <?php echo form::field('sq',20,255,html::escapeHTML($sq));?><br/>
+	      <span class="form-note"><?php echo __('You can use wildcards (? or *) for search.');?></span>
 	    </p>
 	    <h4><?php echo __('Filters');?></h4>
 	    <p>
@@ -151,11 +200,11 @@
 		
 	  <div class="cell">
 	    <h4><?php echo __('Display options');?></h4>
-	    <p><label for="sortby" class="ib"><?php echo __('Order by:');?></label>
-	    <?php echo form::combo('sortby', $sortby_combo, $sortby);?>
+	    <p><label for="sortby_song" class="ib"><?php echo __('Sort by:');?></label>
+	    <?php echo form::combo('sortby_song', $sortby_songs_combo, $sortby_song);?>
 	    </p>
-	    <p><label for="order" class="ib"><?php echo __('Sort:');?></label>
-	    <?php echo form::combo('order',$order_combo,$order);?>
+	    <p><label for="order_song" class="ib"><?php echo __('Order:');?></label>
+	    <?php echo form::combo('order_song',$order_combo, $order_song);?>
 	    </p>
 	    <p>
 	      <span class="label ib"><?php echo __('Show');?></span> 
@@ -167,7 +216,7 @@
 	</div>
 	<p>
 	  <input class="clearfix" type="submit" value="<?php echo __('Apply filters and display options');?>"/>
-	  <?php echo form::hidden('p','rslt');?>
+	  <input type="hidden" name="p" value="rslt"/>
 	</p>
       </form>
 
@@ -186,10 +235,10 @@
 	    '<input type="text" name="album_input" id="album-input"/>'.
 	    '<input type="hidden" name="album_id" id="album-id" value=""/>'.
 	    '<input type="submit" name="do_action" value="'.__('ok').'"/>'.
-	    '<div id="albums_selection"></div>'.
 	    '<input type="hidden" name="object" value="song"/>'.
 	    $core->formNonce().
 	    '</p>'.
+	    '<div id="albums_selection"></div>'.
 	'</div>'.
       '</form>');
       ?>

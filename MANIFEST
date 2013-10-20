@@ -19,8 +19,8 @@ rslt/src/utils/rslt.admin.songs.list.php
 rslt/src/utils/rslt.url.handlers.php
 rslt/src/utils/rslt.admin.albums.list.php
 rslt/src/utils/rslt.pager.php
+rslt/src/utils/rslt.admin.combo.php
 rslt/src/utils/rslt.dashboard.php
-rslt/src/utils/rslt.admincombo.php
 rslt/src/utils/rslt.behaviors.php
 rslt/src/model/object.manager.php
 rslt/src/model/song.manager.php

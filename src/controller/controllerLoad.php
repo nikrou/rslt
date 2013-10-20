@@ -102,7 +102,7 @@ if (!empty($_POST['file']) && !empty($_POST['object'])) {
                 fclose($fh);
             }
             
-            $_SESSION['rslt_message'] = __('Data successfully loaded.');
+            $_SESSION['rslt_message'] = __('The data have been loaded.');
             $_SESSION['rslt_default_tab'] = 'maintenance';
             http::redirect($p_url);
         }

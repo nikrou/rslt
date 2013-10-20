@@ -7,6 +7,18 @@ p.top-add {
 }
 
 /* filters */
+.filters-form-control { 
+  display: none;
+  background: url(images/expand.png) no-repeat 4px center;
+  padding-left: 20px;
+  color: #000;
+  cursor: pointer;
+}
+
+.filters-form-control.open {
+  background: url(images/hide.png) no-repeat 4px center;
+}
+
 .filters-form {
   border: 1px dashed #999;
   border-radius: .5em;
@@ -35,9 +47,6 @@ p.top-add {
 .filters-form label.ibw, span.ibw {
   width: 9em;
   display: inline-block;
-}
-.filters-form select {
-  width: 14em;
 }
 .filters-form h4 {
   margin-top: 0;

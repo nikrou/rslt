@@ -68,7 +68,7 @@
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Publication date:');?>
 	</label>
-	<?php echo form::field('song_publication_date', 100, 255, html::escapeHTML($song['publication_date']), '');?>
+	<?php echo form::field('song_publication_date', 6, 4, html::escapeHTML($song['publication_date']), '');?>
       </p>
       <p>
 	<?php echo form::hidden('p', 'rslt');?>

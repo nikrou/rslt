@@ -35,8 +35,8 @@ if (!empty($_POST['songs']) && ($_POST['object']=='song') && ($_POST['action']==
         foreach ($_POST['songs'] as $song_id) {
             $album_song_manager->add($album_id, $song_id);
         }
-        $_SESSION['rslt_message'] = __('The song has been successfully added to album.',
-        'The songs have been successfully added to album.', count($_POST['songs']));
+        $_SESSION['rslt_message'] = __('The song has been associated to album.',
+        'The songs have been associated to album.', count($_POST['songs']));
         $_SESSION['rslt_default_tab'] = 'songs';
         http::redirect($p_url);
     } catch (Exception $e) {
@@ -46,8 +46,8 @@ if (!empty($_POST['songs']) && ($_POST['object']=='song') && ($_POST['action']==
 
 if (($action=='delete') && !empty($_POST['songs']) && $_POST['object']=='song') {
     $song_manager->delete($_POST['songs']);
-    $_SESSION['rslt_message'] = __('The song has been successfully deleted.', 
-    'The songs have been successfully deleted.', count($_POST['songs']));
+    $_SESSION['rslt_message'] = __('The song has been deleted.', 
+    'The songs have been deleted.', count($_POST['songs']));
     $_SESSION['rslt_default_tab'] = 'songs';
     http::redirect($p_url);
 }
@@ -81,11 +81,11 @@ if (!empty($_POST['save_song'])) {
     try {
         if ($action=='edit') {
             $song_manager->update($_SESSION['song_id'], $cur);
-            $message = __('Song has been successfully updated.');
+            $message = __('The song has been updated.');
             unset($_SESSION['song_id']);
         } else {
             $song_manager->add($cur);
-            $message = __('Song has been successfully added.');
+            $message = __('The song has been added.');
         }
         $_SESSION['rslt_message'] = $message;
         $_SESSION['rslt_default_tab'] = 'songs';

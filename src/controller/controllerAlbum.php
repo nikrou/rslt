@@ -70,8 +70,8 @@ if (!empty($_POST['save_order']) && !empty($_POST['position']) && !empty($_POST[
 
 if (($action=='delete') && !empty($_POST['albums']) && $_POST['object']=='album') {
     $album_manager->delete($_POST['albums']);
-    $_SESSION['rslt_message'] = __('The album has been successfully deleted.', 
-    'The albums have been successfully deleted.', count($_POST['albums']));
+    $_SESSION['rslt_message'] = __('The album has been deleted.', 
+    'The albums have been deleted.', count($_POST['albums']));
     $_SESSION['rslt_default_tab'] = 'albums';
     http::redirect($p_url);
 }
@@ -102,11 +102,11 @@ if (!empty($_POST['save_album'])) {
 	try {
         if ($action=='edit') {
             $album_manager->update($_SESSION['album_id'], $cur);
-            $message = __('Album has been successfully updated.');
+            $message = __('The album has been updated.');
             unset($_SESSION['album_id']);
         } else {
             $album_manager->add($cur);
-            $message = __('Album has been successfully added.');
+            $message = __('The album has been added.');
         }
 		$_SESSION['rslt_message'] = $message;
 		$_SESSION['rslt_default_tab'] = 'albums';

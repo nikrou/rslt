@@ -51,6 +51,10 @@ class albumManager extends objectManager
         return $rs;
     }
 
+    public function getPublicationDate() {
+        return $this->getElements('publication_date');
+    }
+
     // return array
     public function getSongAuthors($album_id) {
         $authors = array();
@@ -86,10 +90,22 @@ class albumManager extends objectManager
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
 
         // apply filters
-        if (!empty($params)) {
-            foreach ($params as $field => $value) {
+        if (!empty($params['equal'])) {
+            foreach ($params['equal'] as $field => $value) {
                 if (in_array($field, $this->object_fields)) {
                     $strReq .= sprintf(' AND %s = \'%s\'', $field, $this->con->escape($value));
+                }
+            }
+        }
+
+        if (!empty($params['like'])) {
+            foreach ($params['like'] as $field => $value) {
+                if ($field=='q') {
+                    $strReq .= sprintf(' AND title like \'%s\'', 
+                    $this->con->escape(str_replace(array('*', '?'), array('%', '_'), $value))
+                    );
+                } elseif (in_array($field, $this->object_fields)) {
+                    $strReq .= sprintf(' AND %s like \'%%%s%%\'', $field, $this->con->escape($value));
                 }
             }
         }
@@ -97,7 +113,18 @@ class albumManager extends objectManager
         $strReq .= ' GROUP BY _a.id';
 
         // apply order
-        $strReq .= ' ORDER BY updated_at ASC';
+        if (!empty($params['sortby']) && in_array($params['sortby'], $this->object_fields)) {
+            $sortby_field = $params['sortby'];
+        } else {
+            $sortby_field = 'updated_at';
+        }
+        if (!empty($params['orderby']) && in_array($params['orderby'], array('DESC', 'ASC'))) {
+            $orderby = $params['orderby'];
+        } else {
+            $orderby = 'DESC';
+        }
+
+        $strReq .= sprintf(' ORDER BY _a.%s %s', $sortby_field, $orderby); 
       
         if (!empty($limit)) {
 			$strReq .= $this->con->limit($limit);
@@ -115,6 +142,17 @@ class albumManager extends objectManager
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
         $strReq .= sprintf(' AND title ilike \'%s%%\'', $this->con->escape($title));
  
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
+      
+        return $rs;
+    }
+
+    protected function getElements($field) {
+        $strReq =  'SELECT distinct('.$field.')';
+        $strReq .= ' FROM '.$this->table;
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
       

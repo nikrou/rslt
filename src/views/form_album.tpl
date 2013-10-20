@@ -45,19 +45,20 @@
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Publication date:');?>
 	</label>
-	<?php echo form::field('album_publication_date', 100, 255, html::escapeHTML($album['publication_date']), '');?>
+	<?php echo form::field('album_publication_date', 6, 4, html::escapeHTML($album['publication_date']), '');?>
       </p>
       <p>
-	<?php echo form::hidden('p', 'rslt');?>
-	<?php echo form::hidden('object', 'album');?>
-	<?php echo form::hidden('action', $action);?>
+	<?php echo form::hidden(array('p',''), 'rslt');?>
+	<?php echo form::hidden(array('object',''), 'album');?>
+	<?php echo form::hidden(array('action',''), $action);?>
 	<?php echo $core->formNonce();?>
 	<input type="submit" name="save_album" value="<?php echo __('Save'); ?>"/>
       </p>
     </form>
 
+    <?php if (!empty($album['id'])):?>
+    <h3><?php echo __('Tracklist');?></h3>
     <?php if (!empty($songs) && !$songs->isEmpty()):?>
-    <h3><?php echo __('Songs in album');?></h3>
     <form action="<?php echo $p_url;?>" method="post" id="songs-rank-form">
       <div class="songs">
 	<ul>
@@ -91,6 +92,7 @@
     </form>    
     <?php else:?>
     <p><?php echo __('No song in that album');?></p>
+    <?php endif;?>
     <?php endif;?>
   </body>
 </html>

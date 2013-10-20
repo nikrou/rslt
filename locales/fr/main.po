@@ -6,144 +6,248 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-07 17:33+0200\n"
+"POT-Creation-Date: 2013-10-20 13:47+0200\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/views/form_author.tpl:3 src/views/form_author.tpl:9
-#: src/views/index.tpl:41 src/views/index.tpl:42 src/views/index.tpl:57
-#: src/views/index.tpl:58 src/views/index.tpl:59
-msgid "Authors"
-msgstr "Auteurs"
-
-#: src/views/form_author.tpl:20 src/views/index.tpl:54 src/views/index.tpl:70
-msgid "Firstname"
-msgstr "Prénom"
-
-#: src/views/form_author.tpl:27 src/views/index.tpl:54 src/views/index.tpl:70
-msgid "Lastname"
-msgstr "Nom"
-
-#: src/views/form_song.tpl:3 src/views/form_song.tpl:9 src/views/index.tpl:126
-#: src/views/index.tpl:127 src/views/load.tpl:3 src/views/load.tpl:9
-#: src/views/index.tpl:146 src/views/index.tpl:147 src/views/index.tpl:102
-#: src/views/index.tpl:103
+#: src/views/form_song.tpl:3 src/views/form_song.tpl:9 src/views/index.tpl:150
+#: src/views/index.tpl:151 src/views/load.tpl:3 src/views/load.tpl:9
+#: src/utils/rslt.admin.albums.list.php:45
 msgid "Songs"
 msgstr "Chansons"
 
-#: src/views/form_song.tpl:20 src/views/form_album.tpl:20
+#: src/views/form_song.tpl:19 src/views/form_song.tpl:26
+#: src/views/form_song.tpl:33 src/views/form_song.tpl:40
+#: src/views/form_song.tpl:47 src/views/form_song.tpl:54
+#: src/views/form_song.tpl:61 src/views/form_song.tpl:68
+#: src/views/form_album.tpl:24 src/views/form_album.tpl:31
+#: src/views/form_album.tpl:38 src/views/form_album.tpl:45
+msgid "Required field"
+msgstr "Champ obligatoire"
+
+#: src/views/form_song.tpl:20 src/views/form_album.tpl:25
+#: src/views/index.tpl:95 src/views/index.tpl:170
 msgid "Title:"
 msgstr "Titre : "
 
-#: src/views/form_song.tpl:27 src/views/form_song.tpl:34
-#: src/views/index.tpl:122
+#: src/views/form_song.tpl:34 src/views/index.tpl:188
 msgid "Author:"
 msgstr "Auteur : "
 
-#: src/views/form_song.tpl:34 src/views/form_album.tpl:34
-#: src/views/form_song.tpl:69 src/views/form_album.tpl:41
-msgid "Publication date:"
-msgstr "Date de publication : "
+#: src/views/form_song.tpl:41 src/views/index.tpl:192
+msgid "Compositor:"
+msgstr "Compositeur : "
 
-#: src/views/form_album.tpl:3 src/views/form_album.tpl:9
-#: src/views/index.tpl:83 src/views/index.tpl:87 src/views/index.tpl:99
-#: src/views/index.tpl:103 src/views/index.tpl:74 src/views/index.tpl:78
+#: src/views/form_song.tpl:48 src/views/index.tpl:196
+msgid "Adaptator:"
+msgstr "Adaptateur : "
+
+#: src/views/form_song.tpl:55 src/views/form_album.tpl:39
+#: src/views/index.tpl:180
+msgid "Singer:"
+msgstr "Interprète : "
+
+#: src/views/form_song.tpl:62 src/views/index.tpl:176
+msgid "Editor:"
+msgstr "Editeur : "
+
+#: src/views/form_song.tpl:69 src/views/form_album.tpl:46
+#: src/views/index.tpl:101
+msgid "Publication date:"
+msgstr "Année de publication : "
+
+#: src/views/form_song.tpl:78 src/views/form_album.tpl:55
+msgid "Save"
+msgstr "Enregistrer"
+
+#: src/views/form_album.tpl:3 src/views/form_album.tpl:14
+#: src/views/index.tpl:75 src/views/index.tpl:79
 msgid "Albums"
 msgstr "Albums"
 
-#: src/views/index.tpl:20 src/views/index.tpl:23 src/views/index.tpl:24
+#: src/views/form_album.tpl:7
+#, php-format
+msgid "Are you sure you want to remove selected songs from album (%s)?"
+msgstr ""
+"Êtes-vous certain de vouloir supprimer la(es) chanson(s) sélectionée(s) (%s)"
+
+#: src/views/form_album.tpl:76
+msgid ""
+"To rearrange songs order, move items by drag and drop, then click on “Save "
+"songs order” button."
+msgstr ""
+"Pour modifier l'ordre des chansons, déplacez les items par glisser-déposer "
+"puis cliquez sur le bouton “Enregistrer l'ordre des chansons“."
+
+#: src/views/form_album.tpl:79
+msgid "Save songs order"
+msgstr "Enregistrer l'ordre des chansons"
+
+#: src/views/form_album.tpl:89
+msgid "Remove selected songs from album"
+msgstr "Supprimer les chansons sélectionnées"
+
+#: src/views/form_album.tpl:94
+msgid "No song in that album"
+msgstr "Pas de chanson dans cet album"
+
+#: src/views/index.tpl:8
+#, php-format
+msgid "Are you sure you want to delete selected songs (%s)?"
+msgstr ""
+"Êtes-vous certain de vouloir supprimer la(es) chanson(s) sélectionée(s) (%s)"
+
+#: src/views/index.tpl:9
+#, php-format
+msgid "Are you sure you want to delete selected albums (%s)?"
+msgstr ""
+"Êtes-vous certain de vouloir supprimer le(s) album(s) sélectioné(s) (%s)"
+
+#: src/views/index.tpl:10 src/views/index.tpl:86 src/views/index.tpl:161
+msgid "Show filters"
+msgstr "Montrer les filtres"
+
+#: src/views/index.tpl:10 src/views/index.tpl:84 src/views/index.tpl:159
+msgid "Hide filters"
+msgstr "Cacher les filtres"
+
+#: src/views/index.tpl:24 src/views/index.tpl:25
+msgid "Settings"
+msgstr "Paramètres"
+
+#: src/views/index.tpl:28
 msgid "Plugin activation"
 msgstr "Activation du plugin"
 
-#: src/views/index.tpl:24 src/views/index.tpl:27 src/views/index.tpl:28
+#: src/views/index.tpl:32
 msgid "Enable RSLT plugin"
 msgstr "Activer le plugin RSLT"
 
-#: src/views/index.tpl:29 src/views/index.tpl:51 src/views/index.tpl:52
-msgid "Save configuration"
-msgstr "Sauver la configuration"
-
-#: src/views/index.tpl:33 src/views/index.tpl:34
+#: src/views/index.tpl:38
 msgid "Advanced options"
 msgstr "Options avancées"
 
-#: src/views/index.tpl:44 src/controller/controllerAuthor.php:24
-#: src/views/index.tpl:60 src/views/index.tpl:61
-msgid "New author"
-msgstr "Nouvel auteur"
+#: src/views/index.tpl:40
+msgid "Albums page prefix:"
+msgstr "Préfixe de la page albums"
 
-#: src/views/index.tpl:47 src/views/index.tpl:63 src/views/index.tpl:64
+#: src/views/index.tpl:44
+msgid "Album page prefix:"
+msgstr "Préfixe des pages album"
+
+#: src/views/index.tpl:48
+msgid "Song page prefix:"
+msgstr "Préfixe des pages chanson"
+
+#: src/views/index.tpl:56
+msgid "Save configuration"
+msgstr "Sauver la configuration"
+
+#: src/views/index.tpl:62 src/views/index.tpl:63
+msgid "Authors"
+msgstr "Auteurs"
+
+#: src/views/index.tpl:65
 msgid "No author"
 msgstr "Pas d'auteur"
 
-#: src/views/index.tpl:76 src/views/index.tpl:119 src/views/index.tpl:168
-#: src/views/index.tpl:92 src/views/index.tpl:139
-msgid "Remove selected"
-msgstr "Supprimer les élements sélectionnés"
-
-#: src/views/index.tpl:85 src/controller/controllerAlbum.php:24
-#: src/views/index.tpl:101 src/views/index.tpl:76
+#: src/views/index.tpl:77 src/controller/controllerAlbum.php:24
 msgid "New album"
 msgstr "Nouvel album"
 
-#: src/views/index.tpl:90 src/views/index.tpl:106 src/views/index.tpl:81
+#: src/views/index.tpl:93 src/views/index.tpl:168
+msgid "Search"
+msgstr "Rechercher"
+
+#: src/views/index.tpl:97 src/views/index.tpl:172
+msgid "You can use wildcards (? or *) for search."
+msgstr "Vous pouvez utiliser des jokers (? ou *) pour la recherche."
+
+#: src/views/index.tpl:99 src/views/index.tpl:174 src/views/index.tpl:186
+msgid "Filters"
+msgstr "Filtres"
+
+#: src/views/index.tpl:107 src/views/index.tpl:202
+msgid "Display options"
+msgstr "Options d'affichage"
+
+#: src/views/index.tpl:108 src/views/index.tpl:203
+msgid "Order by:"
+msgstr "Trier par : "
+
+#: src/views/index.tpl:111 src/views/index.tpl:206
+msgid "Sort:"
+msgstr "Tri"
+
+#: src/views/index.tpl:115 src/views/index.tpl:210
+msgid "Show"
+msgstr "Montrer"
+
+#: src/views/index.tpl:117
+msgid "albums per page"
+msgstr "chansons par page"
+
+#: src/views/index.tpl:123 src/views/index.tpl:218
+msgid "Apply filters and display options"
+msgstr "Appliquer les filtres et options d'affichage"
+
+#: src/views/index.tpl:129
 msgid "No album"
 msgstr "Pas d'album"
 
-#: src/views/index.tpl:97 src/views/index.tpl:140
-#: src/utils/rslt.admin.songs.list.php:42 src/views/index.tpl:113
-#: src/utils/rslt.admin.albums.list.php:42
-msgid "Title"
-msgstr "Titre : "
+#: src/views/index.tpl:131
+#, php-format
+msgid "%d albums in database"
+msgstr "%d albums dans la base de données"
 
-#: src/views/index.tpl:129 src/controller/controllerSong.php:24
-#: src/views/index.tpl:149 src/views/index.tpl:105
+#: src/views/index.tpl:138
+msgid "Selected albums action:"
+msgstr "Actions sur les albums sélectionnés : "
+
+#: src/views/index.tpl:153 src/controller/controllerSong.php:24
 msgid "New song"
 msgstr "Nouvelle chanson"
 
-#: src/views/index.tpl:133 src/views/index.tpl:153 src/views/index.tpl:109
-#: src/views/index.tpl:169
+#: src/views/index.tpl:212
+msgid "songs per page"
+msgstr "chansons par page"
+
+#: src/views/index.tpl:224
 msgid "No song"
 msgstr "Pas de chanson"
 
-#: src/views/index.tpl:141 src/utils/rslt.admin.songs.list.php:44
-msgid "Author"
-msgstr "Auteur"
+#: src/views/index.tpl:226
+#, php-format
+msgid "%d songs in database"
+msgstr "%d chansons dans la base de données"
 
-#: src/views/index.tpl:142 src/utils/rslt.admin.songs.list.php:45
-#: src/views/index.tpl:114 src/utils/rslt.admin.songs.list.php:47
-#: src/utils/rslt.admin.albums.list.php:43
-msgid "Singer"
-msgstr "Interprète"
+#: src/views/index.tpl:233
+msgid "Selected songs action:"
+msgstr "Actions sur les chansons sélectionnées : "
 
-#: src/views/index.tpl:143 src/utils/rslt.admin.songs.list.php:46
-#: src/utils/rslt.admin.songs.list.php:49
-#: src/utils/rslt.admin.albums.list.php:44
-msgid "Publication date"
-msgstr "Date de publication"
-
-#: src/views/index.tpl:175 src/views/index.tpl:176 src/views/index.tpl:152
-#: src/views/index.tpl:153 src/views/index.tpl:173 src/views/index.tpl:174
-#: src/views/index.tpl:130 src/views/index.tpl:131 src/views/index.tpl:190
-#: src/views/index.tpl:191
+#: src/views/index.tpl:248 src/views/index.tpl:249
 msgid "Maintenance"
 msgstr "Maintenance"
 
-#: src/views/index.tpl:180 src/views/index.tpl:157 src/views/index.tpl:178
-#: src/views/index.tpl:135 src/views/index.tpl:195
+#: src/views/index.tpl:253
 msgid "Load songs csv file"
 msgstr "Charger le fichier csv de chansons"
 
-#: src/views/index.tpl:188 src/views/index.tpl:189 src/views/index.tpl:165
-#: src/views/index.tpl:166 src/views/index.tpl:186 src/views/index.tpl:187
-#: src/views/index.tpl:164 src/views/index.tpl:224 src/views/index.tpl:225
+#: src/views/index.tpl:263
+msgid "Load albums csv file"
+msgstr "Charger le fichier csv d'albums"
+
+#: src/views/index.tpl:273
+msgid "Load songs in albums csv file"
+msgstr "Charger le fichier csv de chansons par albums"
+
+#: src/views/index.tpl:282 src/views/index.tpl:283
 msgid "About"
 msgstr "A propos"
 
-#: src/views/index.tpl:191 src/views/index.tpl:168 src/views/index.tpl:189
-#: src/views/index.tpl:167 src/views/index.tpl:227
+#: src/views/index.tpl:285
 msgid ""
 "If you want more informations on that plugin or have new ideas to develope "
 "it, or want to submit a bug or need help (to install or configure it) or for "
@@ -153,220 +257,108 @@ msgstr ""
 "l'améliorer ou si vous pensez avoir trouvé un bug ou si vous avez besoin "
 "d'aide (pour l'installer ou le configurer) ou pour tout autre chose..."
 
-#: src/views/index.tpl:193 src/views/index.tpl:170 src/views/index.tpl:191
-#: src/views/index.tpl:169 src/views/index.tpl:229
+#: src/views/index.tpl:287
 #, php-format
 msgid "Go to %sthe dedicated page%s in"
 msgstr "Allez sur la %spage dédiée%s du"
 
-#: src/views/index.tpl:198 src/views/index.tpl:175 src/views/index.tpl:196
-#: src/views/index.tpl:174 src/views/index.tpl:234
+#: src/views/index.tpl:292
 msgid "Made by:"
 msgstr "Créé par : "
 
-#: src/controller/controllerAuthor.php:35
-msgid "The author has been successfully deleted."
-msgid_plural "The authors have been successfully deleted."
-msgstr[0] "L'auteur a été supprimé avec succès."
-msgstr[1] "Les auteurs ont été supprimés avec succès."
-
-#: src/controller/controllerAuthor.php:58
-msgid "Author has been successfully updated."
-msgstr "L'auteur a été mis à jour avec succès."
-
-#: src/controller/controllerAuthor.php:63
-msgid "Author has been successfully added."
-msgstr "L'auteur a été ajouté avec succès."
-
-#: src/controller/controllerLoad.php:57 src/controller/controllerLoad.php:102
 #: src/controller/controllerLoad.php:105
-msgid "Data successfully loaded."
-msgstr "Les données ont été chargées avec succès."
+msgid "The data have been loaded."
+msgstr "Les données ont été chargées."
 
-#: src/controller/controllerSong.php:33
-msgid "The song has been successfully deleted."
-msgid_plural "The songs have been successfully deleted."
-msgstr[0] "La chanson a été supprimée avec succès."
-msgstr[1] "Les chansons ont été supprimées avec succès."
+#: src/controller/controllerSong.php:38
+msgid "The song has been associated to album."
+msgstr "La chanson a été associée à l'album."
 
-#: src/controller/controllerSong.php:55 src/controller/controllerSong.php:54
-#: src/controller/controllerSong.php:67
-msgid "Song has been successfully updated."
-msgstr "La chanson a été mise à jour avec succès."
+#: src/controller/controllerSong.php:49
+msgid "The song has been deleted."
+msgstr "La chanson a été supprimée."
 
-#: src/controller/controllerSong.php:60 src/controller/controllerSong.php:59
-#: src/controller/controllerSong.php:71
-msgid "Song has been successfully added."
-msgstr "La chanson a été ajoutée avec succès."
+#: src/controller/controllerSong.php:84
+msgid "The song has been updated."
+msgstr "La chanson a été mise à jour."
 
-#: src/controller/controllerAlbum.php:34 src/controller/controllerAlbum.php:31
-msgid "The album has been successfully deleted."
-msgid_plural "The albums have been successfully deleted."
-msgstr[0] "L'album a été supprimé avec succès."
-msgstr[1] "Les albums ont été supprimés avec succès."
+#: src/controller/controllerSong.php:88
+msgid "The song has been added."
+msgstr "La chanson a été ajoutée."
 
-#: src/controller/controllerAlbum.php:54 src/controller/controllerAlbum.php:55
-#: src/controller/controllerAlbum.php:60
-msgid "Album has been successfully updated."
-msgstr "L'album a été mis à jour avec succès."
+#: src/controller/controllerAlbum.php:47
+msgid "The song has been removed from album."
+msgstr "La chanson a été supprimée de l'album."
 
-#: src/controller/controllerAlbum.php:59 src/controller/controllerAlbum.php:60
-#: src/controller/controllerAlbum.php:64
-msgid "Album has been successfully added."
-msgstr "L'album a été ajouté avec succès."
+#: src/controller/controllerAlbum.php:63
+msgid "The order of songs in album has been saved."
+msgstr "L'ordre des chansons dans l'album a été mis à jour."
 
-#: src/controller/controllerConfig.php:31
-#: src/controller/controllerConfig.php:44
-msgid "Configuration successfully updated."
-msgstr "La configuration a été mise à jour avec succès."
+#: src/controller/controllerAlbum.php:73
+msgid "The album has been deleted."
+msgstr "L'album a été supprimé."
 
-#: src/model/object.manager.php:60 src/model/object.manager.php:88
-#: src/model/song.manager.php:32 src/model/object.manager.php:39
-#: src/model/object.manager.php:68 src/model/song.manager.php:33
+#: src/controller/controllerAlbum.php:80
+msgid "Edit album"
+msgstr "Modifier l'album"
+
+#: src/controller/controllerAlbum.php:105
+msgid "The album has been updated."
+msgstr "L'album a été mis à jour."
+
+#: src/controller/controllerAlbum.php:109
+msgid "The album has been added."
+msgstr "L'album a été ajouté."
+
+#: src/controller/controllerIndex.php:45
+msgid "The configuration has been updated."
+msgstr "La configuration a été mise à jour."
+
+#: src/controller/controllerIndex.php:73
+#: src/controller/controllerIndex.php:102
+msgid "Delete"
+msgstr "Supprimer"
+
+#: src/controller/controllerIndex.php:103
+msgid "Associate to album"
+msgstr "Associer à l'album"
+
+#: src/utils/rslt.admin.songs.list.php:46
+#: src/utils/rslt.admin.albums.list.php:42
+msgid "Title"
+msgstr "Titre : "
+
+#: src/utils/rslt.admin.songs.list.php:47
+msgid "Album"
+msgstr "Album"
+
+#: src/utils/rslt.admin.songs.list.php:48
+msgid "Author"
+msgstr "Auteur"
+
+#: src/utils/rslt.admin.songs.list.php:49
+msgid "Compositor"
+msgstr "Compositeur"
+
+#: src/utils/rslt.admin.songs.list.php:50
+msgid "Adaptator"
+msgstr "Adaptateur"
+
+#: src/utils/rslt.admin.songs.list.php:51
+#: src/utils/rslt.admin.albums.list.php:43
+msgid "Singer"
+msgstr "Interprète"
+
+#: src/utils/rslt.admin.songs.list.php:52
+msgid "Editor"
+msgstr "Editeur"
+
+#: src/utils/rslt.admin.songs.list.php:53
+#: src/utils/rslt.admin.albums.list.php:44
+msgid "Publication date"
+msgstr "Année de publication"
+
 #: src/model/object.manager.php:45
 #, php-format
 msgid "You must provide %s field"
 msgstr "Vous devez remplir le champ %s"
-
-#: src/views/form_album.tpl:27 src/views/form_song.tpl:55
-#: src/views/form_album.tpl:34 src/views/index.tpl:141
-msgid "Singer:"
-msgstr "Interprète : "
-
-#: src/views/index.tpl:141 src/views/index.tpl:161 src/views/index.tpl:118
-#: src/views/index.tpl:178
-msgid "Selected songs action:"
-msgstr "Actions sur les chansons sélectionnées : "
-
-#: src/controller/controllerAlbum.php:37 src/controller/controllerAlbum.php:38
-msgid "Edit album"
-msgstr "Mise à jour de l'album"
-
-#: src/utils/rslt.admin.songs.list.php:43
-msgid "Album"
-msgstr "Album"
-
-#: src/views/index.tpl:9 src/views/index.tpl:7
-#, php-format
-msgid "Are you sure you want to delete selected songs (%s)?"
-msgstr ""
-"Êtes-vous certain de vouloir supprimer la(es) chanson(s) sélectionée(s) (%s)"
-
-#: src/views/index.tpl:35 src/views/index.tpl:36
-msgid "Albums page prefix:"
-msgstr "Préfixe de la page albums"
-
-#: src/views/index.tpl:39 src/views/index.tpl:40
-msgid "Album page prefix:"
-msgstr "Préfixe des pages album"
-
-#: src/views/index.tpl:43 src/views/index.tpl:44
-msgid "Song page prefix:"
-msgstr "Préfixe des pages chanson"
-
-#: src/views/form_song.tpl:41 src/views/index.tpl:126
-msgid "Compositor:"
-msgstr "Compositeur : "
-
-#: src/views/form_song.tpl:48 src/views/index.tpl:130
-msgid "Adaptator:"
-msgstr "Adaptateur : "
-
-#: src/views/form_song.tpl:62 src/views/index.tpl:137
-msgid "Editor:"
-msgstr "Editeur : "
-
-#: src/views/index.tpl:10 src/views/index.tpl:8
-#, php-format
-msgid "Are you sure you want to delete selected albums (%s)?"
-msgstr ""
-"Êtes-vous certain de vouloir supprimer le(s) album(s) sélectioné(s) (%s)"
-
-#: src/views/index.tpl:84
-#, php-format
-msgid "%d albums in database"
-msgstr "%d albums dans la base de données"
-
-#: src/views/index.tpl:90
-msgid "Selected albums action:"
-msgstr "Actions sur les albums sélectionnés : "
-
-#: src/views/index.tpl:112 src/views/index.tpl:172
-#, php-format
-msgid "%d songs in database"
-msgstr "%d chansons dans la base de données"
-
-#: src/views/index.tpl:145 src/views/index.tpl:205
-msgid "Load albums csv file"
-msgstr "Charger le fichier csv d'albums"
-
-#: src/views/index.tpl:155 src/views/index.tpl:215
-msgid "Load songs in albums csv file"
-msgstr "Charger le fichier csv de chansons par albums"
-
-#: src/utils/rslt.admin.songs.list.php:45
-msgid "Compositor"
-msgstr "Compositeur"
-
-#: src/utils/rslt.admin.songs.list.php:46
-msgid "Adaptator"
-msgstr "Adaptateur"
-
-#: src/utils/rslt.admin.songs.list.php:48
-msgid "Editor"
-msgstr "Editeur"
-
-#: src/views/index.tpl:9
-msgid "Show filters"
-msgstr "Montrer les filtres"
-
-#: src/views/index.tpl:9
-msgid "Hide filters"
-msgstr "Cacher les filtres"
-
-#: src/views/index.tpl:20 src/views/index.tpl:21
-msgid "Settings"
-msgstr "Paramètres"
-
-#: src/views/index.tpl:120
-msgid "Filters"
-msgstr "Filtres"
-
-#: src/views/index.tpl:147
-msgid "Display options"
-msgstr "Options d'affichage"
-
-#: src/views/index.tpl:148
-msgid "Order by:"
-msgstr "Créé par : "
-
-#: src/views/index.tpl:151
-msgid "Sort:"
-msgstr "Tri"
-
-#: src/views/index.tpl:157
-msgid "songs per page"
-msgstr "Nombre de chansons par page"
-
-#: src/views/index.tpl:163
-msgid "Apply filters and display options"
-msgstr "Appliquer les filtres et options d'affichage"
-
-msgid "Associate to album"
-msgstr "Associer à l'album"
-
-msgid "Filter"
-msgstr "Filtre"
-
-msgid "No song in that album"
-msgstr "Pas de chanson dans cet album"
-
-msgid "To rearrange songs order, move items by drag and drop, then click on “Save songs order” button."
-msgstr "Pour modifier l'ordre des chansons, déplacez les items par glisser-déposer"
-" puis cliquez sur le bouton “Enregistrer l'ordre des chansons“."
-
-msgid "Songs in album"
-msgstr "Chansons dans l'album"
- 
-msgid "Save songs order"
-msgstr "Enregistrer l'ordre des chansons"

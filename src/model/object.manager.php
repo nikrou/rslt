@@ -205,14 +205,29 @@ class objectManager
 
         if (!empty($params['like'])) {
             foreach ($params['like'] as $field => $value) {
-                if (in_array($field, $this->object_fields)) {
+                if ($field=='q') {
+                    $strReq .= sprintf(' AND title like \'%s\'', 
+                    $this->con->escape(str_replace(array('*', '?'), array('%', '_'), $value))
+                    );
+                } elseif (in_array($field, $this->object_fields)) {
                     $strReq .= sprintf(' AND %s like \'%%%s%%\'', $field, $this->con->escape($value));
                 }
             }
         }
 
         // apply order
-        $strReq .= ' ORDER BY updated_at ASC';
+        if (!empty($params['sortby']) && in_array($params['sortby'], $this->object_fields)) {
+            $sortby_field = $params['sortby'];
+        } else {
+            $sortby_field = 'updated_at';
+        }
+        if (!empty($params['orderby']) && in_array($params['orderby'], array('DESC', 'ASC'))) {
+            $orderby = $params['orderby'];
+        } else {
+            $orderby = 'DESC';
+        }
+
+        $strReq .= sprintf(' ORDER BY %s %s', $sortby_field, $orderby); 
       
         if (!empty($limit)) {
 			$strReq .= $this->con->limit($limit);

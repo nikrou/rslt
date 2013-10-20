@@ -26,8 +26,9 @@ class rsltAdminCombo
 		while ($rs->fetch()) {
             $combo[$rs->$field] = html::escapeHTML($rs->$field);
 		}
-        
-		return $combo;
+        asort($combo);
+
+        return $combo;
 	}
 
     public static function makeComboSinger($rs, $field) {
@@ -36,14 +37,15 @@ class rsltAdminCombo
             if (strpos($rs->$field, ',')) {
                 $elements = explode(',', $rs->$field);
                 foreach ($elements as $element) {
-                    $combo[$element] = html::escapeHTML($element);
+                    $combo[html::escapeHTML($element)] = html::escapeHTML($element);
                 }
             } else {
-                $combo[$rs->$field] = html::escapeHTML($rs->$field);
+                $combo[html::escapeHTML($rs->$field)] = html::escapeHTML($rs->$field);
             }
 		}
-        $combo = array_unique($combo);
-        
-		return $combo;
+        $combo = array_unique($combo);        
+        asort($combo);
+
+        return $combo;
 	}
 }

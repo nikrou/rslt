@@ -34,4 +34,4 @@ $__autoload['adminSongsList'] = dirname(__FILE__).'/src/utils/rslt.admin.songs.l
 $__autoload['adminAlbumsList'] = dirname(__FILE__).'/src/utils/rslt.admin.albums.list.php';
 $__autoload['rsltPager'] = dirname(__FILE__).'/src/utils/rslt.pager.php';
 $__autoload['rsltDashboard'] = dirname(__FILE__).'/src/utils/rslt.dashboard.php';
-$__autoload['rsltAdminCombo'] = dirname(__FILE__).'/src/utils/rslt.admincombo.php';
+$__autoload['rsltAdminCombo'] = dirname(__FILE__).'/src/utils/rslt.admin.combo.php';

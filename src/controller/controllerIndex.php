@@ -42,7 +42,7 @@ if (!empty($_POST['saveconfig'])) {
             $core->blog->settings->rslt->put('song_prefix', $rslt_song_prefix, 'string');
         }
         
-        $_SESSION['rslt_message'] = __('Configuration successfully updated.');
+        $_SESSION['rslt_message'] = __('The configuration has been updated.');
         $_SESSION['rslt_default_tab'] = 'settings';
         http::redirect($p_url);
     } catch(Exception $e) {
@@ -52,6 +52,17 @@ if (!empty($_POST['saveconfig'])) {
 
 /* albums */
 /* pagination */
+$album_manager = new albumManager($core);
+
+$active_albums_filters = false;
+$filters_params = array();
+$publication_date_combo = rsltAdminCombo::makeCombo($album_manager->getPublicationDate(), 'publication_date');
+$sortby_album = $order_album = null;
+$sortby_albums_combo = array('' => '', __('Title') => 'title', __('Publication date') => 'publication_date',
+__('Singer') => 'singer');
+$order_combo = array(__('Descending') => 'DESC', __('Ascending') => 'ASC');
+$aq = $publication_date_id = null;
+
 $page_albums = !empty($_GET['page_albums']) ? (integer) $_GET['page_albums'] : 1;
 $nb_per_page_albums =  10;
 
@@ -64,10 +75,33 @@ $albums_action_combo = array();
 $albums_action_combo[''] = null;
 $albums_action_combo[__('Delete')] = 'delete';
 
+if (!empty($_GET['aq'])) {
+    $aq = $_GET['aq'];
+    $filters_params['like']['q'] = $aq;
+    $active_albums_filters = true;
+}
+
+if (!empty($_GET['publication_date_id']) && !empty($publication_date_combo[$_GET['publication_date_id']])) {
+    $publication_date_id = $_GET['publication_date_id'];
+    $filters_params['equal']['publication_date'] = $publication_date_id;
+    $active_albums_filters = true;
+}
+
+if (!empty($_GET['sortby_album'])) {
+    $sortby_album = $_GET['sortby_album'];
+    $filters_params['sortby'] = $sortby_album;
+    $active_songs_filters = true;
+}
+
+if (!empty($_GET['order_album'])) {
+    $order_album = $_GET['order_album'];
+    $filters_params['orderby'] = $order_album;
+    $active_songs_filters = true;
+}
+
 try {
-    $album_manager = new albumManager($core);
-    $albums_counter = $album_manager->getCountList();
-    $albums_list = new adminAlbumsList($core, $album_manager->getList(array(), $limit_albums), $albums_counter);
+    $albums_counter = $album_manager->getCountList($filters_params);
+    $albums_list = new adminAlbumsList($core, $album_manager->getList($filters_params, $limit_albums), $albums_counter);
     $albums_list->setPluginUrl("$p_url&amp;object=album&amp;action=edit&amp;id=%d");
 } catch (Exception $e) {
     $core->error->add($e->getMessage());
@@ -89,56 +123,66 @@ $songs_action_combo[__('Delete')] = 'delete';
 $songs_action_combo[__('Associate to album')] = 'associate_to_album';
 
 /* filters */
-$active_filters = false;
+$active_songs_filters = false;
 $song_manager = new songManager($core);
-
 $author_id = $compositor_id = $adaptator_id = $singer_id = $editor_id = $publication_date = null;
-$sortby = $order = null;
+$sortby_song = $order_song = null;
 $filters_params = array();
-$q= '';
+$sq= '';
 
 $authors_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
 $compositors_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
 $adaptators_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
 $editors_combo = rsltAdminCombo::makeCombo($song_manager->getEditors(), 'editor');
 $singers_combo = rsltAdminCombo::makeComboSinger($song_manager->getSingers(), 'singer');
-$sortby_combo = array('' => '');
-$order_combo = array('' => '');
+$sortby_songs_combo = array('' => '', __('Title') => 'title', __('Singer') => 'singer', __('Publication date') => 'publication_date',
+__('Author') => 'author');
 
-if (!empty($_GET['q'])) {
-    $q = $_GET['q'];
-    $filters_params['like']['q'] = $q;
-    $active_filters = true;
+if (!empty($_GET['sq'])) {
+    $sq = $_GET['sq'];
+    $filters_params['like']['q'] = $sq;
+    $active_songs_filters = true;
 }
 
 if (!empty($_GET['editor_id']) && !empty($editors_combo[$_GET['editor_id']])) {
     $editor_id = $_GET['editor_id'];
     $filters_params['equal']['editor'] = $editor_id;
-    $active_filters = true;
+    $active_songs_filters = true;
 }
 
 if (!empty($_GET['singer_id']) && !empty($singers_combo[$_GET['singer_id']])) {
     $singer_id = $_GET['singer_id'];
     $filters_params['like']['singer'] = $singer_id;
-    $active_filters = true;
+    $active_songs_filters = true;
 }
 
 if (!empty($_GET['author_id']) && !empty(Authors::getName($_GET['author_id']))) {
     $author_id = $_GET['author_id'];
     $filters_params['like']['author'] = Authors::getName($author_id);
-    $active_filters = true;
+    $active_songs_filters = true;
 }
 
 if (!empty($_GET['compositor_id']) && !empty(Authors::getName($_GET['compositor_id']))) {
     $compositor_id = $_GET['compositor_id'];
     $filters_params['like']['compositor'] = Authors::getName($compositor_id);
-    $active_filters = true;
+    $active_songs_filters = true;
 }
 
 if (!empty($_GET['adaptator_id']) && !empty(Authors::getName($_GET['adaptator_id']))) {
     $adaptator_id = $_GET['adaptator_id'];
     $filters_params['like']['adaptator'] = Authors::getName($adaptator_id);
-    $active_filters = true;
+    $active_songs_filters = true;
+}
+
+if (!empty($_GET['sortby_song'])) {
+    $sortby_song = $_GET['sortby_song'];
+    $filters_params['sortby'] = $sortby_song;
+    $active_songs_filters = true;
+}
+
+if (!empty($_GET['order_song'])) {
+    $filters_params['orderby'] = $_GET['order_song'];
+    $active_songs_filters = true;
 }
 
 try {

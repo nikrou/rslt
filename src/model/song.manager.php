@@ -45,10 +45,6 @@ class songManager extends objectManager
         $strReq =  'SELECT distinct('.$field.')';
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
-      
-        if (!empty($limit)) {
-			$strReq .= $this->con->limit($limit);
-        }
 
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
@@ -87,8 +83,19 @@ class songManager extends objectManager
             }
         }
 
-        // apply order
-        $strReq .= ' ORDER BY _s.updated_at ASC';
+        // apply order        
+        if (!empty($params['sortby']) && in_array($params['sortby'], $this->object_fields)) {
+            $sortby_field = $params['sortby'];
+        } else {
+            $sortby_field = 'updated_at';
+        }
+        if (!empty($params['orderby']) && in_array($params['orderby'], array('DESC', 'ASC'))) {
+            $orderby = $params['orderby'];
+        } else {
+            $orderby = 'DESC';
+        }
+
+        $strReq .= sprintf(' ORDER BY _s.%s %s', $sortby_field, $orderby); 
       
         if (!empty($limit)) {
 			$strReq .= $this->con->limit($limit);

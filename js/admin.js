@@ -26,17 +26,17 @@ $(function() {
 		});
 	}
 
-	$('#filters-songs')
+	$('.filters-form-control')
 		.show()
 		.click(function(e) {
-			$(this).toggleClass('open', $('#filters-songs-form').is(':hidden'));
-			$('#filters-songs-form').toggleClass('hide');
-			if ($('#filters-songs-form').is(':hidden')) {
+			var associated_form = $(this).parent().next();
+			$(this).toggleClass('open', associated_form.is(':hidden'));
+			associated_form.toggleClass('hide');
+			if (associated_form.is(':hidden')) {
 				$(this).text(rslt_filters.show);
 			} else {
 				$(this).text(rslt_filters.hide);
 			}
-			e.preventDefault();
 		});
 
 	if ($('#songs_action').val()=='' && $('#songs_action').val()!='associate_to_album') {
