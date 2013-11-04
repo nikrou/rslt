@@ -29,3 +29,14 @@ $_menu['Blog']->addItem('RSLT',
 preg_match('/plugin.php\?p=rslt/', $_SERVER['REQUEST_URI']),
 $core->auth->check('admin,contentadmin', $core->blog->id)
 );
+
+// add metadata 
+$core->addBehavior('adminPostHeaders', array('rsltAdminBehaviors', 'adminPostHeaders'));
+if ($core->hasBehavior('adminPostFormItems')) {
+    $core->addBehavior('adminPostFormItems', array('rsltAdminBehaviors', 'adminPostFormItems'));
+} else {
+    // may be deprecated
+    $core->addBehavior('adminPostFormSidebar', array('rsltAdminBehaviors', 'adminPostFormSidebar'));
+}
+$core->addBehavior('adminAfterPostUpdate', array('rsltAdminBehaviors', 'adminAfterPostUpdate'));
+$core->addBehavior('adminAfterPostCreate', array('rsltAdminBehaviors', 'adminAfterPostCreate'));

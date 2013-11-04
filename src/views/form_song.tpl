@@ -1,6 +1,7 @@
 <html>
   <head>
     <title><?php echo $page_title.' - '.__('Songs'); ?></title>
+    <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
   </head>
   <body>
@@ -15,19 +16,21 @@
 
     <form action="<?php echo $p_url;?>" method="post" id="form-song">
       <p class="field">
-	<label class="required" for="song_title">
+	<label class="required title" for="song_title">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Title:');?>
 	</label>
 	<?php echo form::field('song_title', 100, 255, html::escapeHTML($song['title']), '');?>
       </p>
-      <p class="field">
-	<label class="required" for="song_url">
-	  <abbr title="<?php echo __('Required field');?>">*</abbr>
-	  <?php echo __('URL:');?>
-	</label>
-	<?php echo form::field('song_url', 100, 255, html::escapeHTML($song['url']), '');?>
-      </p>
+      <div class="lockable">
+	<p class="field">
+	  <label for="song_url"><?php echo __('URL:');?></label>
+	  <?php echo form::field('song_url', 100, 255, html::escapeHTML($song['url']), '');?>
+	</p>
+	<p class="form-note warn">
+	  <?php echo __('Warning: If you set the URL manually, it may conflict with another song.');?>
+	</p>
+      </div>
       <p class="field">
 	<label class="required" for="song_author">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
@@ -44,7 +47,6 @@
       </p>
       <p class="field">
 	<label class="required" for="song_adaptator">
-	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Adaptator:');?>
 	</label>
 	<?php echo form::field('song_adaptator', 100, 255, html::escapeHTML($song['adaptator']), '');?>
@@ -62,6 +64,12 @@
 	  <?php echo __('Editor:');?>
 	</label>
 	<?php echo form::field('song_editor', 100, 255, html::escapeHTML($song['editor']), '');?>
+      </p>
+      <p class="field">
+	<label for="song_other_editor">
+	  <?php echo __('Other editor:');?>
+	</label>
+	<?php echo form::field('song_other_editor', 100, 255, html::escapeHTML($song['other_editor']), '');?>
       </p>
       <p class="field">
 	<label class="required" for="song_publication_date">

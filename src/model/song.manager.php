@@ -22,7 +22,7 @@
 class songManager extends objectManager
 {
     public static $fields = array('title', 'publication_date', 'author', 'compositor', 'adaptator',
-    'singer', 'editor', 'original_title', 'url');
+    'singer', 'editor', 'other_editor', 'original_title', 'url');
 
     public static $require_fields = array('title', 'publication_date', 'author', 'singer');
 

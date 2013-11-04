@@ -23,7 +23,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $page_title = __('New song');
 $song = array('title' => '', 'author' => '', 'compositor' => '', 'adaptator' => '',
-'singer' => '', 'publication_date' => '', 'editor' => '', 'url' => '');
+'singer' => '', 'publication_date' => '', 'editor' => '', 'other_editor' => '', 'url' => '');
 
 $song_manager = new songManager($core);
 
@@ -61,6 +61,7 @@ if (($action=='edit') && !empty($_GET['id'])) {
         $song['adaptator'] = $rs->adaptator;
         $song['singer'] = $rs->singer;
         $song['editor'] = $rs->editor;
+        $song['other_editor'] = $rs->other_editor;
         $song['url'] = $rs->url;
         $song['publication_date'] = $rs->publication_date;
         $_SESSION['song_id'] = $_GET['id'];
@@ -75,6 +76,7 @@ if (!empty($_POST['save_song'])) {
     $cur->adaptator = (string) $_POST['song_adaptator'];
     $cur->singer = (string) $_POST['song_singer'];
     $cur->editor = (string) $_POST['song_editor'];
+    $cur->other_editor = (string) $_POST['song_other_editor'];
     $cur->publication_date = (int) $_POST['song_publication_date'];
     $cur->url = (string) $_POST['song_url'];
  

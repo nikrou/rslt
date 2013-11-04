@@ -43,19 +43,6 @@ $(function() {
 		$('#album-input').addClass('hide');
 	}	
 
-	$('#form-songs').submit(function() {
-		var action = $(this).find('select[name="action"]').val();
-		var count_checked = $('input[name="songs[]"]:checked', $(this)).length;
-		if (count_checked==0) {
-			return false;
-		}
-		if (action=='delete') {
-			return window.confirm(rslt_confirm_delete_songs.replace('%s',count_checked));
-		}
-		
-		return true;
-	});
-
 	$('#songs_action').change(function() {
 		var action = $(this).val();
 		if (action=='associate_to_album') {
@@ -73,18 +60,36 @@ $(function() {
 		}
 	});
 
-	$('#form-albums').submit(function() {
+	$('#form-albums, #form-songs').submit(function() {
 		var action = $(this).find('select[name="action"]').val();
-		console.log('action=',action);
+		var objects = $(this).attr('id').replace(/form-/, '');
+		var count_checked = $('input[name="'+objects+'[]"]:checked', $(this)).length;
+		if (count_checked==0) {
+			return false;
+		}
 		if (action=='delete') {
-			var count_checked = $('input[name="albums[]"]:checked', $(this)).length;
-			if (count_checked==0) {
-				return false;
+			if (count_checked==1) {
+				objects = objects.substring(0,objects.length-1);
 			}
 
-			return window.confirm(rslt_confirm_delete_albums.replace('%s',count_checked));
+			return window.confirm(rslt_confirm_delete[objects].replace('%s',count_checked));
 		}
 		
 		return true;
+	});
+
+	$('.lockable').each(function() {
+		var me = $(this);
+		var form_note = me.find('.form-note');
+		form_note.hide();
+		var img = $('<img src="images/locker.png" alt"'+dotclear.msg.click_to_unlock+'">');
+		img.css('cursor', 'pointer').click(function() {
+			$(this).prev('input').prop('disabled', false);
+			form_note.show();
+		});
+		me.find('input').each(function() {
+			$(this).prop('disabled', true).after(img);
+		});
+		
 	});
 });

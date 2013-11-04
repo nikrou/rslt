@@ -29,6 +29,7 @@ $__autoload['Authors'] = dirname(__FILE__).'/src/model/authors.php';
 $__autoload['referenceSong'] = dirname(__FILE__).'/src/model/reference.song.php';
 $__autoload['rsltUrlHandlers'] = dirname(__FILE__).'/src/utils/rslt.url.handlers.php';
 $__autoload['rsltBehaviors'] = dirname(__FILE__).'/src/utils/rslt.behaviors.php';
+$__autoload['rsltAdminBehaviors'] = dirname(__FILE__).'/src/utils/rslt.admin.behaviors.php';
 $__autoload['rsltTpl'] = dirname(__FILE__).'/src/utils/rslt.tpl.php';
 $__autoload['adminSongsList'] = dirname(__FILE__).'/src/utils/rslt.admin.songs.list.php';
 $__autoload['adminAlbumsList'] = dirname(__FILE__).'/src/utils/rslt.admin.albums.list.php';

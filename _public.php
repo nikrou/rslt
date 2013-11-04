@@ -65,3 +65,10 @@ $core->tpl->addBlock('AlbumSongsAuthors', array('rsltTpl', 'AlbumSongsAuthors'))
 $core->tpl->addValue('AuthorId', array('rsltTpl', 'AuthorId'));
 $core->tpl->addValue('AuthorURL', array('rsltTpl', 'AuthorURL'));
 $core->tpl->addValue('AuthorDisplayName', array('rsltTpl', 'AuthorDisplayName'));
+
+// post authors
+$core->tpl->addBlock('MetaAuthors', array('rsltTpl', 'MetaAuthors'));
+$core->tpl->addValue('MetaAuthorId', array('rsltTpl', 'MetaAuthorId'));
+$core->tpl->addValue('MetaAuthorURL', array('rsltTpl', 'MetaAuthorURL'));
+$core->tpl->addValue('MetaAuthorDisplayName', array('rsltTpl', 'MetaAuthorDisplayName'));
+$core->tpl->addValue('MetaAuthorsData', array('rsltTpl', 'MetaAuthorsData'));

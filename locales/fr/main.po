@@ -53,6 +53,9 @@ msgstr "Interprète : "
 msgid "Editor:"
 msgstr "Editeur : "
 
+msgid "Other editor:"
+msgstr "Autre éditeur : "
+
 #: src/views/form_song.tpl:69 src/views/form_album.tpl:46
 #: src/views/index.tpl:101
 msgid "Publication date:"
@@ -71,7 +74,7 @@ msgstr "Albums"
 #, php-format
 msgid "Are you sure you want to remove selected songs from album (%s)?"
 msgstr ""
-"Êtes-vous certain de vouloir supprimer la(es) chanson(s) sélectionée(s) (%s)"
+"Êtes-vous certain de vouloir supprimer la(es) chanson(s) sélectionnée(s) (%s)"
 
 #: src/views/form_album.tpl:76
 msgid ""
@@ -97,13 +100,24 @@ msgstr "Pas de chanson dans cet album"
 #, php-format
 msgid "Are you sure you want to delete selected songs (%s)?"
 msgstr ""
-"Êtes-vous certain de vouloir supprimer la(es) chanson(s) sélectionée(s) (%s)"
+"Êtes-vous certain de vouloir supprimer les chansons sélectionnées (%s) ? "
+
+#: src/views/index.tpl:8
+#, php-format
+msgid "Are you sure you want to delete selected song?"
+msgstr ""
+"Êtes-vous certain de vouloir supprimer la chanson sélectionnée ?"
 
 #: src/views/index.tpl:9
 #, php-format
 msgid "Are you sure you want to delete selected albums (%s)?"
 msgstr ""
-"Êtes-vous certain de vouloir supprimer le(s) album(s) sélectioné(s) (%s)"
+"Êtes-vous certain de vouloir supprimer les albums sélectionnés (%s) ?"
+
+#, php-format
+msgid "Are you sure you want to delete selected album?"
+msgstr ""
+"Êtes-vous certain de vouloir supprimer l'album sélectionné ? "
 
 #: src/views/index.tpl:10 src/views/index.tpl:86 src/views/index.tpl:161
 msgid "Show filters"
@@ -272,11 +286,15 @@ msgstr "Les données ont été chargées."
 
 #: src/controller/controllerSong.php:38
 msgid "The song has been associated to album."
-msgstr "La chanson a été associée à l'album."
+msgid_plural "The songs have been associated to album."
+msgstr[0] "La chanson a été associée à l'album."
+msgstr[1] "Les chanson ont été associées à l'album."
 
 #: src/controller/controllerSong.php:49
 msgid "The song has been deleted."
-msgstr "La chanson a été supprimée."
+msgid_plural "The songs have been deleted."
+msgstr[0] "La chanson a été supprimée."
+msgstr[1] "Les chansons ont été supprimées."
 
 #: src/controller/controllerSong.php:84
 msgid "The song has been updated."
@@ -288,7 +306,9 @@ msgstr "La chanson a été ajoutée."
 
 #: src/controller/controllerAlbum.php:47
 msgid "The song has been removed from album."
-msgstr "La chanson a été supprimée de l'album."
+msgid_plural "The songs have been removed from album."
+msgstr[0] "La chanson a été supprimée de l'album."
+msgstr[1] "Les chanson ont été supprimées de l'album."
 
 #: src/controller/controllerAlbum.php:63
 msgid "The order of songs in album has been saved."
@@ -296,7 +316,9 @@ msgstr "L'ordre des chansons dans l'album a été mis à jour."
 
 #: src/controller/controllerAlbum.php:73
 msgid "The album has been deleted."
-msgstr "L'album a été supprimé."
+msgid_plural "The albums have been deleted."
+msgstr[0] "L'album a été supprimé."
+msgstr[1] "Les albums ont été supprimés."
 
 #: src/controller/controllerAlbum.php:80
 msgid "Edit album"
@@ -353,6 +375,9 @@ msgstr "Interprète"
 msgid "Editor"
 msgstr "Editeur"
 
+msgid "Other editor"
+msgstr "Autre éditeur"
+
 #: src/utils/rslt.admin.songs.list.php:53
 #: src/utils/rslt.admin.albums.list.php:44
 msgid "Publication date"
@@ -362,3 +387,9 @@ msgstr "Année de publication"
 #, php-format
 msgid "You must provide %s field"
 msgstr "Vous devez remplir le champ %s"
+
+msgid "Warning: If you set the URL manually, it may conflict with another album."
+msgstr "Attention : si vous indiquez l'URL manuellement, celle-ci peut entrer en conflit avec un autre album."
+
+msgid "Warning: If you set the URL manually, it may conflict with another song."
+msgstr "Attention : si vous indiquez l'URL manuellement, celle-ci peut entrer en conflit avec une autre chanson."

@@ -62,6 +62,7 @@ $s->rslt_song
 ->adaptator('varchar', 255, true, null)
 ->singer('text', 0, true, null)
 ->editor('varchar', 255, true, null)
+->other_editor('varchar', 255, true, null)
 ->publication_date('bigint', 0, false)
 ->url('varchar', 255, true, null)
 ->created_at('timestamp', 0, false, 'now()')

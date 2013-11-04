@@ -90,13 +90,13 @@ if (!empty($_GET['publication_date_id']) && !empty($publication_date_combo[$_GET
 if (!empty($_GET['sortby_album'])) {
     $sortby_album = $_GET['sortby_album'];
     $filters_params['sortby'] = $sortby_album;
-    $active_songs_filters = true;
+    $active_albums_filters = true;
 }
 
 if (!empty($_GET['order_album'])) {
     $order_album = $_GET['order_album'];
     $filters_params['orderby'] = $order_album;
-    $active_songs_filters = true;
+    $active_albums_filters = true;
 }
 
 try {

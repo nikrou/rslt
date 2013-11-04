@@ -48,7 +48,7 @@ class objectManager
         
         $cur->blog_id = (string) $this->blog->id;
         if ($cur->url == '') {
-            $cur->url = text::tidyURL((string) $cur->title, false);
+            $cur->url = text::str2URL((string) $cur->title, false);
         }
 
         try {
@@ -67,7 +67,7 @@ class objectManager
 
     public function update($id, $cur) {
         if ($cur->url == '') {
-            $cur->url = text::tidyURL((string) $cur->title, false);
+            $cur->url = text::str2URL((string) $cur->title, false);
         }
 
         $cur->update('WHERE id = '.(int) $id." AND blog_id = '".$this->con->escape($this->blog->id)."'");
@@ -113,7 +113,7 @@ class objectManager
                 $cur->$field = $value;
             }
             
-            $rs = $this->findByURL(text::tidyURL((string) $object['title'], false));
+            $rs = $this->findByURL(text::str2URL((string) $object['title'], false));
             if (!$rs->isEmpty()) {
                 $cur->url = $rs->publication_date . '-' .$rs->url;
             }

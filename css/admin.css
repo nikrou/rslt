@@ -1,4 +1,12 @@
 /**/
+p.field label.title {
+  width: 11em;
+}
+
+label.title {
+  font-size: 1.3em;
+}
+
 p.top-add { 
   margin-bottom: 1em;
 }

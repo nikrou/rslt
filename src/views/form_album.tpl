@@ -20,19 +20,23 @@
 
     <form action="<?php echo $p_url;?>" method="post" id="album-form">
       <p class="field">
-	<label class="required" for="album_title">
+	<label class="required title" for="album_title">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Title:');?>
 	</label>
 	<?php echo form::field('album_title', 100, 255, html::escapeHTML($album['title']), '');?>
       </p>
-      <p class="field">
-	<label class="required" for="album_url">
-	  <abbr title="<?php echo __('Required field');?>">*</abbr>
-	  <?php echo __('URL:');?>
-	</label>
-	<?php echo form::field('album_url', 100, 255, html::escapeHTML($album['url']), '');?>
-      </p>
+      <div class="lockable">
+	<p class="field">
+	  <label for="album_url">
+	    <?php echo __('URL:');?>
+	  </label>
+	  <?php echo form::field('album_url', 100, 255, html::escapeHTML($album['url']), '');?>
+	</p>
+	<p class="form-note warn">
+	  <?php echo __('Warning: If you set the URL manually, it may conflict with another album.');?>
+	</p>
+      </div>
       <p class="field">
 	<label class="required" for="album_singer">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>

@@ -36,12 +36,12 @@ class Authors
     }
 
     public static function getAuthorURL($name) {
-        return text::tidyURL($name, false);
+        return text::str2URL($name, false);
     }
 
     public static function getAuthorFromURL($author_url) {
         foreach (self::$list as $author) {
-            if (text::tidyURL($author)==$author_url) {
+            if (text::str2URL($author)==$author_url) {
                 return $author;
             }
         }
@@ -56,6 +56,21 @@ class Authors
 
         if (preg_match_all($pattern, $subject, $matches)) {
             $res = implode(' ', array_map(array('self', 'getAuthorURL'), array_unique($matches[1])));
+        }
+
+        return $res;
+    }
+
+    public static function getDataFromMeta($post_meta) {
+        global $core;
+
+        $res = '';
+        $meta_str = $core->meta->getMetaStr($post_meta, 'rslt');
+        if (!empty($meta_str)) {
+            $post_authors = json_decode($meta_str);
+            foreach ($post_authors as $author) {
+                $res .= self::getAuthorFromURL($author).' ';
+            }
         }
 
         return $res;

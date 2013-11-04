@@ -5,8 +5,11 @@
     <?php echo dcPage::jsPageTabs($default_tab);?>
     <script type="text/javascript">
       //<![CDATA[
-      var rslt_confirm_delete_songs = "<?php echo __('Are you sure you want to delete selected songs (%s)?');?>";
-      var rslt_confirm_delete_albums = "<?php echo __('Are you sure you want to delete selected albums (%s)?');?>";
+      var rslt_confirm_delete = [];
+      rslt_confirm_delete['songs'] = "<?php echo __('Are you sure you want to delete selected songs (%s)?');?>";
+      rslt_confirm_delete['song'] = "<?php echo __('Are you sure you want to delete selected song?');?>";
+      rslt_confirm_delete['albums'] = "<?php echo __('Are you sure you want to delete selected albums (%s)?');?>";
+      rslt_confirm_delete['album'] = "<?php echo __('Are you sure you want to delete selected album?');?>";
       var rslt_filters = {show:"<?php echo __('Show filters');?>",hide:"<?php echo __('Hide filters');?>"};
       var rslt_albums_service = "<?php echo $rslt_albums_service;?>";
       //]]>
