@@ -60,10 +60,40 @@ class rsltTpl
        return '<?php echo '.sprintf($f, '$_ctx->album->singer').';?>';
    }   
 
+   public static function AlbumPageBioExpress($attr) {
+       $f = $GLOBALS['core']->tpl->getFilters($attr);
+       
+       return '<?php echo '.sprintf($f, '$_ctx->album->bio_express').';?>';
+   }   
+
    public static function AlbumPagePublicationDate($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
        
        return '<?php echo '.sprintf($f, '$_ctx->album->publication_date').';?>';
+   }   
+
+   public static function AlbumPageIfMediaSrc($attr, $content) {
+       return
+           '<?php if ($_ctx->album->media_id!==null):?>'.
+           $content.
+           '<?php endif; ?>';
+   }
+
+   public static function AlbumPageMediaSrc($attr) {
+       $f = $GLOBALS['core']->tpl->getFilters($attr);
+       
+       if (!empty($attr['size'])) {
+           $size = $attr['size'];
+       } else {
+           $size = 'sq';
+       }
+
+       $res = "<?php\n";
+       $res .= '$media = new dcMedia($core);';
+       $res .= '$file = $media->getFile($_ctx->album->media_id);';
+       $res .= 'echo '.sprintf($f, '$file->media_thumb[\''.$size.'\']').';?>';
+
+       return $res;
    }   
 
    public static function AlbumSongs($attr, $content) {

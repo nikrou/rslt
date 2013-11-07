@@ -1,16 +1,21 @@
 rslt/CHANGELOG.md
+rslt/js/post.js
 rslt/js/jquery.js
 rslt/js/jquery.rslt.js
+rslt/js/popup.js
 rslt/js/admin.js
 rslt/js/jquery.ui.autocomplete.js
+rslt/TODO
 rslt/BUGS
 rslt/index.php
 rslt/LICENSE
+rslt/src/views/popup_media.tpl
 rslt/src/views/form_song.tpl
 rslt/src/views/form_album.tpl
 rslt/src/views/index.tpl
 rslt/src/views/load.tpl
 rslt/src/controller/controllerLoad.php
+rslt/src/controller/controllerPopupMedia.php
 rslt/src/controller/controllerSong.php
 rslt/src/controller/controllerAlbum.php
 rslt/src/controller/controllerIndex.php
@@ -18,6 +23,7 @@ rslt/src/utils/rslt.tpl.php
 rslt/src/utils/rslt.admin.songs.list.php
 rslt/src/utils/rslt.url.handlers.php
 rslt/src/utils/rslt.admin.albums.list.php
+rslt/src/utils/rslt.admin.behaviors.php
 rslt/src/utils/rslt.pager.php
 rslt/src/utils/rslt.admin.combo.php
 rslt/src/utils/rslt.dashboard.php
@@ -40,6 +46,7 @@ rslt/default-templates/inc_authors_filter.html
 rslt/default-templates/inc_album.html
 rslt/default-templates/song.html
 rslt/default-templates/albums.html
+rslt/default-templates/inc_post_authors_filter.html
 rslt/default-templates/inc_albums.html
 rslt/_install.php
 rslt/css/admin.css

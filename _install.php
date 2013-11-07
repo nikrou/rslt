@@ -41,6 +41,8 @@ $s->rslt_album
 ->singer('text', 0, true, null)
 ->url('varchar', 255, true, null)
 ->publication_date('bigint', 0, false)
+->media_id('bigint', 0, true)
+->bio_express('text', 0, true, null)
 ->created_at('timestamp', 0, false, 'now()')
 ->updated_at('timestamp', 0, false, 'now()')
 ->unique('uk_album_url','url')

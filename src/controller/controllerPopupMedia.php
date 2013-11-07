@@ -19,12 +19,19 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-$this->registerModule(
-		      /* Name */		'RSLT',
-		      /* Description*/	'Restons sur leurs traces',
-		      /* Author */		'Nicolas Roudaire',
-		      /* Version */		'0.2.6',
-		      /* Permissions */	array('permissions' => 'admin,contentadmin', 'type' => 'plugin')
-		      );
+$d = isset($_GET['d']) ? $_GET['d'] : null;
+$album_id = !empty($_GET['media_id']) ? (int) $_GET['media_id'] : null;
+$dir = null;
+
+try {
+    $media = new dcMedia($core);
+	$media->chdir($d);
+	$media->getDir();
+	$dir = &$media->dir;
+} catch (Exception $e) {
+    $core->error->add($e->getMessage());
+}
+
+include(dirname(__FILE__).'/../views/popup_media.tpl');

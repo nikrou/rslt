@@ -39,7 +39,9 @@ $Objects = array('album', 'song');
 // default controller
 $controller_name = 'controllerIndex.php';
 
-if (!empty($_POST['action']) && ($_POST['action']=='load') && !empty($_POST['file'])) {
+if (!empty($_GET['popup'])) {
+    $controller_name = 'controllerPopupMedia.php';
+} elseif (!empty($_POST['action']) && ($_POST['action']=='load') && !empty($_POST['file'])) {
     $controller_name = 'controllerLoad.php';
 } elseif (!empty($_REQUEST['object']) && in_array($_REQUEST['object'], $Objects)) {
     if (!empty($_REQUEST['action'])) {

@@ -22,7 +22,8 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $page_title = __('New album');
-$album = array('title' => '', 'singer' => '', 'url' => '', 'publication_date' => '');
+$album = array('title' => '', 'singer' => '', 'url' => '', 
+'publication_date' => '', 'media_id' => '', 'bio_express' => '');
 
 $action = 'edit';
 $songs = null;
@@ -86,6 +87,15 @@ if (($action=='edit') && !empty($_GET['id'])) {
         $album['singer'] = $rs->singer;
         $album['publication_date'] = $rs->publication_date;
         $album['url'] = $rs->url;
+        $album['media_id'] = $rs->media_id;
+        $album['bio_express'] = $rs->bio_express;
+
+        if (!empty($album['media_id'])) {
+            $media = new dcMedia($core);
+            if (($file = $media->getFile($album['media_id']))!=null) {
+                $album['media_icon'] = $file->media_icon;
+            }
+        }
         $_SESSION['album_id'] = $_GET['id'];
     }
 
@@ -98,6 +108,8 @@ if (!empty($_POST['save_album'])) {
 	$cur->singer = (string) $_POST['album_singer'];
 	$cur->publication_date = (string) $_POST['album_publication_date'];
 	$cur->url = (string) $_POST['album_url'];
+	$cur->media_id = (int) $_POST['album_media_id'];
+	$cur->bio_express = (string) $_POST['album_bio_express'];
 
 	try {
         if ($action=='edit') {

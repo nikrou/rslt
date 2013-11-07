@@ -51,9 +51,26 @@
 	</label>
 	<?php echo form::field('album_publication_date', 6, 4, html::escapeHTML($album['publication_date']), '');?>
       </p>
+      <p class="field">
+	<label for="album_media_id">
+	  <?php echo __('Media Id:');?>
+	</label>
+	<?php echo form::field('album_media_id', 6, 6, html::escapeHTML($album['media_id']));?>
+	<?php if (!empty($album['media_icon'])):?>
+	<img class="show-media" src="images/outgoing-blue.png" alt=""/>
+	<img class="media-icon" src="<?php echo $album['media_icon'];?>" alt=""/>
+	<?php endif;?>
+      </p>
+      <p class="area" id="bio_express_area">
+	<label for="album_bio_express">
+	  <?php echo __('Bio express:');?>
+	</label>
+	<?php echo form::textarea('album_bio_express', 50, 20, html::escapeHTML($album['bio_express']));?>
+      </p>
       <p>
 	<?php echo form::hidden(array('p',''), 'rslt');?>
 	<?php echo form::hidden(array('object',''), 'album');?>
+	<?php echo form::hidden('album_id', $album['id']);?>
 	<?php echo form::hidden(array('action',''), $action);?>
 	<?php echo $core->formNonce();?>
 	<input type="submit" name="save_album" value="<?php echo __('Save'); ?>"/>

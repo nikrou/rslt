@@ -7,6 +7,24 @@ label.title {
   font-size: 1.3em;
 }
 
+.lockable .locker {
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.lockable .form-note {
+  margin-left: 14em;
+}
+
+.show-media {
+  cursor: pointer;
+}
+
+.media-icon {
+  position: absolute;
+  margin-left: 5px;
+}
+
 p.top-add { 
   margin-bottom: 1em;
 }
@@ -145,4 +163,27 @@ p.top-add {
 }
 .ui-menu .ui-state-disabled a {
   cursor: default;
+}
+
+/* mini media manager */
+.directories {
+  list-style: none;
+  padding: 0 0 0 10px;
+  margin-bottom: 35px;
+}
+
+.directories li {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.files li {
+  display: inline-block;
+  width: 33%;
+  height: 70px;
+  margin-bottom: 10px;
+}
+
+.button {
+  margin-left: 10px
 }

@@ -82,8 +82,8 @@ $(function() {
 		var me = $(this);
 		var form_note = me.find('.form-note');
 		form_note.hide();
-		var img = $('<img src="images/locker.png" alt"'+dotclear.msg.click_to_unlock+'">');
-		img.css('cursor', 'pointer').click(function() {
+		var img = $('<img class="locker" src="images/locker.png" alt"'+dotclear.msg.click_to_unlock+'">');
+		img.click(function() {
 			$(this).prev('input').prop('disabled', false);
 			form_note.show();
 		});
@@ -92,4 +92,25 @@ $(function() {
 		});
 		
 	});
+
+	$('#album_media_id').click(function() {
+		var open_url = 'plugin.php?p=rslt&popup=1&media_id='+$('#album_id').attr('value');
+		var p_win = window.open(open_url,'dc_popup',
+					'alwaysRaised=yes,dependent=yes,toolbar=yes,height=500,width=760,'+
+					'menubar=no,resizable=yes,scrollbars=yes,status=no');
+
+		return false;
+	});
+
+	if ($('.show-media').length>0) {
+		var media_icon = $('.media-icon');
+		media_icon.hide();
+		$('.show-media').click(function() {
+			if (media_icon.is(':visible')) {
+				media_icon.hide();
+			} else {
+				media_icon.show();
+			}
+		});
+	}
 });

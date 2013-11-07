@@ -21,7 +21,7 @@
 
 class albumManager extends objectManager
 {
-    public static $fields = array('title', 'singer', 'publication_date', 'url');
+    public static $fields = array('title', 'singer', 'publication_date', 'url', 'media_id', 'bio_express');
 
     public static $required_fields = array('title', 'singer', 'publication_date');
 

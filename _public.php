@@ -53,6 +53,9 @@ $core->tpl->addValue('AlbumURL', array('rsltTpl', 'AlbumURL'));
 $core->tpl->addValue('AlbumPageTitle', array('rsltTpl', 'AlbumPageTitle'));
 $core->tpl->addValue('AlbumPageSinger', array('rsltTpl', 'AlbumPageSinger'));
 $core->tpl->addValue('AlbumPagePublicationDate', array('rsltTpl', 'AlbumPagePublicationDate'));
+$core->tpl->addBlock('AlbumPageIfMediaSrc', array('rsltTpl', 'AlbumPageIfMediaSrc'));
+$core->tpl->addValue('AlbumPageMediaSrc', array('rsltTpl', 'AlbumPageMediaSrc'));
+$core->tpl->addValue('AlbumPageBioExpress', array('rsltTpl', 'AlbumPageBioExpress'));
 
 $core->tpl->addBlock('AlbumSongs', array('rsltTpl', 'AlbumSongs'));
 $core->tpl->addBlock('AlbumSongsHeader', array('rsltTpl', 'AlbumSongsHeader'));
