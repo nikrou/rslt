@@ -78,6 +78,13 @@ $(function() {
 		return true;
 	});
 
+	$('#album-form, #song-form').submit(function() {
+		// enable url field so it can be transmitted
+		$('input:disabled').prop('disabled', false);
+		
+		return true;
+	});
+
 	$('.lockable').each(function() {
 		var me = $(this);
 		var form_note = me.find('.form-note');
@@ -94,7 +101,9 @@ $(function() {
 	});
 
 	$('#album_media_id').click(function() {
-		var open_url = 'plugin.php?p=rslt&popup=1&media_id='+$('#album_id').attr('value');
+		window.the_toolbar = this; // unused but needed by admin/js/jsToolbar/popup_media.js
+
+		var open_url = 'media.php?p=rslt&popup=1&media_id='+$('#album_id').attr('value');
 		var p_win = window.open(open_url,'dc_popup',
 					'alwaysRaised=yes,dependent=yes,toolbar=yes,height=500,width=760,'+
 					'menubar=no,resizable=yes,scrollbars=yes,status=no');

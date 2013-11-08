@@ -3,9 +3,11 @@ $(function() {
 		window.close();
 	});
 
-	$('.add-media').click(function(e) {
-		e.preventDefault();
-		window.opener.$('#album_media_id').prop('value',  $(this).attr('href').replace(/.*media_id=(\d+).*/, '$1'));
-		window.close();
-	});
+	$('#media-insert-ok')
+		.unbind('click')
+		.click(function(e) {
+			e.preventDefault();
+			window.opener.$('#album_media_id').prop('value', $('input[name="id"]').attr('value'));
+			window.close();
+		});
 });

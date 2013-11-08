@@ -14,7 +14,7 @@
     <p class="message"><?php echo $message;?></p>
     <?php endif;?>
 
-    <form action="<?php echo $p_url;?>" method="post" id="form-song">
+    <form action="<?php echo $p_url;?>" method="post" id="song-form">
       <p class="field">
 	<label class="required title" for="song_title">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>

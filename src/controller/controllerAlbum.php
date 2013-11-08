@@ -107,7 +107,9 @@ if (!empty($_POST['save_album'])) {
 	$cur->title = (string) $_POST['album_title'];
 	$cur->singer = (string) $_POST['album_singer'];
 	$cur->publication_date = (string) $_POST['album_publication_date'];
-	$cur->url = (string) $_POST['album_url'];
+    if (isset($_POST['album_url'])) {
+        $cur->url = (string) $_POST['album_url'];
+	}
 	$cur->media_id = (int) $_POST['album_media_id'];
 	$cur->bio_express = (string) $_POST['album_bio_express'];
 

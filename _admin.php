@@ -40,3 +40,4 @@ if ($core->hasBehavior('adminPostFormItems')) {
 }
 $core->addBehavior('adminAfterPostUpdate', array('rsltAdminBehaviors', 'adminAfterPostUpdate'));
 $core->addBehavior('adminAfterPostCreate', array('rsltAdminBehaviors', 'adminAfterPostCreate'));
+$core->addBehavior('adminPageHTMLHead', array('rsltAdminBehaviors', 'adminPageHTMLHead'));

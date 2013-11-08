@@ -21,6 +21,10 @@
 
 class rsltAdminBehaviors
 {
+	public static function adminPageHTMLHead() {
+		echo dcPage::jsLoad('index.php?pf=rslt/js/popup.js');
+	}
+
     public static function adminAfterPostUpdate($cur, $post_id) {
 		self::adminAfterPostSave($cur, $post_id, true);
 	}

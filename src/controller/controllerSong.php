@@ -78,7 +78,9 @@ if (!empty($_POST['save_song'])) {
     $cur->editor = (string) $_POST['song_editor'];
     $cur->other_editor = (string) $_POST['song_other_editor'];
     $cur->publication_date = (int) $_POST['song_publication_date'];
-    $cur->url = (string) $_POST['song_url'];
+    if (isset($_POST['song_url'])) {
+        $cur->url = (string) $_POST['song_url'];
+	}
  
     try {
         if ($action=='edit') {
