@@ -25,6 +25,6 @@ $this->registerModule(
     /* Name */		'dcEditor',
     /* Description*/	'ckeditor integration in Dotclear',
     /* Author */		'Nicolas Roudaire',
-    /* Version */		'0.3.0',
+    /* Version */		'0.3.1',
     /* Permissions */	array('permissions' => 'admin,contentadmin', 'type' => 'plugin')
 );

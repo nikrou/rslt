@@ -81,15 +81,11 @@
     <?php if ($rslt_active):?>
     <div class="multi-part" id="authors" title="<?php echo __('Authors');?>">
       <h3 class="hidden-if-js"><?php echo __('Authors');?></h3>
-      <?php if (empty(Authors::getAll())):?>
-      <p><strong><?php echo __('No author');?></strong></p>
-      <?php else:?>
       <?php foreach (Authors::getAll() as $author):?>
       <ul>
 	<li><?php echo $author;?></li>
       </ul>
       <?php endforeach;?>
-      <?php endif;?>
     </div>
 
     <div class="multi-part" id="albums" title="<?php echo __('Albums');?>">
