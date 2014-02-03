@@ -22,9 +22,9 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-		      /* Name */		'RSLT',
-		      /* Description*/	'Restons sur leurs traces',
-		      /* Author */		'Nicolas Roudaire',
-		      /* Version */		'0.2.6',
-		      /* Permissions */	array('permissions' => 'admin,contentadmin', 'type' => 'plugin')
-		      );
+    /* Name */		'dcEditor',
+    /* Description*/	'ckeditor integration in Dotclear',
+    /* Author */		'Nicolas Roudaire',
+    /* Version */		'0.3.0',
+    /* Permissions */	array('permissions' => 'admin,contentadmin', 'type' => 'plugin')
+);

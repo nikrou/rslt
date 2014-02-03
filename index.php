@@ -29,9 +29,12 @@ if (!empty($_SESSION['rslt_message'])) {
 $is_super_admin = $core->auth->isSuperAdmin();
 $core->blog->settings->addNameSpace('rslt');
 $rslt_active = $core->blog->settings->rslt->active;
-$rslt_albums_prefix = $core->blog->settings->rslt->albums_prefix;
-$rslt_album_prefix = $core->blog->settings->rslt->album_prefix;
-$rslt_song_prefix = $core->blog->settings->rslt->song_prefix;
+$rslt_prefix['albums'] = $core->blog->settings->rslt->prefix_albums;
+$rslt_prefix['album'] = $core->blog->settings->rslt->prefix_album;
+$rslt_prefix['song'] = $core->blog->settings->rslt->prefix_song;
+$rslt_directory['albums'] = $core->blog->settings->rslt->directory_albums;
+$rslt_directory['bios'] = $core->blog->settings->rslt->directory_bios;
+$rslt_directory['supports'] = $core->blog->settings->rslt->directory_supports;
 
 $Actions = array('add', 'edit');
 $Objects = array('album', 'song');
@@ -39,7 +42,9 @@ $Objects = array('album', 'song');
 // default controller
 $controller_name = 'controllerIndex.php';
 
-if (!empty($_POST['action']) && ($_POST['action']=='load') && !empty($_POST['file'])) {
+if (!empty($_POST['saveconfig'])) {
+    $controller_name = 'controllerConfig.php';
+} elseif (!empty($_POST['action']) && ($_POST['action']=='load') && !empty($_POST['file'])) {
     $controller_name = 'controllerLoad.php';
 } elseif (!empty($_REQUEST['object']) && in_array($_REQUEST['object'], $Objects)) {
     if (!empty($_REQUEST['action'])) {

@@ -38,20 +38,37 @@
 	</div>
 	<?php if ($rslt_active):?>
 	<div class="fieldset">
-	  <h4><?php echo __('Advanced options');?></h4>
+	  <h4><?php echo __('URL');?></h4>
 	  <p class="field">
-	    <label class="classic" for="rslt_albums_prefix"><?php echo __('Albums page prefix:');?></label>
-	    <?php echo form::field('rslt_albums_prefix', 60, 255, $rslt_albums_prefix);?>
+	    <label class="classic" for="rslt_prefix_albums"><?php echo __('Albums page prefix:');?></label>
+	    <?php echo form::field('rslt_prefix_albums', 60, 255, $rslt_prefix['albums']);?>
 	  </p>
 	  <p class="field">
 	    <label class="classic" for="rslt_album_prefix"><?php echo __('Album page prefix:');?></label>
-	    <?php echo form::field('rslt_album_prefix', 60, 255, $rslt_album_prefix);?>
+	    <?php echo form::field('rslt_prefix_album', 60, 255, $rslt_prefix['album']);?>
 	  </p>
 	  <p class="field">
 	    <label class="classic" for="rslt_song_prefix"><?php echo __('Song page prefix:');?></label>
-	    <?php echo form::field('rslt_song_prefix', 60, 255, $rslt_song_prefix);?>
+	    <?php echo form::field('rslt_prefix_song', 60, 255, $rslt_prefix['song']);?>
 	  </p>
 	</div>
+
+	<div class="fieldset">
+	  <h4><?php echo __('Directories for media');?></h4>
+	  <p class="field">
+	    <label class="classic" for="rslt_directory_albums"><?php echo __('Albums direcory:');?></label>
+	    <?php echo form::field('rslt_directory_albums', 60, 255, $rslt_directory['albums']);?>
+	  </p>
+	  <p class="field">
+	    <label class="classic" for="rslt_directory_bios"><?php echo __('Bios direcory:');?></label>
+	    <?php echo form::field('rslt_directory_bios', 60, 255, $rslt_directory['bios']);?>
+	  </p>
+	  <p class="field">
+	    <label class="classic" for="rslt_directory_supports"><?php echo __('Supports direcory:');?></label>
+	    <?php echo form::field('rslt_directory_support', 60, 255, $rslt_directory['supports']);?>
+	  </p>
+	</div>
+
 	<?php endif;?>
 	<p>
 	  <input type="hidden" name="p" value="rslt"/>

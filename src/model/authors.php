@@ -30,9 +30,13 @@ class Authors
     public static function getAuthorId($name) {
         return array_search($name, self::$list);
     }
-
-   public static function getName($id) {
-        return self::$list[$id];
+    
+    public static function getName($id) {
+        if (!empty($id) && !empty(self::$list[$id])) {
+            return self::$list[$id];
+        } else {
+            return null;
+        }
     }
 
     public static function getAuthorURL($name) {

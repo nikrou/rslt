@@ -24,32 +24,6 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 $default_tab = 'settings';
 $rslt_albums_service = sprintf('%s&object=album', $p_url);
 
-if (!empty($_POST['saveconfig'])) {
-    try {
-        $rslt_active = (empty($_POST['rslt_active']))?false:true;
-        $core->blog->settings->rslt->put('active', $rslt_active, 'boolean');
-        
-        if (!empty($_POST['rslt_albums_prefix'])) {
-            $rslt_albums_prefix = trim($_POST['rslt_albums_prefix']);
-            $core->blog->settings->rslt->put('albums_prefix', $rslt_albums_prefix, 'string');
-        }
-        if (!empty($_POST['rslt_album_prefix'])) {
-            $rslt_album_prefix = trim($_POST['rslt_album_prefix']);
-            $core->blog->settings->rslt->put('album_prefix', $rslt_album_prefix, 'string');
-        }
-        if (!empty($_POST['rslt_song_prefix'])) {
-            $rslt_song_prefix = trim($_POST['rslt_song_prefix']);
-            $core->blog->settings->rslt->put('song_prefix', $rslt_song_prefix, 'string');
-        }
-        
-        $_SESSION['rslt_message'] = __('The configuration has been updated.');
-        $_SESSION['rslt_default_tab'] = 'settings';
-        http::redirect($p_url);
-    } catch(Exception $e) {
-        $core->error->add($e->getMessage());
-    }
-}
-
 /* albums */
 /* pagination */
 $album_manager = new albumManager($core);
@@ -156,19 +130,19 @@ if (!empty($_GET['singer_id']) && !empty($singers_combo[$_GET['singer_id']])) {
     $active_songs_filters = true;
 }
 
-if (!empty($_GET['author_id']) && !empty(Authors::getName($_GET['author_id']))) {
+if (!empty($_GET['author_id']) && Authors::getName($_GET['author_id'])) {
     $author_id = $_GET['author_id'];
     $filters_params['like']['author'] = Authors::getName($author_id);
     $active_songs_filters = true;
 }
 
-if (!empty($_GET['compositor_id']) && !empty(Authors::getName($_GET['compositor_id']))) {
+if (!empty($_GET['compositor_id']) && Authors::getName($_GET['compositor_id'])) {
     $compositor_id = $_GET['compositor_id'];
     $filters_params['like']['compositor'] = Authors::getName($compositor_id);
     $active_songs_filters = true;
 }
 
-if (!empty($_GET['adaptator_id']) && !empty(Authors::getName($_GET['adaptator_id']))) {
+if (!empty($_GET['adaptator_id']) && Authors::getName($_GET['adaptator_id'])) {
     $adaptator_id = $_GET['adaptator_id'];
     $filters_params['like']['adaptator'] = Authors::getName($adaptator_id);
     $active_songs_filters = true;

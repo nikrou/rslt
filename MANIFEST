@@ -9,15 +9,14 @@ rslt/TODO
 rslt/BUGS
 rslt/index.php
 rslt/LICENSE
-rslt/src/views/popup_media.tpl
 rslt/src/views/form_song.tpl
 rslt/src/views/form_album.tpl
 rslt/src/views/index.tpl
 rslt/src/views/load.tpl
 rslt/src/controller/controllerLoad.php
-rslt/src/controller/controllerPopupMedia.php
 rslt/src/controller/controllerSong.php
 rslt/src/controller/controllerAlbum.php
+rslt/src/controller/controllerConfig.php
 rslt/src/controller/controllerIndex.php
 rslt/src/utils/rslt.tpl.php
 rslt/src/utils/rslt.admin.songs.list.php

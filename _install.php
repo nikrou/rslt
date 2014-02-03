@@ -28,9 +28,12 @@ $settings = $core->blog->settings;
 $settings->addNamespace('rslt');
 
 $settings->rslt->put('active', false, 'boolean', 'RSLT plugin activated ?', false);
-$settings->rslt->put('albums_prefix', 'albums', 'string', 'RSLT albums prefix', false);
-$settings->rslt->put('album_prefix', 'album', 'string', 'RSLT album prefix', false);
-$settings->rslt->put('song_prefix', 'song', 'string', 'RSLT song prefix', false);
+$settings->rslt->put('prefix_albums', 'albums', 'string', 'RSLT albums prefix', false);
+$settings->rslt->put('prefix_album', 'album', 'string', 'RSLT album prefix', false);
+$settings->rslt->put('prefix_song', 'song', 'string', 'RSLT song prefix', false);
+$settings->rslt->put('directory_albums', 'albums', 'string', 'Directory form media albums', false);
+$settings->rslt->put('directory_bios', 'bios', 'string', 'Directory form media bios', false);
+$settings->rslt->put('directory_supports', 'supports', 'string', 'Directory form media supports', false);
 
 $s = new dbStruct($core->con, $core->prefix);
 
