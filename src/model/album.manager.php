@@ -140,8 +140,10 @@ class albumManager extends objectManager
         $strReq =  'SELECT id, '.implode(',', $this->object_fields);
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
-        $strReq .= sprintf(' AND title ilike \'%s%%\'', $this->con->escape($title));
+        $strReq .= sprintf(' AND UPPER(title) like UPPER(\'%s%%\')', $this->con->escape($title));
  
+        Log::getInstance()->debug($strReq);
+
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
       
