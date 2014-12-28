@@ -56,15 +56,15 @@
 	<div class="fieldset">
 	  <h4><?php echo __('Directories for media');?></h4>
 	  <p class="field">
-	    <label class="classic" for="rslt_directory_albums"><?php echo __('Albums direcory:');?></label>
+	    <label class="classic" for="rslt_directory_albums"><?php echo __('Albums directory:');?></label>
 	    <?php echo form::field('rslt_directory_albums', 60, 255, $rslt_directory['albums']);?>
 	  </p>
 	  <p class="field">
-	    <label class="classic" for="rslt_directory_bios"><?php echo __('Bios direcory:');?></label>
+	    <label class="classic" for="rslt_directory_bios"><?php echo __('Bios directory:');?></label>
 	    <?php echo form::field('rslt_directory_bios', 60, 255, $rslt_directory['bios']);?>
 	  </p>
 	  <p class="field">
-	    <label class="classic" for="rslt_directory_supports"><?php echo __('Supports direcory:');?></label>
+	    <label class="classic" for="rslt_directory_supports"><?php echo __('Supports directory:');?></label>
 	    <?php echo form::field('rslt_directory_support', 60, 255, $rslt_directory['supports']);?>
 	  </p>
 	</div>
@@ -118,7 +118,7 @@
 	      <?php echo form::combo('publication_date_id', $publication_date_combo, $publication_date_id);?>
 	    </p>
 	  </div>
-		
+
 	  <div class="cell">
 	    <h4><?php echo __('Display options');?></h4>
 	    <p><label for="sortby_album" class="ib"><?php echo __('Sort by:');?></label>
@@ -128,7 +128,7 @@
 	    <?php echo form::combo('order_album',$order_combo, $order_album);?>
 	    </p>
 	    <p>
-	      <span class="label ib"><?php echo __('Show');?></span> 
+	      <span class="label ib"><?php echo __('Show');?></span>
 	      <label for="nbs" class="classic">
 		<?php echo form::field('nba',3,3,$nb_per_page_albums), __('albums per page');?>
 	      </label>
@@ -213,7 +213,7 @@
 	      <?php echo form::combo('adaptator_id', $adaptators_combo, $adaptator_id);?>
 	    </p>
 	  </div>
-		
+
 	  <div class="cell">
 	    <h4><?php echo __('Display options');?></h4>
 	    <p><label for="sortby_song" class="ib"><?php echo __('Sort by:');?></label>
@@ -223,7 +223,7 @@
 	    <?php echo form::combo('order_song',$order_combo, $order_song);?>
 	    </p>
 	    <p>
-	      <span class="label ib"><?php echo __('Show');?></span> 
+	      <span class="label ib"><?php echo __('Show');?></span>
 	      <label for="nbs" class="classic">
 		<?php echo form::field('nbs',3,3,$nb_per_page_songs), __('songs per page');?>
 	      </label>
@@ -240,8 +240,8 @@
       <p><strong><?php echo __('No song');?></strong></p>
       <?php else:?>
       <p class="infos"><?php printf(__('%d songs in database'), $songs_counter);?></p>
-      <?php 
-      $songs_list->display($page_songs, $nb_per_page_songs, 
+      <?php
+      $songs_list->display($page_songs, $nb_per_page_songs,
       '<form action="'.$p_url.'" method="post" id="form-songs">'.'%s'.
 	'<div class="two-cols clearfix">'.
 	  '<p class="col checkboxes-helpers"></p>'.
@@ -269,7 +269,7 @@
 	  <input type="submit" value="<?php echo __('Load songs csv file');?>"/>
 	  <input type="hidden" name="action" value="load"/>
 	  <input type="hidden" name="file" value="songs"/>
-	  <input type="hidden" name="object" value="song"/>	  
+	  <input type="hidden" name="object" value="song"/>
 	  <?php echo $core->formNonce();?>
 	</p>
       </form>
@@ -279,7 +279,7 @@
 	  <input type="submit" value="<?php echo __('Load albums csv file');?>"/>
 	  <input type="hidden" name="action" value="load"/>
 	  <input type="hidden" name="file" value="albums"/>
-	  <input type="hidden" name="object" value="album"/>	  
+	  <input type="hidden" name="object" value="album"/>
 	  <?php echo $core->formNonce();?>
 	</p>
       </form>
@@ -289,26 +289,12 @@
 	  <input type="submit" value="<?php echo __('Load songs in albums csv file');?>"/>
 	  <input type="hidden" name="action" value="load"/>
 	  <input type="hidden" name="file" value="albums_songs"/>
-	  <input type="hidden" name="object" value="album_song"/>	  
+	  <input type="hidden" name="object" value="album_song"/>
 	  <?php echo $core->formNonce();?>
 	</p>
       </form>
     </div>
     <?php endif;?>
-    <div class="multi-part" id="about" title="<?php echo __('About');?>">
-      <h3 class="hidden-if-js"><?php echo __('About');?></h3>
-      <p>
-	<?php echo __('If you want more informations on that plugin or have new ideas to develope it, or want to submit a bug or need help (to install or configure it) or for anything else ...');?></p>
-      <p>
-	<?php printf(__('Go to %sthe dedicated page%s in'),
-	      '<a href="http://www.nikrou.net/pages/rslt">',
-	      '</a>');?>
-	<a href="http://www.nikrou.net/">Le journal de nikrou</a>
-      </p>
-      <p><?php echo __('Made by:');?>
-	<a href="http://www.nikrou.net/contact">Nicolas</a> (nikrou)
-      </p>
-    </div>
     <?php dcPage::helpBlock('rslt');?>
   </body>
 </html>

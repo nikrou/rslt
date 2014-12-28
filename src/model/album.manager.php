@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | RSLT - a plugin for dotclear                                          |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2013 Nicolas Roudaire             http://www.nikrou.net  |
+// | Copyright(C) 2013-2014 Nicolas Roudaire        http://www.nikrou.net  |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License version 2 as     |
@@ -25,7 +25,7 @@ class albumManager extends objectManager
 
     public static $required_fields = array('title', 'singer', 'publication_date');
 
-    public function __construct($core) {        
+    public function __construct($core) {
         parent::__construct($core, 'album', self::$required_fields, self::$fields);
 
         $this->table_song = $this->blog->prefix.'rslt_song';
@@ -40,14 +40,14 @@ class albumManager extends objectManager
         $strReq .= ' ON _s.id = _as.song_id';
         $strReq .= ' LEFT JOIN '.$this->table_reference_song.' as _rs';
         $strReq .= ' ON _s.id = _rs.song_id';
-        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';      
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
         $strReq .= ' AND album_id = '.$this->con->escape($album_id);
         $strReq .= ' GROUP BY id, rank';
         $strReq .= ' ORDER BY rank asc';
 
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
-      
+
         return $rs;
     }
 
@@ -67,7 +67,7 @@ class albumManager extends objectManager
         $strReq .= ' ON _s.id = _rs.song_id';
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
         $strReq .= ' AND album_id = '.$this->con->escape($album_id);
- 
+
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
         while ($rs->fetch()) {
@@ -101,8 +101,8 @@ class albumManager extends objectManager
         if (!empty($params['like'])) {
             foreach ($params['like'] as $field => $value) {
                 if ($field=='q') {
-                    $strReq .= sprintf(' AND title like \'%s\'', 
-                    $this->con->escape(str_replace(array('*', '?'), array('%', '_'), $value))
+                    $strReq .= sprintf(' AND title like \'%s\'',
+                                       $this->con->escape(str_replace(array('*', '?'), array('%', '_'), $value))
                     );
                 } elseif (in_array($field, $this->object_fields)) {
                     $strReq .= sprintf(' AND %s like \'%%%s%%\'', $field, $this->con->escape($value));
@@ -124,15 +124,15 @@ class albumManager extends objectManager
             $orderby = 'DESC';
         }
 
-        $strReq .= sprintf(' ORDER BY _a.%s %s', $sortby_field, $orderby); 
-      
+        $strReq .= sprintf(' ORDER BY _a.%s %s', $sortby_field, $orderby);
+
         if (!empty($limit)) {
 			$strReq .= $this->con->limit($limit);
         }
 
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
-      
+
         return $rs;
     }
 
@@ -141,12 +141,10 @@ class albumManager extends objectManager
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
         $strReq .= sprintf(' AND UPPER(title) like UPPER(\'%s%%\')', $this->con->escape($title));
- 
-        Log::getInstance()->debug($strReq);
 
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
-      
+
         return $rs;
     }
 
@@ -157,7 +155,7 @@ class albumManager extends objectManager
 
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
-      
+
         return $rs;
     }
 }

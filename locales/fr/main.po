@@ -393,3 +393,15 @@ msgstr "Attention : si vous indiquez l'URL manuellement, celle-ci peut entrer e
 
 msgid "Warning: If you set the URL manually, it may conflict with another song."
 msgstr "Attention : si vous indiquez l'URL manuellement, celle-ci peut entrer en conflit avec une autre chanson."
+
+msgid "Directories for media"
+msgstr "Répertoires des médias"
+
+msgid "Albums directory:"
+msgstr "Répertoire des albums : "
+
+msgid "Bios directory:"
+msgstr "Répertoire des bios : "
+
+msgid "Supports directory:"
+msgstr "Répertoire des supports : "

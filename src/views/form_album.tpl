@@ -70,7 +70,6 @@
       <p>
 	<?php echo form::hidden(array('p',''), 'rslt');?>
 	<?php echo form::hidden(array('object',''), 'album');?>
-	<?php echo form::hidden('album_id', $album['id']);?>
 	<?php echo form::hidden(array('action',''), $action);?>
 	<?php echo $core->formNonce();?>
 	<input type="submit" name="save_album" value="<?php echo __('Save'); ?>"/>
