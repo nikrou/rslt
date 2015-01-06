@@ -19,30 +19,16 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-class rsltUrlHandlers extends dcUrlHandlers
-{
-    public static function albums($args) {
-        self::serveDocument('albums.html');
+if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_GET['q'])) {
+    header('Content-type: application/json');
+    $person_manager = new personManager($core);
+    $persons = $person_manager->searchByName($_GET['q']);
+    $response = array();
+    while ($persons->fetch()) {
+        $response[] = array('id' => $persons->id, 'name' => $persons->name);
     }
-
-    public static function album($args) {
-        global $core, $_ctx;
-
-        if (empty($args)) {
-            throw new Exception('Page not found', 404);
-        }
-
-        $album_manager = new albumManager($core);
-        $_ctx->album = $album_manager->findByURL($args);
-
-        if ($_ctx->album->isEmpty()) {
-            throw new Exception("Page not found", 404);
-        }
-
-        self::serveDocument('album.html');
-    }
-
-    public static function song($args) {
-        self::serveDocument('song.html');
-    }
+    echo json_encode($response);
+    exit();
 }

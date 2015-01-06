@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | RSLT - a plugin for dotclear                                          |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2013 Nicolas Roudaire             http://www.nikrou.net  |
+// | Copyright(C) 2013-2015 Nicolas Roudaire        http://www.nikrou.net  |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License version 2 as     |
@@ -24,8 +24,8 @@ if (!defined('DC_RC_PATH')) { return; }
 $__autoload['objectManager'] = dirname(__FILE__).'/src/model/object.manager.php';
 $__autoload['songManager'] = dirname(__FILE__).'/src/model/song.manager.php';
 $__autoload['albumManager'] = dirname(__FILE__).'/src/model/album.manager.php';
+$__autoload['personManager'] = dirname(__FILE__).'/src/model/person.manager.php';
 $__autoload['albumSong'] = dirname(__FILE__).'/src/model/album.song.php';
-$__autoload['Authors'] = dirname(__FILE__).'/src/model/authors.php';
 $__autoload['referenceSong'] = dirname(__FILE__).'/src/model/reference.song.php';
 $__autoload['rsltUrlHandlers'] = dirname(__FILE__).'/src/utils/rslt.url.handlers.php';
 $__autoload['rsltBehaviors'] = dirname(__FILE__).'/src/utils/rslt.behaviors.php';

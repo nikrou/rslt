@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | RSLT - a plugin for dotclear                                          |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2013 Nicolas Roudaire             http://www.nikrou.net  |
+// | Copyright(C) 2013-2015 Nicolas Roudaire        http://www.nikrou.net  |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License version 2 as     |
@@ -24,13 +24,13 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 $core->addBehavior('adminDashboardFavorites',array('rsltDashboard','adminDashboardFavorites'));
 
 $_menu['Blog']->addItem('RSLT',
-'plugin.php?p=rslt',
-'index.php?pf=rslt/imgs/icon.png',
-preg_match('/plugin.php\?p=rslt/', $_SERVER['REQUEST_URI']),
-$core->auth->check('admin,contentadmin', $core->blog->id)
+                        'plugin.php?p=rslt',
+                        'index.php?pf=rslt/imgs/icon.png',
+                        preg_match('/plugin.php\?p=rslt/', $_SERVER['REQUEST_URI']),
+                        $core->auth->check('admin,contentadmin', $core->blog->id)
 );
 
-// add metadata 
+// add metadata
 $core->addBehavior('adminPostHeaders', array('rsltAdminBehaviors', 'adminPostHeaders'));
 if ($core->hasBehavior('adminPostFormItems')) {
     $core->addBehavior('adminPostFormItems', array('rsltAdminBehaviors', 'adminPostFormItems'));

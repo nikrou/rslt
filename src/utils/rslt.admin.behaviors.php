@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | RSLT - a plugin for dotclear                                          |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2013 Nicolas Roudaire             http://www.nikrou.net  |
+// | Copyright(C) 2013-2015 Nicolas Roudaire        http://www.nikrou.net  |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License version 2 as     |
@@ -28,7 +28,7 @@ class rsltAdminBehaviors
     public static function adminAfterPostUpdate($cur, $post_id) {
 		self::adminAfterPostSave($cur, $post_id, true);
 	}
-	
+
 	public static function adminAfterPostCreate($cur, $post_id) {
 		self::adminAfterPostSave($cur, $post_id, false);
 	}
@@ -40,7 +40,7 @@ class rsltAdminBehaviors
         if (!empty($_POST['rslt_authors'])) {
             $authors = $_POST['rslt_authors'];
         }
-        
+
         $core->meta->delPostMeta($post_id, 'rslt');
         foreach ($authors as $author) {
             $core->meta->setPostMeta($post_id, 'rslt', $author);
@@ -59,13 +59,15 @@ class rsltAdminBehaviors
             echo $rslt_checkboxes;
         }
     }
-    
+
 	public static function adminPostFormItems($main_items, $sidebar_items, $post) {
         $sidebar_items['metas-box']['items']['rslt'] = self::adminPostFormCheckboxes($post);
     }
 
     private static function adminPostFormCheckboxes($post) {
         global $core;
+
+        return;
 
         $can_publish = $core->auth->check('publish,contentadmin',$core->blog->id);
         if (!$core->auth->check('contentadmin', $core->blog->id)) {
@@ -87,7 +89,7 @@ class rsltAdminBehaviors
             if ($post != null && ($meta_str = $core->meta->getMetaStr($post->post_meta, 'rslt'))) {
                 $meta_authors = array_map('trim', explode(',', $meta_str));
             }
-            
+
             $rslt_checkboxes = '<h5 class="rslt">'.__('Authors').'</h5>';
 
             foreach (Authors::getAll() as $author) {
@@ -97,7 +99,7 @@ class rsltAdminBehaviors
                 } else {
                     $checked = '';
                 }
-                
+
                 $rslt_checkboxes .= '<p class="rslt author"><label class="classic" for="'.$author_id.'">';
                 $rslt_checkboxes .= '<input type="checkbox" id="'.$author_id.'" name="rslt_authors[]"';
                 $rslt_checkboxes .= ' value="'.$author_id.'"'.$checked.'/>&nbsp;';

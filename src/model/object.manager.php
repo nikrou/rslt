@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | RSLT - a plugin for dotclear                                          |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2013 Nicolas Roudaire             http://www.nikrou.net  |
+// | Copyright(C) 2013-2015 Nicolas Roudaire        http://www.nikrou.net  |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License version 2 as     |
@@ -38,17 +38,20 @@ class objectManager
     public function openCursor() {
         return $this->con->openCursor($this->table);
     }
-  
+
     public function add($cur) {
         foreach ($this->object_required_fields as $field) {
             if ($cur->$field = '') {
                 throw new Exception(sprintf(__('You must provide %s field', $field)));
             }
         }
-        
+
         $cur->blog_id = (string) $this->blog->id;
         if ($cur->url == '') {
             $cur->url = text::str2URL((string) $cur->title, false);
+            if (is_callable('tweakUrls::tweakBlogURL')) {
+                $cur->url = tweakUrls::tweakBlogURL($cur->url);
+            }
         }
 
         try {
@@ -69,6 +72,9 @@ class objectManager
         if ($cur->url == '') {
             $cur->url = text::str2URL((string) $cur->title, false);
         }
+        if (is_callable('tweakUrls::tweakBlogURL')) {
+            $cur->url = tweakUrls::tweakBlogURL($cur->url);
+        }
 
         $cur->update('WHERE id = '.(int) $id." AND blog_id = '".$this->con->escape($this->blog->id)."'");
         $this->blog->triggerBlog();
@@ -80,7 +86,7 @@ class objectManager
     public function replaceByTitle($object) {
         $rs = $this->findByTitle($object['title']);
         $cur = $this->openCursor();
-        
+
         if (!$rs->isEmpty()) {
             foreach ($object as $field => $value) {
                 $cur->$field = $value;
@@ -112,7 +118,7 @@ class objectManager
             foreach ($object as $field => $value) {
                 $cur->$field = $value;
             }
-            
+
             $rs = $this->findByURL(text::str2URL((string) $object['title'], false));
             if (!$rs->isEmpty()) {
                 $cur->url = $rs->publication_date . '-' .$rs->url;
@@ -159,8 +165,8 @@ class objectManager
 
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
-      
-        return $rs;     
+
+        return $rs;
     }
 
     public function findByTitleAndPublicationDate($title, $publication_date) {
@@ -169,11 +175,11 @@ class objectManager
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
         $strReq .= ' AND title = \''.$this->con->escape($title).'\'';
         $strReq .= ' AND publication_date = '.(int) $this->con->escape($publication_date);
-      
+
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
-      
-        return $rs;     
+
+        return $rs;
     }
 
     public function findByURL($url) {
@@ -182,11 +188,11 @@ class objectManager
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
 
         $strReq .= ' AND url = \''.$this->con->escape($url).'\'';
-      
+
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
-      
-        return $rs;     
+
+        return $rs;
     }
 
     public function getList(array $params=array(), array $limit=array()) {
@@ -206,7 +212,7 @@ class objectManager
         if (!empty($params['like'])) {
             foreach ($params['like'] as $field => $value) {
                 if ($field=='q') {
-                    $strReq .= sprintf(' AND title like \'%s\'', 
+                    $strReq .= sprintf(' AND title like \'%s\'',
                     $this->con->escape(str_replace(array('*', '?'), array('%', '_'), $value))
                     );
                 } elseif (in_array($field, $this->object_fields)) {
@@ -227,15 +233,15 @@ class objectManager
             $orderby = 'DESC';
         }
 
-        $strReq .= sprintf(' ORDER BY %s %s', $sortby_field, $orderby); 
-      
+        $strReq .= sprintf(' ORDER BY %s %s', $sortby_field, $orderby);
+
         if (!empty($limit)) {
 			$strReq .= $this->con->limit($limit);
         }
 
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
-      
+
         return $rs;
     }
 
@@ -256,7 +262,7 @@ class objectManager
         if (!empty($params['like'])) {
             foreach ($params['like'] as $field => $value) {
                 if ($field=='q') {
-                    $strReq .= sprintf(' AND title like \'%s\'', 
+                    $strReq .= sprintf(' AND title like \'%s\'',
                     $this->con->escape(str_replace(array('*', '?'), array('%', '_'), $value))
                     );
                 } elseif (in_array($field, $this->object_fields)) {
@@ -267,7 +273,7 @@ class objectManager
 
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();
-  
+
         return $rs->f(0);
     }
 }

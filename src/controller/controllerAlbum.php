@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | RSLT - a plugin for dotclear                                          |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2013 Nicolas Roudaire             http://www.nikrou.net  |
+// | Copyright(C) 2013-2015 Nicolas Roudaire        http://www.nikrou.net  |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License version 2 as     |
@@ -22,10 +22,12 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $page_title = __('New album');
-$album = array('title' => '', 'singer' => '', 'url' => '', 
-'publication_date' => '', 'media_id' => '', 'bio_express' => '');
+$album = array(
+    'title' => '', 'singer' => '',
+    'url' => '', 'publication_date' => '',
+    'media_id' => '', 'bio_express' => ''
+);
 
-$action = 'edit';
 $songs = null;
 $album_manager = new albumManager($core);
 
@@ -40,19 +42,22 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_GET['term'])) {
     exit();
 }
 
+if (!empty($_POST['cleanurls']) && !empty($_POST['albums'])) {
+}
+
 if (!empty($_POST['remove']) && !empty($_POST['songs']) && !empty($_POST['album_id'])) {
     $album_song_manager = new albumSong($core);
     try {
         $album_song_manager->removeFromAlbum($_POST['album_id'], $_POST['songs']);
         $_SESSION['rslt_default_tab'] = 'albums';
-        $_SESSION['rslt_message'] = __('The song has been removed from album.', 
+        $_SESSION['rslt_message'] = __('The song has been removed from album.',
         'The songs have been removed from album', count($_POST['songs'])
-        ); 
+        );
         http::redirect($p_url);
     } catch (Exception $e) {
 		$core->error->add($e->getMessage());
     }
-    
+
     $_SESSION['rslt_default_tab'] = 'albums';
     http::redirect($p_url);
 }
@@ -61,7 +66,7 @@ if (!empty($_POST['save_order']) && !empty($_POST['position']) && !empty($_POST[
     $album_song_manager = new albumSong($core);
     try {
         $album_song_manager->updateRanks($_POST['album_id'], $_POST['position']);
-        $_SESSION['rslt_message'] = __('The order of songs in album has been saved.'); 
+        $_SESSION['rslt_message'] = __('The order of songs in album has been saved.');
         $_SESSION['rslt_default_tab'] = 'albums';
         http::redirect($p_url);
     } catch (Exception $e) {
@@ -71,7 +76,7 @@ if (!empty($_POST['save_order']) && !empty($_POST['position']) && !empty($_POST[
 
 if (($action=='delete') && !empty($_POST['albums']) && $_POST['object']=='album') {
     $album_manager->delete($_POST['albums']);
-    $_SESSION['rslt_message'] = __('The album has been deleted.', 
+    $_SESSION['rslt_message'] = __('The album has been deleted.',
     'The albums have been deleted.', count($_POST['albums']));
     $_SESSION['rslt_default_tab'] = 'albums';
     http::redirect($p_url);

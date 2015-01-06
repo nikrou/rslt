@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | RSLT - a plugin for dotclear                                          |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2013 Nicolas Roudaire             http://www.nikrou.net  |
+// | Copyright(C) 2013-2015 Nicolas Roudaire        http://www.nikrou.net  |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License version 2 as     |
@@ -37,13 +37,20 @@ $rslt_directory['bios'] = $core->blog->settings->rslt->directory_bios;
 $rslt_directory['supports'] = $core->blog->settings->rslt->directory_supports;
 
 $Actions = array('add', 'edit');
+if (is_callable('tweakUrls::tweakBlogURL')) {
+    $Actions[] = 'cleanurls';
+}
 $Objects = array('album', 'song');
+
+$rslt_person_service = sprintf('%s&object=person', $p_url);
 
 // default controller
 $controller_name = 'controllerIndex.php';
 
 if (!empty($_POST['saveconfig'])) {
     $controller_name = 'controllerConfig.php';
+} elseif (!empty($_REQUEST['object']) && $_REQUEST['object']=='person' && !empty($_GET['q'])) {
+    $controller_name = sprintf('controller%s.php', ucfirst($_REQUEST['object']));
 } elseif (!empty($_POST['action']) && ($_POST['action']=='load') && !empty($_POST['file'])) {
     $controller_name = 'controllerLoad.php';
 } elseif (!empty($_REQUEST['object']) && in_array($_REQUEST['object'], $Objects)) {

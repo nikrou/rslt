@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | RSLT - a plugin for dotclear                                          |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2013 Nicolas Roudaire             http://www.nikrou.net  |
+// | Copyright(C) 2013-2015 Nicolas Roudaire        http://www.nikrou.net  |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License version 2 as     |
@@ -24,6 +24,9 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 $default_tab = 'settings';
 $rslt_albums_service = sprintf('%s&object=album', $p_url);
 
+$person_manager = new personManager($core);
+$person_list = $person_manager->getList();
+
 /* albums */
 /* pagination */
 $album_manager = new albumManager($core);
@@ -32,8 +35,12 @@ $active_albums_filters = false;
 $filters_params = array();
 $publication_date_combo = rsltAdminCombo::makeCombo($album_manager->getPublicationDate(), 'publication_date');
 $sortby_album = $order_album = null;
-$sortby_albums_combo = array('' => '', __('Title') => 'title', __('Publication date') => 'publication_date',
-__('Singer') => 'singer');
+$sortby_albums_combo = array(
+    '' => '',
+    __('Title') => 'title',
+    __('Publication date') => 'publication_date',
+    __('Singer') => 'singer'
+);
 $order_combo = array(__('Descending') => 'DESC', __('Ascending') => 'ASC');
 $aq = $publication_date_id = null;
 
@@ -48,6 +55,9 @@ $limit_albums = array((($page_albums-1)*$nb_per_page_albums), $nb_per_page_album
 $albums_action_combo = array();
 $albums_action_combo[''] = null;
 $albums_action_combo[__('Delete')] = 'delete';
+if (is_callable('tweakUrls::tweakBlogURL')) {
+    $albums_action_combo[__('Clean URLs')] = 'cleanurls';
+}
 
 if (!empty($_GET['aq'])) {
     $aq = $_GET['aq'];
@@ -95,6 +105,9 @@ $songs_action_combo = array();
 $songs_action_combo[''] = null;
 $songs_action_combo[__('Delete')] = 'delete';
 $songs_action_combo[__('Associate to album')] = 'associate_to_album';
+if (is_callable('tweakUrls::tweakBlogURL')) {
+    $songs_action_combo[__('Clean URLs')] = 'cleanurls';
+}
 
 /* filters */
 $active_songs_filters = false;
@@ -104,60 +117,65 @@ $sortby_song = $order_song = null;
 $filters_params = array();
 $sq= '';
 
-$authors_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
-$compositors_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
-$adaptators_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
-$editors_combo = rsltAdminCombo::makeCombo($song_manager->getEditors(), 'editor');
-$singers_combo = rsltAdminCombo::makeComboSinger($song_manager->getSingers(), 'singer');
-$sortby_songs_combo = array('' => '', __('Title') => 'title', __('Singer') => 'singer', __('Publication date') => 'publication_date',
-__('Author') => 'author');
+// $authors_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
+// $compositors_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
+// $adaptators_combo = array_merge(array('' => ''), array_flip(Authors::getAll()));
+// $editors_combo = rsltAdminCombo::makeCombo($song_manager->getEditors(), 'editor');
+// $singers_combo = rsltAdminCombo::makeComboSinger($song_manager->getSingers(), 'singer');
+// $sortby_songs_combo = array(
+//     '' => '',
+//     __('Title') => 'title',
+//     __('Singer') => 'singer',
+//     __('Publication date') => 'publication_date',
+//     __('Author') => 'author'
+// );
 
-if (!empty($_GET['sq'])) {
-    $sq = $_GET['sq'];
-    $filters_params['like']['q'] = $sq;
-    $active_songs_filters = true;
-}
+// if (!empty($_GET['sq'])) {
+//     $sq = $_GET['sq'];
+//     $filters_params['like']['q'] = $sq;
+//     $active_songs_filters = true;
+// }
 
-if (!empty($_GET['editor_id']) && !empty($editors_combo[$_GET['editor_id']])) {
-    $editor_id = $_GET['editor_id'];
-    $filters_params['equal']['editor'] = $editor_id;
-    $active_songs_filters = true;
-}
+// if (!empty($_GET['editor_id']) && !empty($editors_combo[$_GET['editor_id']])) {
+//     $editor_id = $_GET['editor_id'];
+//     $filters_params['equal']['editor'] = $editor_id;
+//     $active_songs_filters = true;
+// }
 
-if (!empty($_GET['singer_id']) && !empty($singers_combo[$_GET['singer_id']])) {
-    $singer_id = $_GET['singer_id'];
-    $filters_params['like']['singer'] = $singer_id;
-    $active_songs_filters = true;
-}
+// if (!empty($_GET['singer_id']) && !empty($singers_combo[$_GET['singer_id']])) {
+//     $singer_id = $_GET['singer_id'];
+//     $filters_params['like']['singer'] = $singer_id;
+//     $active_songs_filters = true;
+// }
 
-if (!empty($_GET['author_id']) && Authors::getName($_GET['author_id'])) {
-    $author_id = $_GET['author_id'];
-    $filters_params['like']['author'] = Authors::getName($author_id);
-    $active_songs_filters = true;
-}
+// if (!empty($_GET['author_id']) && Authors::getName($_GET['author_id'])) {
+//     $author_id = $_GET['author_id'];
+//     $filters_params['like']['author'] = Authors::getName($author_id);
+//     $active_songs_filters = true;
+// }
 
-if (!empty($_GET['compositor_id']) && Authors::getName($_GET['compositor_id'])) {
-    $compositor_id = $_GET['compositor_id'];
-    $filters_params['like']['compositor'] = Authors::getName($compositor_id);
-    $active_songs_filters = true;
-}
+// if (!empty($_GET['compositor_id']) && Authors::getName($_GET['compositor_id'])) {
+//     $compositor_id = $_GET['compositor_id'];
+//     $filters_params['like']['compositor'] = Authors::getName($compositor_id);
+//     $active_songs_filters = true;
+// }
 
-if (!empty($_GET['adaptator_id']) && Authors::getName($_GET['adaptator_id'])) {
-    $adaptator_id = $_GET['adaptator_id'];
-    $filters_params['like']['adaptator'] = Authors::getName($adaptator_id);
-    $active_songs_filters = true;
-}
+// if (!empty($_GET['adaptator_id']) && Authors::getName($_GET['adaptator_id'])) {
+//     $adaptator_id = $_GET['adaptator_id'];
+//     $filters_params['like']['adaptator'] = Authors::getName($adaptator_id);
+//     $active_songs_filters = true;
+// }
 
-if (!empty($_GET['sortby_song'])) {
-    $sortby_song = $_GET['sortby_song'];
-    $filters_params['sortby'] = $sortby_song;
-    $active_songs_filters = true;
-}
+// if (!empty($_GET['sortby_song'])) {
+//     $sortby_song = $_GET['sortby_song'];
+//     $filters_params['sortby'] = $sortby_song;
+//     $active_songs_filters = true;
+// }
 
-if (!empty($_GET['order_song'])) {
-    $filters_params['orderby'] = $_GET['order_song'];
-    $active_songs_filters = true;
-}
+// if (!empty($_GET['order_song'])) {
+//     $filters_params['orderby'] = $_GET['order_song'];
+//     $active_songs_filters = true;
+// }
 
 try {
     $songs_counter = $song_manager->getCountList($filters_params);
@@ -180,4 +198,3 @@ if ($rslt_active) {
 }
 
 include(dirname(__FILE__).'/../views/index.tpl');
-

@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | RSLT - a plugin for dotclear                                          |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2013 Nicolas Roudaire             http://www.nikrou.net  |
+// | Copyright(C) 2013-2015 Nicolas Roudaire        http://www.nikrou.net  |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License version 2 as     |
@@ -26,16 +26,14 @@ if (!$self_ns->active) {
     return;
 }
 
-$_ctx->authors = Authors::getAll();
-
 // public urls
-$albums_prefix = $core->blog->settings->rslt->albums_prefix;
-$album_prefix = $core->blog->settings->rslt->album_prefix;
-$song_prefix = $core->blog->settings->rslt->song_prefix;
+$prefix_albums = $core->blog->settings->rslt->prefix_albums;
+$prefix_album = $core->blog->settings->rslt->prefix_album;
+$prefix_song = $core->blog->settings->rslt->prefix_song;
 
-$core->url->register('albums', $albums_prefix, '^'.preg_quote($albums_prefix).'$', array('rsltUrlHandlers', 'albums'));
-$core->url->register('album', $album_prefix, '^'.preg_quote($album_prefix).'/(.+)$', array('rsltUrlHandlers', 'album'));
-$core->url->register('song', $song_prefix, '^'.preg_quote($song_prefix).'/(.+)$', array('rsltUrlHandlers', 'song'));
+$core->url->register('albums', $prefix_albums, '^'.preg_quote($prefix_albums).'$', array('rsltUrlHandlers', 'albums'));
+$core->url->register('album', $prefix_album, '^'.preg_quote($prefix_album).'/(.+)$', array('rsltUrlHandlers', 'album'));
+$core->url->register('song', $prefix_song, '^'.preg_quote($prefix_song).'/(.+)$', array('rsltUrlHandlers', 'song'));
 
 // behaviors
 $core->addBehavior('publicBeforeDocument', array('rsltBehaviors', 'addTplPath'));
@@ -44,7 +42,7 @@ $core->addBehavior('publicHeadContent', array('rsltBehaviors', 'publicHeadConten
 $_ctx->album_manager = new albumManager($core);
 
 // template tags
-// albums 
+// albums
 $core->tpl->addBlock('Albums', array('rsltTpl', 'Albums'));
 $core->tpl->addValue('AlbumTitle', array('rsltTpl', 'AlbumTitle'));
 $core->tpl->addValue('AlbumURL', array('rsltTpl', 'AlbumURL'));

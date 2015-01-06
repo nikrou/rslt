@@ -79,13 +79,17 @@
     </div>
     <?php endif;?>
     <?php if ($rslt_active):?>
-    <div class="multi-part" id="authors" title="<?php echo __('Authors');?>">
-      <h3 class="hidden-if-js"><?php echo __('Authors');?></h3>
-      <?php foreach (Authors::getAll() as $author):?>
+    <div class="multi-part" id="person" title="<?php echo __('Person');?>">
+      <h3 class="hidden-if-js"><?php echo __('Person');?></h3>
+      <?php if (count($person_list->rows())==0):?>
+      <p><strong><?php echo __('No person');?></strong></p>
+      <?php else:?>
+      <?php foreach($person_list as $person):?>
       <ul>
-	<li><?php echo $author;?></li>
+	<li><?php //echo $person;?></li>
       </ul>
       <?php endforeach;?>
+      <?php endif;?>
     </div>
 
     <div class="multi-part" id="albums" title="<?php echo __('Albums');?>">
@@ -259,40 +263,6 @@
       '</form>');
       ?>
       <?php endif;?>
-    </div>
-
-    <div class="multi-part" id="maintenance" title="<?php echo __('Maintenance');?>">
-      <h3 class="hidden-if-js"><?php echo __('Maintenance');?></h3>
-
-      <form action="<?php echo $p_url;?>" method="post" >
-	<p>
-	  <input type="submit" value="<?php echo __('Load songs csv file');?>"/>
-	  <input type="hidden" name="action" value="load"/>
-	  <input type="hidden" name="file" value="songs"/>
-	  <input type="hidden" name="object" value="song"/>
-	  <?php echo $core->formNonce();?>
-	</p>
-      </form>
-
-      <form action="<?php echo $p_url;?>" method="post" >
-	<p>
-	  <input type="submit" value="<?php echo __('Load albums csv file');?>"/>
-	  <input type="hidden" name="action" value="load"/>
-	  <input type="hidden" name="file" value="albums"/>
-	  <input type="hidden" name="object" value="album"/>
-	  <?php echo $core->formNonce();?>
-	</p>
-      </form>
-
-      <form action="<?php echo $p_url;?>" method="post" >
-	<p>
-	  <input type="submit" value="<?php echo __('Load songs in albums csv file');?>"/>
-	  <input type="hidden" name="action" value="load"/>
-	  <input type="hidden" name="file" value="albums_songs"/>
-	  <input type="hidden" name="object" value="album_song"/>
-	  <?php echo $core->formNonce();?>
-	</p>
-      </form>
     </div>
     <?php endif;?>
     <?php dcPage::helpBlock('rslt');?>

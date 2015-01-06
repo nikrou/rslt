@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | RSLT - a plugin for dotclear                                          |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2013-2014 Nicolas Roudaire        http://www.nikrou.net  |
+// | Copyright(C) 2013-2015 Nicolas Roudaire        http://www.nikrou.net  |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License version 2 as     |
@@ -25,6 +25,6 @@ $this->registerModule(
     /* Name */		'RSLT',
     /* Description*/	'Restons sur leurs traces',
     /* Author */		'Nicolas Roudaire',
-    /* Version */		'0.3.5',
+    /* Version */		'0.3.10',
     /* Permissions */	array('permissions' => 'admin,contentadmin', 'type' => 'plugin')
 );

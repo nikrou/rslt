@@ -1,189 +1,193 @@
 /**/
 p.field label.title {
-  width: 11em;
+    width: 11em;
+}
+
+.select2 {
+    min-width: 60em;
 }
 
 label.title {
-  font-size: 1.3em;
+    font-size: 1.3em;
 }
 
 .lockable .locker {
-  margin-top: 5px;
-  cursor: pointer;
+    margin-top: 5px;
+    cursor: pointer;
 }
 
 .lockable .form-note {
-  margin-left: 14em;
+    margin-left: 14em;
 }
 
 .show-media {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .media-icon {
-  position: absolute;
-  margin-left: 5px;
+    position: absolute;
+    margin-left: 5px;
 }
 
-p.top-add { 
-  margin-bottom: 1em;
+p.top-add {
+    margin-bottom: 1em;
 }
-.pager { 
-  margin: 1em 0 1em 0;
+.pager {
+    margin: 1em 0 1em 0;
 }
 
 /* filters */
-.filters-form-control { 
-  display: none;
-  background: url(images/expand.png) no-repeat 4px center;
-  padding-left: 20px;
-  color: #000;
-  cursor: pointer;
+.filters-form-control {
+    display: none;
+    background: url(images/expand.png) no-repeat 4px center;
+    padding-left: 20px;
+    color: #000;
+    cursor: pointer;
 }
 
 .filters-form-control.open {
-  background: url(images/hide.png) no-repeat 4px center;
+    background: url(images/hide.png) no-repeat 4px center;
 }
 
 .filters-form {
-  border: 1px dashed #999;
-  border-radius: .5em;
-  margin-bottom: 2em;
-  padding: .5em 1em 0;
+    border: 1px dashed #999;
+    border-radius: .5em;
+    margin-bottom: 2em;
+    padding: .5em 1em 0;
 }
 .filters-form .table {
-  width: 100%;
-  padding: 0;
-  margin-bottom: 1em;
-  margin-top: .5em;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 1em;
+    margin-top: .5em;
 }
 .filters-form .cell {
-  padding: 0 2em 0 0;
+    padding: 0 2em 0 0;
 }
 .filters-form .filters-sibling-cell {
-  padding-top: 3.8em;
+    padding-top: 3.8em;
 }
 .filters-form .filters-options {
-  padding-left: 2em;
-  border-left: 1px solid #ccc;
+    padding-left: 2em;
+    border-left: 1px solid #ccc;
 }
 .filters-form label.ib, span.ib {
-  width:7em;
+    width:7em;
 }
 .filters-form label.ibw, span.ibw {
-  width: 9em;
-  display: inline-block;
+    width: 9em;
+    display: inline-block;
 }
 .filters-form h4 {
-  margin-top: 0;
-  margin-bottom: 2em;
+    margin-top: 0;
+    margin-bottom: 2em;
 }
 
 /* songs in album page */
 .songs ul {
-  list-style: none;
-  margin-top: 2em;
-  padding: 0;
+    list-style: none;
+    margin-top: 2em;
+    padding: 0;
 }
 
 .songs ul li {
-  position: relative;
-  margin: .66em 0;
-  padding: .66em 1em;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+    position: relative;
+    margin: .66em 0;
+    padding: .66em 1em;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
 .songs ul li input[type="checkbox"] {
-  margin-top: 6px;
+    margin-top: 6px;
 }
 
-.songs.ui-sortable ul li { 
-  cursor: move;
+.songs.ui-sortable ul li {
+    cursor: move;
 }
 
 /* autocomplete */
 .ui-helper-hidden, .ui-helper-hidden-accessible {
-  display: none;
+    display: none;
 }
 
 .ui-widget-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .ui-autocomplete {
-  position: absolute;
-  top: 0;
-  left: 0;
-  cursor: default;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: default;
 }
 .ui-menu {
-  list-style: none;
-  padding: 2px;
-  margin: 0;
-  display: block;
-  outline: none;
+    list-style: none;
+    padding: 2px;
+    margin: 0;
+    display: block;
+    outline: none;
 }
 
 .ui-menu .ui-menu {
-  margin-top: -3px;
-  position: absolute;
+    margin-top: -3px;
+    position: absolute;
 }
 
 .ui-menu .ui-menu-item {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    list-style-type: none;
 }
 
 .ui-menu .ui-menu-item a {
-  text-decoration: none;
-  display: block;
-  padding: 2px .4em;
-  line-height: 1.5;
-  min-height: 0; /* support: IE7 */
-  font-weight: normal;
+    text-decoration: none;
+    display: block;
+    padding: 2px .4em;
+    line-height: 1.5;
+    min-height: 0; /* support: IE7 */
+    font-weight: normal;
 }
 .ui-menu .ui-menu-item a.ui-state-focus,
 .ui-menu .ui-menu-item a.ui-state-active {
-  font-weight: normal;
-  margin: -1px;
-  color: #D30E60;  
+    font-weight: normal;
+    margin: -1px;
+    color: #D30E60;
 }
 
 .ui-menu .ui-state-disabled {
-  font-weight: normal;
-  margin: .4em 0 .2em;
-  line-height: 1.5;
+    font-weight: normal;
+    margin: .4em 0 .2em;
+    line-height: 1.5;
 }
 .ui-menu .ui-state-disabled a {
-  cursor: default;
+    cursor: default;
 }
 
 /* mini media manager */
 .directories {
-  list-style: none;
-  padding: 0 0 0 10px;
-  margin-bottom: 35px;
+    list-style: none;
+    padding: 0 0 0 10px;
+    margin-bottom: 35px;
 }
 
 .directories li {
-  display: inline-block;
-  margin: 0 5px;
+    display: inline-block;
+    margin: 0 5px;
 }
 
 .files li {
-  display: inline-block;
-  width: 33%;
-  height: 70px;
-  margin-bottom: 10px;
+    display: inline-block;
+    width: 33%;
+    height: 70px;
+    margin-bottom: 10px;
 }
 
 .button {
-  margin-left: 10px
+    margin-left: 10px
 }

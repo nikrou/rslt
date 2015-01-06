@@ -1,10 +1,15 @@
 <html>
   <head>
     <title><?php echo $page_title.' - '.__('Albums'); ?></title>
+    <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/select2.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
+    <script type="text/javascript" src="index.php?pf=rslt/js/select2.js"></script>
+    <script type="text/javascript" src="index.php?pf=rslt/js/album.js"></script>
     <?php echo dcPage::jsLoad('js/jquery/jquery-ui.custom.js');?>
     <script type="text/javascript">
       var rslt_confirm_remove_songs_from_album = "<?php echo __('Are you sure you want to remove selected songs from album (%s)?');?>";
+      var rslt_person_service = "<?php echo $rslt_person_service;?>";
+
     </script>
     <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
   </head>
@@ -42,7 +47,7 @@
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Singer:');?>
 	</label>
-	<?php echo form::field('album_singer', 100, 255, html::escapeHTML($album['singer']), '');?>
+	<?php echo form::field('album_singer', 100, 255, html::escapeHTML($album['singer']), 'select2');?>
       </p>
       <p class="field">
 	<label class="required" for="album_publication_date">
@@ -97,7 +102,7 @@
 	  <p>
 	    <span class="hidden-if-no-js">
 	      <input type="submit" name="save_order" class="disabled" disabled="disabled" id="save-set-order" value="<?php echo __('Save songs order');?>"/>
-	    </span> 
+	    </span>
 	    <?php echo form::hidden(array('p',''), 'rslt');?>
 	    <?php echo form::hidden(array('object',''), 'album');?>
 	    <?php echo form::hidden(array('album_id',''), $album['id']);?>
@@ -109,12 +114,10 @@
 	  <input type="submit" id="remove-songs" name="remove" class="delete" value="<?php echo __('Remove selected songs from album');?>"/>
 	</div>
       </div>
-    </form>    
+    </form>
     <?php else:?>
     <p><?php echo __('No song in that album');?></p>
     <?php endif;?>
     <?php endif;?>
   </body>
 </html>
-
-

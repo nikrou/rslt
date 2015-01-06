@@ -19,30 +19,24 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-class rsltUrlHandlers extends dcUrlHandlers
+class personManager extends objectManager
 {
-    public static function albums($args) {
-        self::serveDocument('albums.html');
+    public static $fields = array('name', 'url');
+    public static $require_fields = array('name');
+
+    public function __construct($core) {
+        parent::__construct($core, 'person', self::$require_fields, self::$fields);
     }
 
-    public static function album($args) {
-        global $core, $_ctx;
+    public function searchByName($q) {
+        $strReq =  'SELECT id, url, '.implode(',', $this->object_fields);
+        $strReq .= ' FROM '.$this->table;
+        $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
+        $strReq .= ' AND name like \'%'.$this->con->escape($q).'%\'';
 
-        if (empty($args)) {
-            throw new Exception('Page not found', 404);
-        }
+        $rs = $this->con->select($strReq);
+        $rs = $rs->toStatic();
 
-        $album_manager = new albumManager($core);
-        $_ctx->album = $album_manager->findByURL($args);
-
-        if ($_ctx->album->isEmpty()) {
-            throw new Exception("Page not found", 404);
-        }
-
-        self::serveDocument('album.html');
-    }
-
-    public static function song($args) {
-        self::serveDocument('song.html');
+        return $rs;
     }
 }
