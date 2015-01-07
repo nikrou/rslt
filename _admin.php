@@ -21,23 +21,52 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$core->addBehavior('adminDashboardFavorites',array('rsltDashboard','adminDashboardFavorites'));
+$core->blog->settings->addNameSpace('rslt');
 
-$_menu['Blog']->addItem('RSLT',
-                        'plugin.php?p=rslt',
-                        'index.php?pf=rslt/imgs/icon.png',
-                        preg_match('/plugin.php\?p=rslt/', $_SERVER['REQUEST_URI']),
-                        $core->auth->check('admin,contentadmin', $core->blog->id)
+$_menu['RSLT'] = new dcMenu('rslt-menu', 'RSLT');
+if ($core->blog->settings->rslt->active) {
+    $_menu['RSLT']->addItem(
+        __('News'),
+        'plugin.php?p=rslt&object=news',
+        'images/menu/themes.png',
+        preg_match('/plugin.php\?p=rslt&object=news/', $_SERVER['REQUEST_URI']),
+        $core->auth->check('admin,contentadmin', $core->blog->id)
+    );
+    $_menu['RSLT']->addItem(
+        __('Albums'),
+        'plugin.php?p=rslt&object=album',
+        'images/menu/themes.png',
+        preg_match('/plugin.php\?p=rslt&object=albums/', $_SERVER['REQUEST_URI']),
+        $core->auth->check('admin,contentadmin', $core->blog->id)
+    );
+    $_menu['RSLT']->addItem(
+        __('People'),
+        'plugin.php?p=rslt&object=people',
+        'images/menu/users.png',
+        preg_match('/plugin.php\?p=rslt&object=people/', $_SERVER['REQUEST_URI']),
+        $core->auth->check('admin,contentadmin', $core->blog->id)
+    );
+}
+$_menu['RSLT']->addItem(
+    __('Settings'),
+    'plugin.php?p=rslt&page=settings',
+    'images/menu/blog-pref.png',
+    preg_match('/plugin.php\?p=rslt&page=settings/', $_SERVER['REQUEST_URI']),
+    $core->auth->check('admin,contentadmin', $core->blog->id)
 );
 
-// add metadata
-$core->addBehavior('adminPostHeaders', array('rsltAdminBehaviors', 'adminPostHeaders'));
-if ($core->hasBehavior('adminPostFormItems')) {
-    $core->addBehavior('adminPostFormItems', array('rsltAdminBehaviors', 'adminPostFormItems'));
-} else {
-    // may be deprecated
-    $core->addBehavior('adminPostFormSidebar', array('rsltAdminBehaviors', 'adminPostFormSidebar'));
+if ($core->blog->settings->rslt->active) {
+    // add metadata
+    $core->addBehavior('adminPostHeaders', array('rsltAdminBehaviors', 'adminPostHeaders'));
+    if ($core->hasBehavior('adminPostFormItems')) {
+        $core->addBehavior('adminPostFormItems', array('rsltAdminBehaviors', 'adminPostFormItems'));
+    } else {
+        // may be deprecated
+        $core->addBehavior('adminPostFormSidebar', array('rsltAdminBehaviors', 'adminPostFormSidebar'));
+    }
+    $core->addBehavior('adminAfterPostUpdate', array('rsltAdminBehaviors', 'adminAfterPostUpdate'));
+    $core->addBehavior('adminAfterPostCreate', array('rsltAdminBehaviors', 'adminAfterPostCreate'));
+    $core->addBehavior('adminPageHTMLHead', array('rsltAdminBehaviors', 'adminPageHTMLHead'));
+
+    $core->addBehavior('adminDashboardFavorites',array('rsltDashboard','adminDashboardFavorites'));
 }
-$core->addBehavior('adminAfterPostUpdate', array('rsltAdminBehaviors', 'adminAfterPostUpdate'));
-$core->addBehavior('adminAfterPostCreate', array('rsltAdminBehaviors', 'adminAfterPostCreate'));
-$core->addBehavior('adminPageHTMLHead', array('rsltAdminBehaviors', 'adminPageHTMLHead'));
