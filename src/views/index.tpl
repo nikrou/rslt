@@ -86,7 +86,7 @@
       <?php else:?>
       <?php foreach($person_list as $person):?>
       <ul>
-	<li><?php //echo $person;?></li>
+	<li><?php echo $person->name;?></li>
       </ul>
       <?php endforeach;?>
       <?php endif;?>

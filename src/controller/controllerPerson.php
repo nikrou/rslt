@@ -31,4 +31,9 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_GET['q'])) {
     }
     echo json_encode($response);
     exit();
+} else {
+    $person_manager = new personManager($core);
+    $person_list = $person_manager->getList();
+
+    include(dirname(__FILE__).'/../views/persons.tpl');
 }

@@ -17,7 +17,7 @@ $(function() {
 				var results = [];
 				$.each(data, function(index, item){
 					results.push({
-						id: item.id,
+						id: '~~'+item.id+'~~',
 						text: item.name
 					});
 				});

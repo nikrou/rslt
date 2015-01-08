@@ -4,11 +4,11 @@ $(function() {
 	});
 
 	$('#remove-songs').click(function(e) {
-		var count_checked = $('input[name="songs[]"]:checked', $('#songs-rank-form')).length; 
+		var count_checked = $('input[name="songs[]"]:checked', $('#songs-rank-form')).length;
 		if (count_checked==0) {
 			return false;
 		}
-		
+
 		return window.confirm(rslt_confirm_remove_songs_from_album.replace('%s',count_checked));
 	});
 
@@ -26,22 +26,9 @@ $(function() {
 		});
 	}
 
-	$('.filters-form-control')
-		.show()
-		.click(function(e) {
-			var associated_form = $(this).parent().next();
-			$(this).toggleClass('open', associated_form.is(':hidden'));
-			associated_form.toggleClass('hide');
-			if (associated_form.is(':hidden')) {
-				$(this).text(rslt_filters.show);
-			} else {
-				$(this).text(rslt_filters.hide);
-			}
-		});
-
 	if ($('#songs_action').val()=='' && $('#songs_action').val()!='associate_to_album') {
 		$('#album-input').addClass('hide');
-	}	
+	}
 
 	$('#songs_action').change(function() {
 		var action = $(this).val();
@@ -74,14 +61,14 @@ $(function() {
 
 			return window.confirm(rslt_confirm_delete[objects].replace('%s',count_checked));
 		}
-		
+
 		return true;
 	});
 
 	$('#album-form, #song-form').submit(function() {
 		// enable url field so it can be transmitted
 		$('input:disabled').prop('disabled', false);
-		
+
 		return true;
 	});
 
@@ -97,7 +84,7 @@ $(function() {
 		me.find('input').each(function() {
 			$(this).prop('disabled', true).after(img);
 		});
-		
+
 	});
 
 	$('#album_media_id').click(function() {

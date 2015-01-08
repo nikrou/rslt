@@ -2,7 +2,7 @@ DIST=.dist
 PLUGIN_NAME=rslt
 SOURCE=./*
 TARGET=../target
-DESTINATION=/var/projets/git/dotclear/plugins/$(PLUGIN_NAME)/
+DESTINATION=root@kimsufi2:/var/www/nikrou.net/dc/plugins/$(PLUGIN_NAME)/
 RSYNC=rsync -vrpcC --exclude-from=rsync_exclude
 
 rsync:

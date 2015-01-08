@@ -7,14 +7,14 @@
   <body>
     <h2>
       <?php echo html::escapeHTML($core->blog->name); ?> &gt;
-      <a href="<?php echo $p_url;?>&amp;action=index#songs"><?php echo __('Songs');?></a> &gt; <?php echo $page_title;?>
+      <a href="<?php echo $page_url;?>&amp;action=index#songs"><?php echo __('Songs');?></a> &gt; <?php echo $page_title;?>
     </h2>
 
     <?php if (!empty($message)):?>
     <p class="message"><?php echo $message;?></p>
     <?php endif;?>
 
-    <form action="<?php echo $p_url;?>" method="post" id="song-form">
+    <form action="<?php echo $page_url;?>" method="post" id="song-form">
       <p class="field">
 	<label class="required title" for="song_title">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
@@ -88,5 +88,3 @@
     </form>
   </body>
 </html>
-
-

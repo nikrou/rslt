@@ -37,35 +37,15 @@ $rslt_directory['bios'] = $core->blog->settings->rslt->directory_bios;
 $rslt_directory['supports'] = $core->blog->settings->rslt->directory_supports;
 
 $Pages = array('settings');
+$Objects = array('album', 'song', 'person');
 
 // default controller
 $controller_name = 'controllerSettings.php';
 
 if (!empty($_REQUEST['page']) && in_array($_REQUEST['page'], $Pages)) {
     $controller_name = sprintf('controller%s.php', ucfirst($_REQUEST['page']));
+} elseif (!empty($_REQUEST['object']) && in_array($_REQUEST['object'], $Objects)) {
+    $controller_name = sprintf('controller%s.php', ucfirst($_REQUEST['object']));
 }
 
 include(dirname(__FILE__).'/src/controller/'.$controller_name);
-
-
-// $Actions = array('add', 'edit');
-// if (is_callable('tweakUrls::tweakBlogURL')) {
-//     $Actions[] = 'cleanurls';
-// }
-// $Objects = array('album', 'song', 'people');
-
-// $rslt_person_service = sprintf('%s&object=person', $p_url);
-
-
-// if (!empty($_POST['saveconfig'])) {
-//     $controller_name = 'controllerConfig.php';
-// } elseif (!empty($_REQUEST['object']) && $_REQUEST['object']=='person' && !empty($_GET['q'])) {
-//     $controller_name = sprintf('controller%s.php', ucfirst($_REQUEST['object']));
-// } elseif (!empty($_POST['action']) && ($_POST['action']=='load') && !empty($_POST['file'])) {
-//     $controller_name = 'controllerLoad.php';
-// } elseif (!empty($_REQUEST['object']) && in_array($_REQUEST['object'], $Objects)) {
-//     if (!empty($_REQUEST['action'])) {
-//         $action = $_REQUEST['action'];
-//     }
-//     $controller_name = sprintf('controller%s.php', ucfirst($_REQUEST['object']));
-// }

@@ -9,21 +9,20 @@
     <script type="text/javascript">
       var rslt_confirm_remove_songs_from_album = "<?php echo __('Are you sure you want to remove selected songs from album (%s)?');?>";
       var rslt_person_service = "<?php echo $rslt_person_service;?>";
-
     </script>
     <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
   </head>
   <body>
     <h2>
       <?php echo html::escapeHTML($core->blog->name); ?> &gt;
-      <a href="<?php echo $p_url;?>#albums"><?php echo __('Albums');?></a> &gt; <?php echo $page_title;?>
+      <a href="<?php echo $page_url;?>"><?php echo __('Albums');?></a> &gt; <?php echo $page_title;?>
     </h2>
 
     <?php if (!empty($message)):?>
     <p class="message"><?php echo $message;?></p>
     <?php endif;?>
 
-    <form action="<?php echo $p_url;?>" method="post" id="album-form">
+    <form action="<?php echo $page_url;?>" method="post" id="album-form">
       <p class="field">
 	<label class="required title" for="album_title">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
@@ -84,7 +83,7 @@
     <?php if (!empty($album['id'])):?>
     <h3><?php echo __('Tracklist');?></h3>
     <?php if (!empty($songs) && !$songs->isEmpty()):?>
-    <form action="<?php echo $p_url;?>" method="post" id="songs-rank-form">
+    <form action="<?php echo $page_url;?>" method="post" id="songs-rank-form">
       <div class="songs">
 	<ul>
 	  <?php while ($songs->fetch()):?>
