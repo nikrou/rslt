@@ -28,12 +28,16 @@ class adminAlbumsList extends adminGenericList
         $this->p_url = $p_url;
     }
 
+    public function setPersonUrl($url) {
+        $this->person_url = $url;
+    }
+
     public function display($albums, $nb_per_page, $enclose_block) {
         $pager = new rsltPager($albums, $this->rs_count, $nb_per_page, 10);
         $pager->setVarPage('page_albums');
         $pager->setAnchor(self::$anchor);
 
-        $html_block = 
+        $html_block =
 			'<div class="table-outer">'.
             '<table class="albums clear" id="albums-list">'.
             '<thead>'.
@@ -47,7 +51,7 @@ class adminAlbumsList extends adminGenericList
             '</thead>'.
             '<tbody>%s</tbody></table>'.
             '</div>';
-        
+
         echo $pager->getLinks();
 
         if ($enclose_block) {
@@ -55,9 +59,9 @@ class adminAlbumsList extends adminGenericList
         }
 
         $blocks = explode('%s',$html_block);
-        
+
         echo $blocks[0];
-        
+
         while ($this->rs->fetch()) {
             echo $this->postLine();
         }
@@ -68,7 +72,22 @@ class adminAlbumsList extends adminGenericList
     }
 
     private function postLine() {
-        $res = 
+        $singer_string = '';
+        $n = 0;
+        foreach ($this->rs->getSinger() as $singer) {
+            $singer_string .= sprintf('<li><a href="'.$this->person_url.'">%s</a></li>',
+                                      $singer['id'],
+                                      html::escapeHTML($singer['name'])
+            );
+            $n++;
+            if ($n>2) {
+                break;
+            }
+        }
+        if (!empty($singer_string)) {
+            $singer_string = '<ul class="singer">'.$singer_string.'</ul>';
+        }
+        $res =
             '<tr>'.
             '<td>'.
             form::checkbox(array('albums[]'), $this->rs->id, '', '', '').
@@ -78,11 +97,11 @@ class adminAlbumsList extends adminGenericList
             html::escapeHTML(text::cutString($this->rs->title, 50)).
             '</a>'.
             '</td>'.
-            '<td class="nowrap">'.html::escapeHTML(text::cutString($this->rs->singer,50)).'</td>'.
+            '<td class="nowrap">'.$singer_string.'</td>'.
             '<td class="nowrap">'.$this->rs->publication_date.'</td>'.
             '<td class="nowrap">'.$this->rs->count_songs.'</td>'.
             '</tr>';
-        
+
         return $res;
     }
 }

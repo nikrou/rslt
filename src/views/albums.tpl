@@ -2,7 +2,6 @@
   <head>
     <title><?php echo __('RSLT');?></title>
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
-    <?php echo dcPage::jsPageTabs($default_tab);?>
     <script type="text/javascript">
       //<![CDATA[
       var rslt_confirm_delete = [];

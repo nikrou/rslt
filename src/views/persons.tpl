@@ -11,7 +11,7 @@
     <?php endif;?>
 
     <?php if ($rslt_active):?>
-    <?php echo dcPage::breadcrumb(array(html::escapeHTML($core->blog->name) => '',  __('People') => ''));?>
+    <?php echo dcPage::breadcrumb(array(html::escapeHTML($core->blog->name) => '',  __('Persons') => ''));?>
 
     <?php if ($person_list->isEmpty()):?>
     <p><strong><?php echo __('No person');?></strong></p>

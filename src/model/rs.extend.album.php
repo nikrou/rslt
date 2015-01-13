@@ -19,12 +19,17 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-if (!defined('DC_RC_PATH')) { return; }
+class rsExtendAlbum
+{
+    public static function getSinger($rs) {
+        $meta_singer = array();
+        if ($rs->exists('meta')) {
+            $meta = json_decode($rs->meta, true);
+            if (!empty($meta['singer'])) {
+                $meta_singer = $meta['singer'];
+            }
+        }
 
-$this->registerModule(
-    /* Name */		'RSLT',
-    /* Description*/	'Restons sur leurs traces',
-    /* Author */		'Nicolas Roudaire',
-    /* Version */		'0.3.12',
-    /* Permissions */	array('permissions' => 'admin,contentadmin', 'type' => 'plugin')
-);
+        return $meta_singer;
+    }
+}

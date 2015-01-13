@@ -42,11 +42,17 @@
 	</p>
       </div>
       <p class="field">
+	<script type="text/javascript">
+	  var singers = [];
+	  <?php if (!empty($singers_string)):?>
+	  singers = <?php echo $singers_string;?>;
+	  <?php endif;?>
+	</script>
 	<label class="required" for="album_singer">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Singer:');?>
 	</label>
-	<?php echo form::field('album_singer', 100, 255, html::escapeHTML($album['singer']), 'select2');?>
+	<?php echo form::hidden('album_singer', html::escapeHTML($album['singer']));?>
       </p>
       <p class="field">
 	<label class="required" for="album_publication_date">
@@ -73,6 +79,7 @@
       </p>
       <p>
 	<?php echo form::hidden(array('p',''), 'rslt');?>
+	<?php echo form::hidden('id', $album['id']);?>
 	<?php echo form::hidden(array('object',''), 'album');?>
 	<?php echo form::hidden(array('action',''), $action);?>
 	<?php echo $core->formNonce();?>

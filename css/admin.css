@@ -1,3 +1,12 @@
+.singer {
+    list-style-type: none;
+}
+
+.singer li {
+    display: inline;
+    margin-left: 0.5em;
+}
+
 /**/
 p.field label.title {
     width: 11em;

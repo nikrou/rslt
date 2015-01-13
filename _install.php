@@ -41,7 +41,7 @@ $s->rslt_album
     ->id ('bigint',	0, false)
     ->blog_id ('varchar', 32, false)
     ->title('varchar', 255, true, null)
-    ->meta_singer('text', 0, true, null)
+    ->meta('text', 0, true, null)
     ->url('varchar', 255, true, null)
     ->publication_date('bigint', 0, false)
     ->media_id('bigint', 0, true)
@@ -62,11 +62,7 @@ $s->rslt_song
     ->blog_id ('varchar', 32, false)
     ->title('varchar', 255, true, null)
     ->original_title('varchar', 255, true, null)
-    ->meta_author('text', 0, true, null)
-    ->meta_compositor('text', 0, true, null)
-    ->meta_adaptator('text', 0, true, null)
-    ->meta_singer('text', 0, true, null)
-    ->meta_editor('text', 0, true, null)
+    ->meta('text', 0, true, null)
     ->publication_date('bigint', 0, false)
     ->url('varchar', 255, true, null)
     ->created_at('timestamp', 0, false, 'now()')
@@ -120,8 +116,6 @@ $s->rslt_album->reference('fk_album_blog','blog_id','blog','blog_id','cascade','
 $s->rslt_song->reference('fk_song_blog','blog_id','blog','blog_id','cascade','cascade');
 $s->rslt_support->reference('fk_support_blog','blog_id','blog','blog_id','cascade','cascade');
 $s->rslt_reference_song->reference('fk_reference_song','song_id','rslt_song','id','cascade','cascade');
-
-$s->rslt_meta->reference('fk_meta_singer','person_id','rslt_person','id','cascade','cascade');
 
 
 $si = new dbStruct($core->con, $core->prefix);

@@ -405,3 +405,6 @@ msgstr "Répertoire des bios : "
 
 msgid "Supports directory:"
 msgstr "Répertoire des supports : "
+
+msgid "%d persons in database"
+msgstr "%d personnes dans la base de données"

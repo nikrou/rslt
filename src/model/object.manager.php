@@ -152,7 +152,6 @@ class objectManager
         $strReq .= ' AND id='.$this->con->escape($id);
 
         $rs = $this->con->select($strReq);
-        $rs = $rs->toStatic();
 
         return $rs;
     }
@@ -164,7 +163,6 @@ class objectManager
         $strReq .= ' AND title = \''.$this->con->escape($title).'\'';
 
         $rs = $this->con->select($strReq);
-        $rs = $rs->toStatic();
 
         return $rs;
     }
@@ -177,7 +175,6 @@ class objectManager
         $strReq .= ' AND publication_date = '.(int) $this->con->escape($publication_date);
 
         $rs = $this->con->select($strReq);
-        $rs = $rs->toStatic();
 
         return $rs;
     }
@@ -190,7 +187,6 @@ class objectManager
         $strReq .= ' AND url = \''.$this->con->escape($url).'\'';
 
         $rs = $this->con->select($strReq);
-        $rs = $rs->toStatic();
 
         return $rs;
     }
@@ -240,7 +236,6 @@ class objectManager
         }
 
         $rs = $this->con->select($strReq);
-        $rs = $rs->toStatic();
 
         return $rs;
     }
@@ -272,7 +267,6 @@ class objectManager
         }
 
         $rs = $this->con->select($strReq);
-        $rs = $rs->toStatic();
 
         return $rs->f(0);
     }

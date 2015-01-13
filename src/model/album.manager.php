@@ -21,7 +21,7 @@
 
 class albumManager extends objectManager
 {
-    public static $fields = array('title', 'singer', 'publication_date', 'url', 'media_id', 'bio_express');
+    public static $fields = array('title', 'singer', 'publication_date', 'url', 'media_id', 'bio_express', 'meta');
 
     public static $required_fields = array('title', 'singer', 'publication_date');
 
@@ -31,6 +31,16 @@ class albumManager extends objectManager
         $this->table_song = $this->blog->prefix.'rslt_song';
         $this->table_album_song = $this->blog->prefix.'rslt_album_song';
         $this->table_reference_song = $this->blog->prefix.'rslt_reference_song';
+    }
+
+    public function add($cur) {
+        $cur->meta = json_encode($cur->meta);
+        parent::add($cur);
+    }
+
+    public function update($id, $cur) {
+        $cur->meta = json_encode($cur->meta);
+        parent::update($id, $cur);
     }
 
     public function getSongs($album_id) {
@@ -46,7 +56,6 @@ class albumManager extends objectManager
         $strReq .= ' ORDER BY rank asc';
 
         $rs = $this->con->select($strReq);
-        $rs = $rs->toStatic();
 
         return $rs;
     }
@@ -69,7 +78,6 @@ class albumManager extends objectManager
         $strReq .= ' AND album_id = '.$this->con->escape($album_id);
 
         $rs = $this->con->select($strReq);
-        $rs = $rs->toStatic();
         while ($rs->fetch()) {
             $author_name = Authors::getName($rs->author_id);
             $authors[$rs->author_id] = array(
@@ -131,7 +139,7 @@ class albumManager extends objectManager
         }
 
         $rs = $this->con->select($strReq);
-        $rs = $rs->toStatic();
+		$rs->extend('rsExtendAlbum');
 
         return $rs;
     }
@@ -143,7 +151,14 @@ class albumManager extends objectManager
         $strReq .= sprintf(' AND UPPER(title) like UPPER(\'%s%%\')', $this->con->escape($title));
 
         $rs = $this->con->select($strReq);
-        $rs = $rs->toStatic();
+		$rs->extend('rsExtendAlbum');
+
+        return $rs;
+    }
+
+    public function findById($id) {
+        $rs = parent::findById($id);
+		$rs->extend('rsExtendAlbum');
 
         return $rs;
     }
@@ -154,7 +169,7 @@ class albumManager extends objectManager
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
 
         $rs = $this->con->select($strReq);
-        $rs = $rs->toStatic();
+		$rs->extend('rsExtendAlbum');
 
         return $rs;
     }
