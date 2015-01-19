@@ -68,6 +68,8 @@ class albumManager extends objectManager
     public function getSongAuthors($album_id) {
         $authors = array();
 
+        return $authors;
+
         $strReq =  'SELECT _rs.author_id';
         $strReq .= ' FROM '.$this->table_song.' as _s';
         $strReq .= ' LEFT JOIN '.$this->table_album_song.' as _as';

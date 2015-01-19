@@ -408,3 +408,6 @@ msgstr "Répertoire des supports : "
 
 msgid "%d persons in database"
 msgstr "%d personnes dans la base de données"
+
+msgid "See that album on the site"
+msgstr "Voir cet album sur le site"

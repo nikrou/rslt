@@ -2,6 +2,7 @@
   <head>
     <title><?php echo __('RSLT');?></title>
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
+    /*# sourceMappingURL = index.php?pf=rslt/css/admin.css.map
     <script type="text/javascript">
       //<![CDATA[
       var rslt_confirm_delete = [];
@@ -46,10 +47,10 @@
 
 	<div class="cell">
 	  <h4><?php echo __('Display options');?></h4>
-	  <p><label for="sortby_album" class="ib"><?php echo __('Sort by:');?></label>
+	  <p><label for="sortby_album" class="ib"><?php echo __('Order by:');?></label>
 	    <?php echo form::combo('sortby_album', $sortby_albums_combo, $sortby_album);?>
 	  </p>
-	  <p><label for="order_album" class="ib"><?php echo __('Order:');?></label>
+	  <p><label for="order_album" class="ib"><?php echo __('Sort:');?></label>
 	    <?php echo form::combo('order_album',$order_combo, $order_album);?>
 	  </p>
 	  <p>

@@ -22,6 +22,14 @@
     <p class="message"><?php echo $message;?></p>
     <?php endif;?>
 
+    <?php if ($album['id']):?>
+    <p class="clearfix">
+      <a class="onblog_link outgoing" href="<?php echo $album_url;?>">
+	<?php echo __('See that album on the site');?> <img src="images/outgoing-blue.png" alt="" />
+      </a>
+    </p>
+    <?php endif;?>
+
     <form action="<?php echo $page_url;?>" method="post" id="album-form">
       <p class="field">
 	<label class="required title" for="album_title">

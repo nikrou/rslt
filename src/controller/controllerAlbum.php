@@ -49,6 +49,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_GET['term'])) {
 
         $rs = $album_manager->findById($_GET['id']);
         if (!$rs->isEmpty()) {
+            $album_url = $core->blog->url.$core->url->getBase('album').'/'.rawurlencode($rs->url);
+
             $album['id'] = (int) $_GET['id'];
             $album['title'] = $rs->title;
             $album['publication_date'] = $rs->publication_date;
@@ -134,6 +136,12 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_GET['term'])) {
 
 
     include(dirname(__FILE__).'/../views/form_album.tpl');
+} elseif (!empty($_REQUEST['action']) && ($_REQUEST['action']=='delete') && !empty($_POST['albums']) && $_POST['object']=='album') {
+    $album_manager = new albumManager($core);
+    $album_manager->delete($_POST['albums']);
+    $_SESSION['rslt_message'] = __('The album has been deleted.',
+                                   'The albums have been deleted.', count($_POST['albums']));
+    http::redirect($page_url);
 } else {
     $album_manager = new albumManager($core);
 

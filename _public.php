@@ -31,10 +31,6 @@ $prefix_albums = $core->blog->settings->rslt->prefix_albums;
 $prefix_album = $core->blog->settings->rslt->prefix_album;
 $prefix_song = $core->blog->settings->rslt->prefix_song;
 
-$core->url->register('albums', $prefix_albums, '^'.preg_quote($prefix_albums).'$', array('rsltUrlHandlers', 'albums'));
-$core->url->register('album', $prefix_album, '^'.preg_quote($prefix_album).'/(.+)$', array('rsltUrlHandlers', 'album'));
-$core->url->register('song', $prefix_song, '^'.preg_quote($prefix_song).'/(.+)$', array('rsltUrlHandlers', 'song'));
-
 // behaviors
 $core->addBehavior('publicBeforeDocument', array('rsltBehaviors', 'addTplPath'));
 $core->addBehavior('publicHeadContent', array('rsltBehaviors', 'publicHeadContent'));

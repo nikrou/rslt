@@ -39,3 +39,14 @@ $__autoload['rsltDashboard'] = dirname(__FILE__).'/src/utils/rslt.dashboard.php'
 $__autoload['rsltAdminCombo'] = dirname(__FILE__).'/src/utils/rslt.admin.combo.php';
 
 $__autoload['rsExtendAlbum'] = dirname(__FILE__).'/src/model/rs.extend.album.php';
+
+
+$core->blog->settings->addNamespace('rslt');
+$prefix_albums = $core->blog->settings->rslt->prefix_albums;
+$prefix_album = $core->blog->settings->rslt->prefix_album;
+$prefix_song = $core->blog->settings->rslt->prefix_song;
+
+// public url needed for admin preview
+$core->url->register('albums', $prefix_albums, '^'.preg_quote($prefix_albums).'$', array('rsltUrlHandlers', 'albums'));
+$core->url->register('album', $prefix_album, '^'.preg_quote($prefix_album).'/(.+)$', array('rsltUrlHandlers', 'album'));
+$core->url->register('song', $prefix_song, '^'.preg_quote($prefix_song).'/(.+)$', array('rsltUrlHandlers', 'song'));
