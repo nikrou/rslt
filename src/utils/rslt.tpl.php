@@ -91,7 +91,8 @@ class rsltTpl
        $res = "<?php\n";
        $res .= '$media = new dcMedia($core);';
        $res .= '$file = $media->getFile($_ctx->album->media_id);';
-       $res .= 'echo '.sprintf($f, '$file->media_thumb[\''.$size.'\']').';?>';
+       $res .= 'if (!empty($file->media_thumb[\''.$size.'\'])) {';
+       $res .= 'echo '.sprintf($f, '$file->media_thumb[\''.$size.'\']').';}?>';
 
        return $res;
    }
