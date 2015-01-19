@@ -22,8 +22,12 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $page_url = $p_url.'&object=song';
+$rslt_albums_service = $p_url.'&object=album';
 
-if (!empty($_REQUEST['id']) || (!empty($_GET['action']) && (in_array($_GET['action'], array('edit', 'add'))))) {
+Log::getInstance()->debug('GET', $_GET);
+Log::getInstance()->debug('REQUEST', $_REQUEST);
+
+if (!empty($_REQUEST['album_id']) || (!empty($_GET['action']) && (in_array($_GET['action'], array('edit', 'add'))))) {
     if (!empty($_GET['action'])) {
         $action = $_GET['action'];
     }
@@ -45,8 +49,7 @@ if (!empty($_REQUEST['id']) || (!empty($_GET['action']) && (in_array($_GET['acti
             }
             $_SESSION['rslt_message'] = __('The song has been associated to album.',
                                            'The songs have been associated to album.', count($_POST['songs']));
-            $_SESSION['rslt_default_tab'] = 'songs';
-            http::redirect($p_url);
+            http::redirect($page_url);
         } catch (Exception $e) {
             $core->error->add($e->getMessage());
         }
@@ -56,7 +59,6 @@ if (!empty($_REQUEST['id']) || (!empty($_GET['action']) && (in_array($_GET['acti
         $song_manager->delete($_POST['songs']);
         $_SESSION['rslt_message'] = __('The song has been deleted.',
                                        'The songs have been deleted.', count($_POST['songs']));
-        $_SESSION['rslt_default_tab'] = 'songs';
         http::redirect($p_url);
     }
 
@@ -100,7 +102,6 @@ if (!empty($_REQUEST['id']) || (!empty($_GET['action']) && (in_array($_GET['acti
                 $message = __('The song has been added.');
             }
             $_SESSION['rslt_message'] = $message;
-            $_SESSION['rslt_default_tab'] = 'songs';
             http::redirect($p_url);
         } catch (Exception $e) {
             $core->error->add($e->getMessage());

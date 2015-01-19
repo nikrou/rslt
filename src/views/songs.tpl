@@ -2,15 +2,16 @@
   <head>
     <title><?php echo __('RSLT');?></title>
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
-    <?php echo dcPage::jsPageTabs($default_tab);?>
     <script type="text/javascript">
       //<![CDATA[
       <?php echo dcPage::jsVar('dotclear.msg.show_filters', $show_filters ? 'true':'false');?>
       <?php echo dcPage::jsVar('dotclear.msg.filter_posts_list',$form_filter_title);?>
       <?php echo dcPage::jsVar('dotclear.msg.cancel_the_filter',__('Cancel filters and display options'));?>
+      var rslt_albums_service = "<?php echo $rslt_albums_service;?>";
       //]]>
     </script>
     <?php echo dcPage::jsLoad('js/filter-controls.js');?>
+    <script type="text/javascript" src="index.php?pf=rslt/js/jquery.ui.autocomplete.js"></script>
     <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
   </head>
   <body>

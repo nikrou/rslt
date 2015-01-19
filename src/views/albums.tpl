@@ -2,7 +2,6 @@
   <head>
     <title><?php echo __('RSLT');?></title>
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
-    /*# sourceMappingURL = index.php?pf=rslt/css/admin.css.map
     <script type="text/javascript">
       //<![CDATA[
       var rslt_confirm_delete = [];
