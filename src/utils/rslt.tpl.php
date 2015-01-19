@@ -24,19 +24,19 @@ class rsltTpl
     // albums
     public static function Albums($attr, $content) {
         $res = '';
-        
+
         $res .= "<?php\n";
         $res .= '$_ctx->albums = $_ctx->album_manager->getList();';
         $res .= 'while ($_ctx->albums->fetch()):?>';
         $res .= $content;
         $res .= '<?php endwhile; $_ctx->albums = null;?>';
-        
+
         return $res;
     }
 
     public static function AlbumTitle($attr) {
         $f = $GLOBALS['core']->tpl->getFilters($attr);
-        
+
         return '<?php echo '.sprintf($f, '$_ctx->albums->title').';?>';
     }
 
@@ -50,38 +50,38 @@ class rsltTpl
    // album
    public static function AlbumPageTitle($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
-       
+
        return '<?php echo '.sprintf($f, '$_ctx->album->title').';?>';
    }
 
    public static function AlbumPageSinger($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
-       
+
        return '<?php echo '.sprintf($f, '$_ctx->album->singer').';?>';
-   }   
+   }
 
    public static function AlbumPageBioExpress($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
-       
+
        return '<?php echo '.sprintf($f, '$_ctx->album->bio_express').';?>';
-   }   
+   }
 
    public static function AlbumPagePublicationDate($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
-       
+
        return '<?php echo '.sprintf($f, '$_ctx->album->publication_date').';?>';
-   }   
+   }
 
    public static function AlbumPageIfMediaSrc($attr, $content) {
        return
-           '<?php if ($_ctx->album->media_id!==null):?>'.
+           '<?php if ($_ctx->album->exists(\'media_id\') && $_ctx->album->media_id):?>'.
            $content.
            '<?php endif; ?>';
    }
 
    public static function AlbumPageMediaSrc($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
-       
+
        if (!empty($attr['size'])) {
            $size = $attr['size'];
        } else {
@@ -94,17 +94,17 @@ class rsltTpl
        $res .= 'echo '.sprintf($f, '$file->media_thumb[\''.$size.'\']').';?>';
 
        return $res;
-   }   
+   }
 
    public static function AlbumSongs($attr, $content) {
         $res = '';
-        
+
         $res .= "<?php\n";
         $res .= '$_ctx->songs = $_ctx->album_manager->getSongs($_ctx->album->id);';
         $res .= 'while ($_ctx->songs->fetch()):?>';
         $res .= $content;
         $res .= '<?php endwhile; $_ctx->songs = null;?>';
-        
+
         return $res;
    }
 
@@ -124,20 +124,20 @@ class rsltTpl
 
    public static function SongTitle($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
-       
+
        return '<?php echo '.sprintf($f, '$_ctx->songs->title').';?>';
-   }   
+   }
 
    public static function SongAuthor($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
-       
+
        return '<?php echo '.sprintf($f, '$_ctx->songs->author').';?>';
-   }   
+   }
 
    public static function SongData($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
 
-       return '<?php echo '.sprintf($f, 'Authors::getSongData($_ctx->songs)').';?>';
+       return '<?php echo '.sprintf($f, '\'\'').';?>';
    }
 
    // Authors
@@ -151,25 +151,25 @@ class rsltTpl
        $res .= 'foreach ($_ctx->song_authors as $_ctx->song_author_id => $_ctx->song_author):?>';
        $res .= $content;
        $res .= '<?php endforeach;unset($_ctx->song_authors,$_ctx->song_author_id,$_ctx->song_author);?>';
-       
+
        return $res;
    }
 
    public static function AuthorId($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
-       
+
        return '<?php echo '.sprintf($f, '$_ctx->song_author_id').';?>';
    }
 
    public static function AuthorURL($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
-       
+
        return '<?php echo '.sprintf($f, '$_ctx->song_author[\'url\']').';?>';
    }
 
    public static function AuthorDisplayName($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
-       
+
        return '<?php echo '.sprintf($f, '$_ctx->song_author[\'display\']').';?>';
    }
 
@@ -187,19 +187,19 @@ class rsltTpl
 
    public static function MetaAuthorId($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
-       
+
        return '<?php echo '.sprintf($f, '$_ctx->meta->meta_id').';?>';
    }
 
    public static function MetaAuthorURL($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
-       
+
        return '<?php echo '.sprintf($f, '$_ctx->meta->meta_id').';?>';
    }
 
    public static function MetaAuthorDisplayName($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
-       
+
        return '<?php echo '.sprintf($f, 'Authors::getAuthorFromUrl($_ctx->meta->meta_id)').';?>';
    }
 
