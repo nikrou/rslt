@@ -2,7 +2,20 @@
   <head>
     <title><?php echo $page_title.' - '.__('Songs'); ?></title>
     <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/select2.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
+    <script type="text/javascript">
+      var rslt_person_service = "<?php echo $rslt_person_service;?>";
+    </script>
+    <script type="text/javascript" src="index.php?pf=rslt/js/select2.js"></script>
+    <script type="text/javascript" src="index.php?pf=rslt/js/select2_locale_fr.js"></script>
+    <script type="text/javascript" src="index.php?pf=rslt/js/person.js"></script>
+    <script type="text/javascript">
+      var all_elements = [];
+      <?php foreach ($json as $field => $ids):?>
+      all_elements['<?php echo $field;?>'] = <?php echo $ids;?>;
+      <?php endforeach;?>
+    </script>
   </head>
   <body>
     <h2>
@@ -36,40 +49,34 @@
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Author:');?>
 	</label>
-	<?php echo form::field('song_author', 100, 255, html::escapeHTML($song['author']), '');?>
+	<input type="hidden" data-elements="author" data-placeholder="<?php echo __('Author');?>" class="select2" name="song_author" value="<?php echo html::escapeHTML($song['author']);?>">
       </p>
       <p class="field">
 	<label class="required" for="song_compositor">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Compositor:');?>
 	</label>
-	<?php echo form::field('song_compositor', 100, 255, html::escapeHTML($song['compositor']), '');?>
+	<input type="hidden" data-elements="compositor" data-placeholder="<?php echo __('Compositor');?>" class="select2" name="song_compositor" value="<?php echo html::escapeHTML($song['compositor']);?>">
       </p>
       <p class="field">
 	<label class="required" for="song_adaptator">
 	  <?php echo __('Adaptator:');?>
 	</label>
-	<?php echo form::field('song_adaptator', 100, 255, html::escapeHTML($song['adaptator']), '');?>
+	<input type="hidden" data-elements="adaptator" data-placeholder="<?php echo __('Adaptator');?>" class="select2" name="song_adaptator" value="<?php echo html::escapeHTML($song['adaptator']);?>">
       </p>
       <p class="field">
 	<label class="required" for="song_singer">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Singer:');?>
 	</label>
-	<?php echo form::field('song_singer', 100, 255, html::escapeHTML($song['singer']), '');?>
+	<input type="hidden" data-elements="singer" data-placeholder="<?php echo __('Singer');?>" class="select2" name="song_singer" value="<?php echo html::escapeHTML($song['singer']);?>">
       </p>
       <p class="field">
 	<label class="required" for="song_editor">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Editor:');?>
 	</label>
-	<?php echo form::field('song_editor', 100, 255, html::escapeHTML($song['editor']), '');?>
-      </p>
-      <p class="field">
-	<label for="song_other_editor">
-	  <?php echo __('Other editor:');?>
-	</label>
-	<?php echo form::field('song_other_editor', 100, 255, html::escapeHTML($song['other_editor']), '');?>
+	<input type="hidden" data-elements="editor" data-placeholder="<?php echo __('Editor');?>" class="select2" name="song_editor" value="<?php echo html::escapeHTML($song['editor']);?>">
       </p>
       <p class="field">
 	<label class="required" for="song_publication_date">
@@ -80,6 +87,7 @@
       </p>
       <p>
 	<?php echo form::hidden('p', 'rslt');?>
+	<?php if (!empty($song['id'])) { echo form::hidden('id', $song['id']);}?>
 	<?php echo form::hidden('object', 'song');?>
 	<?php echo form::hidden('action', $action);?>
 	<?php echo $core->formNonce();?>

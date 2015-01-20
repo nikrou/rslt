@@ -132,7 +132,7 @@ class rsltTpl
    public static function SongAuthor($attr) {
        $f = $GLOBALS['core']->tpl->getFilters($attr);
 
-       return '<?php echo '.sprintf($f, '$_ctx->songs->author').';?>';
+       return '<?php echo '.sprintf($f, '$_ctx->songs->getSingers()').';?>';
    }
 
    public static function SongData($attr) {

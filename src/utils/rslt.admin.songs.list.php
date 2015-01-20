@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | RSLT - a plugin for dotclear                                          |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2013 Nicolas Roudaire             http://www.nikrou.net  |
+// | Copyright(C) 2013-2015 Nicolas Roudaire        http://www.nikrou.net  |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License version 2 as     |
@@ -28,6 +28,10 @@ class adminSongsList extends adminGenericList
         $this->p_url = $p_url;
     }
 
+    public function setPersonUrl($url) {
+        $this->person_url = $url;
+    }
+
     public function setAlbumUrl($url) {
         $this->album_url = $url;
     }
@@ -37,7 +41,7 @@ class adminSongsList extends adminGenericList
         $pager->setVarPage('page_songs');
         $pager->setAnchor(self::$anchor);
 
-        $html_block = 
+        $html_block =
 			'<div class="table-outer">'.
             '<table class="songs clear" id="songs-list">'.
             '<thead>'.
@@ -55,7 +59,7 @@ class adminSongsList extends adminGenericList
             '</thead>'.
             '<tbody>%s</tbody></table>'.
             '</div>';
-        
+
         echo $pager->getLinks();
 
         if ($enclose_block) {
@@ -63,9 +67,9 @@ class adminSongsList extends adminGenericList
         }
 
         $blocks = explode('%s',$html_block);
-        
+
         echo $blocks[0];
-        
+
         while ($this->rs->fetch()) {
             echo $this->postLine();
         }
@@ -81,8 +85,9 @@ class adminSongsList extends adminGenericList
         if ($this->rs->album_id) {
             $album = sprintf('<a href="'.$this->album_url.'">%s</a>', $this->rs->album_id, $this->rs->album_title);
         }
+        $meta = json_decode($this->rs->meta, true);
 
-        $res = 
+        $res =
             '<tr>'.
             '<td>'.
             form::checkbox(array('songs[]'), $this->rs->id, '', '', '').
@@ -93,14 +98,31 @@ class adminSongsList extends adminGenericList
             '</a>'.
             '</td>'.
             '<td class="nowrap">'.$album.'</td>'.
-            '<td class="nowrap">'.html::escapeHTML($this->rs->author).'</td>'.
-            '<td class="nowrap">'.html::escapeHTML($this->rs->compositor).'</td>'.
-            '<td class="nowrap">'.html::escapeHTML($this->rs->adaptator).'</td>'.
-            '<td class="nowrap">'.html::escapeHTML(text::cutString($this->rs->singer,50)).'</td>'.
-            '<td class="nowrap">'.html::escapeHTML($this->rs->editor).'</td>'.
+            '<td class="nowrap">'.$this->fieldString($meta['author']).'</td>'.
+            '<td class="nowrap">'.$this->fieldString($meta['compositor']).'</td>'.
+            '<td class="nowrap">'.$this->fieldString($meta['adaptator']).'</td>'.
+            '<td class="nowrap">'.$this->fieldString($meta['singer']).'</td>'.
+            '<td class="nowrap">'.$this->fieldString($meta['editor']).'</td>'.
             '<td class="nowrap">'.$this->rs->publication_date.'</td>'.
             '</tr>';
-        
+
         return $res;
+    }
+
+    private function fieldString($data) {
+        $s = '';
+        if (!empty($data)) {
+            foreach ($data as $person) {
+                $s .= sprintf('<li><a href="'.$this->person_url.'">%s</a></li>',
+                              $person['id'],
+                              html::escapeHTML($person['name'])
+                );
+            }
+            if (!empty($s)) {
+                $s = '<ul class="meta-field">'.$s.'</ul>';
+            }
+        }
+
+        return $s;
     }
 }

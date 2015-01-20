@@ -23,70 +23,68 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $page_url = $p_url.'&object=song';
 $rslt_albums_service = $p_url.'&object=album';
+$rslt_person_service = $p_url.'&object=person';
+$meta_fields = array('author','compositor','adaptator','singer','editor');
 
-Log::getInstance()->debug('GET', $_GET);
-Log::getInstance()->debug('REQUEST', $_REQUEST);
-
-if (!empty($_REQUEST['album_id']) || (!empty($_GET['action']) && (in_array($_GET['action'], array('edit', 'add'))))) {
-    if (!empty($_GET['action'])) {
-        $action = $_GET['action'];
-    }
-
+if (!empty($_REQUEST['action']) && (in_array($_REQUEST['action'], array('edit', 'add')))) {
+    $action = $_REQUEST['action'];
     $page_title = __('New song');
-    $song = array('title' => '', 'author' => '', 'compositor' => '', 'adaptator' => '',
-                  'singer' => '', 'publication_date' => '', 'editor' => '', 'other_editor' => '', 'url' => '');
+
+    $json = array();
+    $song = array(
+        'title' => '', 'author' => '', 'compositor' => '', 'adaptator' => '',
+        'singer' => '', 'publication_date' => '', 'editor' => '', 'url' => ''
+    );
 
     $song_manager = new songManager($core);
+    if (!empty($_GET['id'])) {
+        $page_title = __('Edit song');
 
-    if (!empty($_POST['songs']) && ($_POST['object']=='song')
-        && ($_POST['action']=='associate_to_album') && !empty($_POST['album_id'])) {
-        $album_id = (int) $_POST['album_id'];
-        $album_song_manager = new albumSong($core);
-
-        try {
-            foreach ($_POST['songs'] as $song_id) {
-                $album_song_manager->add($album_id, $song_id);
-            }
-            $_SESSION['rslt_message'] = __('The song has been associated to album.',
-                                           'The songs have been associated to album.', count($_POST['songs']));
-            http::redirect($page_url);
-        } catch (Exception $e) {
-            $core->error->add($e->getMessage());
-        }
-    }
-
-    if (($action=='delete') && !empty($_POST['songs']) && $_POST['object']=='song') {
-        $song_manager->delete($_POST['songs']);
-        $_SESSION['rslt_message'] = __('The song has been deleted.',
-                                       'The songs have been deleted.', count($_POST['songs']));
-        http::redirect($p_url);
-    }
-
-    if (($action=='edit') && !empty($_GET['id'])) {
         $rs = $song_manager->findById($_GET['id']);
         if (!$rs->isEmpty()) {
+            foreach ($meta_fields as $field) {
+                $json[$field] = $rs->getJson($field);
+                $song[$field] = $rs->getIds($field);
+            }
+            $song['id'] = (int) $_GET['id'];
             $song['title'] = $rs->title;
-            $song['author'] = $rs->author;
-            $song['compositor'] = $rs->compositor;
-            $song['adaptator'] = $rs->adaptator;
-            $song['singer'] = $rs->singer;
-            $song['editor'] = $rs->editor;
-            $song['other_editor'] = $rs->other_editor;
             $song['url'] = $rs->url;
             $song['publication_date'] = $rs->publication_date;
             $_SESSION['song_id'] = $_GET['id'];
+        } else {
+            dcPage::addErrorNotice('That song does not exist.');
+            http::redirect($page_url);
         }
     }
-
     if (!empty($_POST['save_song'])) {
         $cur = $song_manager->openCursor();
+        $meta = array();
         $cur->title = (string) $_POST['song_title'];
-        $cur->author = (string) $_POST['song_author'];
-        $cur->compositor = (string) $_POST['song_compositor'];
-        $cur->adaptator = (string) $_POST['song_adaptator'];
-        $cur->singer = (string) $_POST['song_singer'];
-        $cur->editor = (string) $_POST['song_editor'];
-        $cur->other_editor = (string) $_POST['song_other_editor'];
+        foreach ($meta_fields as $field) {
+            $persons = array();
+            if (!empty($_POST['song_'.$field])) {
+                $raw_persons = explode(',', $_POST['song_'.$field]);
+
+                $person_manager = new personManager($core);
+                foreach ($raw_persons as $raw_person) {
+                    if (preg_match('/^~~(\d+)~~$/', $raw_person, $matches)) {
+                        $person = $person_manager->findById($matches[1]);
+                        if (!$person->isEmpty()) {
+                            $persons[] = array('id'=> $matches[1], 'name' => $person->name);
+                        }
+                    } else {
+                        $cur_person = $person_manager->openCursor();
+                        $cur_person->name = $raw_person;
+                        $person = $person_manager->add($cur_person);
+                        if ($person) {
+                            $persons[] = array('id'=> $person->id, 'name' => $person->name);
+                        }
+                    }
+                }
+            }
+            $meta[$field] = $persons;
+        }
+        $cur->meta = $meta;
         $cur->publication_date = (int) $_POST['song_publication_date'];
         if (isset($_POST['song_url'])) {
             $cur->url = (string) $_POST['song_url'];
@@ -102,13 +100,34 @@ if (!empty($_REQUEST['album_id']) || (!empty($_GET['action']) && (in_array($_GET
                 $message = __('The song has been added.');
             }
             $_SESSION['rslt_message'] = $message;
-            http::redirect($p_url);
+            http::redirect($page_url.'&action=edit&id='.(int) $_POST['id']);
         } catch (Exception $e) {
             $core->error->add($e->getMessage());
         }
     }
 
     include(dirname(__FILE__).'/../views/form_song.tpl');
+} elseif (!empty($_REQUEST['action']) && ($_REQUEST['action']=='delete')
+          && !empty($_POST['songs']) && $_POST['object']=='song') {
+    $song_manager->delete($_POST['songs']);
+    $_SESSION['rslt_message'] = __('The song has been deleted.',
+                                   'The songs have been deleted.', count($_POST['songs']));
+    http::redirect($page_url);
+} elseif (!empty($_REQUEST['action']) && ($_REQUEST['action']=='associate_to_album')
+          && !empty($_POST['songs']) && ($_POST['object']=='song') && !empty($_POST['album_id'])) {
+    $album_id = (int) $_POST['album_id'];
+    $album_song_manager = new albumSong($core);
+
+    try {
+        foreach ($_POST['songs'] as $song_id) {
+            $album_song_manager->add($album_id, $song_id);
+        }
+        $_SESSION['rslt_message'] = __('The song has been associated to album.',
+                                       'The songs have been associated to album.', count($_POST['songs']));
+        http::redirect($page_url);
+    } catch (Exception $e) {
+        $core->error->add($e->getMessage());
+    }
 } else {
     $song_manager = new songManager($core);
 
@@ -210,6 +229,7 @@ if (!empty($_REQUEST['album_id']) || (!empty($_GET['action']) && (in_array($_GET
         $songs_list = new adminSongsList($core, $song_manager->getList($filters_params, $limit_songs), $songs_counter);
         $songs_list->setPluginUrl("$p_url&amp;object=song&amp;action=edit&amp;id=%d");
         $songs_list->setAlbumUrl("$p_url&amp;object=album&amp;action=edit&amp;id=%d");
+        $songs_list->setPersonUrl("$p_url&amp;object=person&amp;action=edit&amp;id=%d");
     } catch (Exception $e) {
         $core->error->add($e->getMessage());
     }

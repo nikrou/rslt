@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | RSLT - a plugin for dotclear                                          |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2013 Nicolas Roudaire             http://www.nikrou.net  |
+// | Copyright(C) 2013-2015 Nicolas Roudaire        http://www.nikrou.net  |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License version 2 as     |
@@ -74,18 +74,21 @@ class adminAlbumsList extends adminGenericList
     private function postLine() {
         $singer_string = '';
         $n = 0;
-        foreach ($this->rs->getSinger() as $singer) {
-            $singer_string .= sprintf('<li><a href="'.$this->person_url.'">%s</a></li>',
-                                      $singer['id'],
-                                      html::escapeHTML($singer['name'])
-            );
-            $n++;
-            if ($n>2) {
+        $singers = json_decode($this->rs->getJson('singer'), true);
+        if (!empty($singers)) {
+            foreach ($singers as $singer) {
+                $singer_string .= sprintf('<li><a href="'.$this->person_url.'">%s</a></li>',
+                                          $singer['id'],
+                                          html::escapeHTML($singer['name'])
+                );
+                $n++;
+                if ($n>2) {
                 break;
+                }
             }
         }
         if (!empty($singer_string)) {
-            $singer_string = '<ul class="singer">'.$singer_string.'</ul>';
+            $singer_string = '<ul class="meta-field">'.$singer_string.'</ul>';
         }
         $res =
             '<tr>'.

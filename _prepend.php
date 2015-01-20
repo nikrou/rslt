@@ -38,8 +38,7 @@ $__autoload['rsltPager'] = dirname(__FILE__).'/src/utils/rslt.pager.php';
 $__autoload['rsltDashboard'] = dirname(__FILE__).'/src/utils/rslt.dashboard.php';
 $__autoload['rsltAdminCombo'] = dirname(__FILE__).'/src/utils/rslt.admin.combo.php';
 
-$__autoload['rsExtendAlbum'] = dirname(__FILE__).'/src/model/rs.extend.album.php';
-
+$__autoload['rsExtendMeta'] = dirname(__FILE__).'/src/model/rs.extend.meta.php';
 
 $core->blog->settings->addNamespace('rslt');
 $prefix_albums = $core->blog->settings->rslt->prefix_albums;

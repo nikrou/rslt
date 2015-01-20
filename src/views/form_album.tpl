@@ -4,13 +4,20 @@
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/select2.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="index.php?pf=rslt/css/admin.css"/>
     <script type="text/javascript" src="index.php?pf=rslt/js/select2.js"></script>
-    <script type="text/javascript" src="index.php?pf=rslt/js/album.js"></script>
+    <script type="text/javascript" src="index.php?pf=rslt/js/select2_locale_fr.js"></script>
+    <script type="text/javascript" src="index.php?pf=rslt/js/person.js"></script>
     <?php echo dcPage::jsLoad('js/jquery/jquery-ui.custom.js');?>
     <script type="text/javascript">
       var rslt_confirm_remove_songs_from_album = "<?php echo __('Are you sure you want to remove selected songs from album (%s)?');?>";
       var rslt_person_service = "<?php echo $rslt_person_service;?>";
     </script>
     <script type="text/javascript" src="index.php?pf=rslt/js/admin.js"></script>
+    <script type="text/javascript">
+      var all_elements = [];
+      <?php if (!empty($singers_string)):?>
+      all_elements['singer'] = <?php echo $singers_string;?>;
+      <?php endif;?>
+    </script>
   </head>
   <body>
     <h2>
@@ -22,7 +29,7 @@
     <p class="message"><?php echo $message;?></p>
     <?php endif;?>
 
-    <?php if ($album['id']):?>
+    <?php if (!empty($album['id'])):?>
     <p class="clearfix">
       <a class="onblog_link outgoing" href="<?php echo $album_url;?>">
 	<?php echo __('See that album on the site');?> <img src="images/outgoing-blue.png" alt="" />
@@ -50,17 +57,11 @@
 	</p>
       </div>
       <p class="field">
-	<script type="text/javascript">
-	  var singers = [];
-	  <?php if (!empty($singers_string)):?>
-	  singers = <?php echo $singers_string;?>;
-	  <?php endif;?>
-	</script>
 	<label class="required" for="album_singer">
 	  <abbr title="<?php echo __('Required field');?>">*</abbr>
 	  <?php echo __('Singer:');?>
 	</label>
-	<?php echo form::hidden('album_singer', html::escapeHTML($album['singer']));?>
+	<input type="hidden" data-elements="singer" data-placeholder="<?php echo __('Singer');?>" class="select2" name="album_singer" value="<?php echo html::escapeHTML($album['singer']);?>">
       </p>
       <p class="field">
 	<label class="required" for="album_publication_date">
@@ -87,7 +88,7 @@
       </p>
       <p>
 	<?php echo form::hidden(array('p',''), 'rslt');?>
-	<?php echo form::hidden('id', $album['id']);?>
+	<?php if (!empty($album['id'])) { echo form::hidden('id', $album['id']);}?>
 	<?php echo form::hidden(array('object',''), 'album');?>
 	<?php echo form::hidden(array('action',''), $action);?>
 	<?php echo $core->formNonce();?>
@@ -99,13 +100,13 @@
     <h3><?php echo __('Tracklist');?></h3>
     <?php if (!empty($songs) && !$songs->isEmpty()):?>
     <form action="<?php echo $page_url;?>" method="post" id="songs-rank-form">
-      <div class="songs">
+      <div class="songs-album">
 	<ul>
 	  <?php while ($songs->fetch()):?>
 	  <li>
 	    <input type="checkbox" name="songs[]" value="<?php echo (int) $songs->id;?>"/>
 	    <input type="text" size="2" name="position[<?php echo $songs->id;?>]" value="<?php echo (int) $songs->rank;?>"/>
-	    <?php echo $songs->title;?>&nbsp;-&nbsp;<?php echo $songs->singer;?>
+	    <?php echo $songs->title;?>&nbsp;-&nbsp;<?php echo $songs->getSingers();?>
 	  </li>
 	  <?php endwhile;?>
 	</ul>

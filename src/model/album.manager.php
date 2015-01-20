@@ -56,6 +56,7 @@ class albumManager extends objectManager
         $strReq .= ' ORDER BY rank asc';
 
         $rs = $this->con->select($strReq);
+		$rs->extend('rsExtendMeta');
 
         return $rs;
     }
@@ -141,7 +142,7 @@ class albumManager extends objectManager
         }
 
         $rs = $this->con->select($strReq);
-		$rs->extend('rsExtendAlbum');
+		$rs->extend('rsExtendMeta');
 
         return $rs;
     }
@@ -153,14 +154,14 @@ class albumManager extends objectManager
         $strReq .= sprintf(' AND UPPER(title) like UPPER(\'%s%%\')', $this->con->escape($title));
 
         $rs = $this->con->select($strReq);
-		$rs->extend('rsExtendAlbum');
+		$rs->extend('rsExtendMeta');
 
         return $rs;
     }
 
     public function findById($id) {
         $rs = parent::findById($id);
-		$rs->extend('rsExtendAlbum');
+		$rs->extend('rsExtendMeta');
 
         return $rs;
     }
@@ -171,7 +172,7 @@ class albumManager extends objectManager
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
 
         $rs = $this->con->select($strReq);
-		$rs->extend('rsExtendAlbum');
+		$rs->extend('rsExtendMeta');
 
         return $rs;
     }

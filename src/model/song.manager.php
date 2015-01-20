@@ -21,16 +21,24 @@
 
 class songManager extends objectManager
 {
-    public static $fields = array('title', 'publication_date', 'author', 'compositor', 'adaptator',
-    'singer', 'editor', 'other_editor', 'original_title', 'url');
-
-    public static $require_fields = array('title', 'publication_date', 'author', 'singer');
+    public static $fields = array('title', 'publication_date', 'meta', 'original_title', 'url');
+    public static $require_fields = array('title', 'publication_date', 'meta');
 
     public function __construct($core) {
         parent::__construct($core, 'song', self::$require_fields, self::$fields);
 
         $this->table_album_song = $this->blog->prefix.'rslt_album_song';
         $this->table_album = $this->blog->prefix.'rslt_album';
+    }
+
+    public function add($cur) {
+        $cur->meta = json_encode($cur->meta);
+        parent::add($cur);
+    }
+
+    public function update($id, $cur) {
+        $cur->meta = json_encode($cur->meta);
+        parent::update($id, $cur);
     }
 
     public function getEditors() {
@@ -41,14 +49,20 @@ class songManager extends objectManager
         return $this->getElements('singer');
     }
 
+    public function findById($id) {
+        $rs = parent::findById($id);
+		$rs->extend('rsExtendMeta');
+
+        return $rs;
+    }
+
     protected function getElements($field) {
         $strReq =  'SELECT distinct('.$field.')';
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
 
         $rs = $this->con->select($strReq);
-        $rs = $rs->toStatic();
-      
+
         return $rs;
     }
 
@@ -59,7 +73,7 @@ class songManager extends objectManager
         $strReq .= ' LEFT JOIN '.$this->table_album_song.' AS _as';
         $strReq .= ' ON _as.song_id = _s.id';
         $strReq .= ' LEFT JOIN '.$this->table_album.' AS _a';
-        $strReq .= ' ON _as.album_id = _a.id';        
+        $strReq .= ' ON _as.album_id = _a.id';
         $strReq .= ' WHERE _s.blog_id = \''.$this->con->escape($this->blog->id).'\'';
 
         // apply filters
@@ -72,9 +86,9 @@ class songManager extends objectManager
         }
 
         if (!empty($params['like'])) {
-            foreach ($params['like'] as $field => $value) {                
+            foreach ($params['like'] as $field => $value) {
                 if ($field=='q') {
-                    $strReq .= sprintf(' AND _s.title like \'%s\'', 
+                    $strReq .= sprintf(' AND _s.title like \'%s\'',
                     $this->con->escape(str_replace(array('*', '?'), array('%', '_'), $value))
                     );
                 } elseif (in_array($field, $this->object_fields)) {
@@ -83,7 +97,7 @@ class songManager extends objectManager
             }
         }
 
-        // apply order        
+        // apply order
         if (!empty($params['sortby']) && in_array($params['sortby'], $this->object_fields)) {
             $sortby_field = $params['sortby'];
         } else {
@@ -95,15 +109,15 @@ class songManager extends objectManager
             $orderby = 'DESC';
         }
 
-        $strReq .= sprintf(' ORDER BY _s.%s %s', $sortby_field, $orderby); 
-      
+        $strReq .= sprintf(' ORDER BY _s.%s %s', $sortby_field, $orderby);
+
         if (!empty($limit)) {
 			$strReq .= $this->con->limit($limit);
         }
 
         $rs = $this->con->select($strReq);
-        $rs = $rs->toStatic();
-      
+        $rs->extend('rsExtendMeta');
+
         return $rs;
     }
 

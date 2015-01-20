@@ -1,9 +1,9 @@
-.singer {
+.meta-field {
     list-style-type: none;
     margin: 0;
 }
 
-.singer li {
+.meta-field li {
     display: inline;
     margin-left: 0.5em;
 }
@@ -94,13 +94,13 @@ p.top-add {
 }
 
 /* songs in album page */
-.songs ul {
+.songs-album ul {
     list-style: none;
     margin-top: 2em;
     padding: 0;
 }
 
-.songs ul li {
+.songs-album ul li {
     position: relative;
     margin: .66em 0;
     padding: .66em 1em;
@@ -108,11 +108,11 @@ p.top-add {
     border-radius: 3px;
 }
 
-.songs ul li input[type="checkbox"] {
+.songs-album ul li input[type="checkbox"] {
     margin-top: 6px;
 }
 
-.songs.ui-sortable ul li {
+.songs-album.ui-sortable ul li {
     cursor: move;
 }
 

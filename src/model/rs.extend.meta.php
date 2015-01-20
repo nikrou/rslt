@@ -19,17 +19,59 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-class rsExtendAlbum
+class rsExtendMeta
 {
-    public static function getSinger($rs) {
-        $meta_singer = array();
-        if ($rs->exists('meta')) {
+    public static function getJson($rs, $field) {
+        $s = '';
+
+        if ($rs->exists('meta') && !empty($field)) {
             $meta = json_decode($rs->meta, true);
-            if (!empty($meta['singer'])) {
-                $meta_singer = $meta['singer'];
+            if (!empty($meta[$field])) {
+                $elements = $meta[$field];
+                $data = array();
+                foreach ($elements as $element) {
+                    $data[] = sprintf('{ "id":%d, "name":"%s" }', $element['id'], $element['name']);
+                }
+                $s = '['.implode(',', $data).']';
             }
         }
 
-        return $meta_singer;
+        return $s;
     }
+
+    public static function getIds($rs, $field) {
+        $s = '';
+        if ($rs->exists('meta') && !empty($field)) {
+            $meta = json_decode($rs->meta, true);
+            if (!empty($meta[$field])) {
+                $elements = $meta[$field];
+                $ids = array();
+                foreach ($elements as $element) {
+                    $ids[] = '~~'.$element['id'].'~~';
+                }
+                $s = implode(',', $ids);
+            }
+        }
+
+        return $s;
+    }
+
+
+    public static function getSingers($rs) {
+        $s = '';
+
+        if ($rs->exists('meta')) {
+            $meta = json_decode($rs->meta, true);
+            if (!empty($meta['singer'])) {
+                $elements = $meta['singer'];
+                $data = array();
+                foreach ($elements as $element) {
+                    $data[] = $element['name'];
+                }
+                $s = implode(',', $data);
+            }
+        }
+
+        return $s;
+   }
 }

@@ -58,16 +58,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_GET['term'])) {
             $album['media_id'] = $rs->media_id;
             $album['bio_express'] = $rs->bio_express;
 
-            $singers = array();
-            $singer_ids = array();
-            foreach ($rs->getSinger() as $singer) {
-                $singers[] = sprintf('{ id:%d, name:"%s" }', $singer['id'], $singer['name']);
-                $singer_ids[] = '~~'.$singer['id'].'~~';
-            }
-            if (!empty($singers)) {
-                $singers_string = '['.implode(',', $singers).']';
-            }
-            $album['singer'] = implode(',', $singer_ids);
+            $singers_string = $rs->getJson('singer');
+            $album['singer'] = $rs->getIds('singer');
 
             if (!empty($album['media_id'])) {
                 $media = new dcMedia($core);
@@ -132,8 +124,6 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_GET['term'])) {
             $core->error->add($e->getMessage());
         }
     }
-
-
 
     include(dirname(__FILE__).'/../views/form_album.tpl');
 } elseif (!empty($_REQUEST['action']) && ($_REQUEST['action']=='delete') && !empty($_POST['albums']) && $_POST['object']=='album') {

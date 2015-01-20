@@ -1,7 +1,7 @@
 $(function() {
-	$('#album_singer').select2({
+	var select2_params = {
 		width: '50%',
-		placeholder: "Singer ?",
+		placeholder: $(this).attr('data-placeholder'),
 		minimumInputLength: 2,
 		multiple: true,
 		ajax: {
@@ -36,19 +36,22 @@ $(function() {
 		},
 		initSelection : function(element, callback) {
 			var data = [];
-			for (var n=0,l=singers.length;n<l;n++) {
-				data.push({id: '~~'+singers[n]['id']+'~~', text: singers[n]['name']});
+			var elements = all_elements[element.attr('data-elements')];
+			for (var n=0,l=elements.length;n<l;n++) {
+				data.push({id: '~~'+elements[n]['id']+'~~', text: elements[n]['name']});
 			}
 			callback(data);
 		},
 		tokenSeparators: [',']
-	});
+	};
+
+	$('.select2').select2(select2_params);
 
 	if ($.fn.sortable) {
 		$('ul.select2-choices').sortable({
 			containment: 'parent',
-			start: function() { $("#album_singer").select2("onSortStart"); },
-			update: function() { $("#album_singer").select2("onSortEnd"); }
+			start: function() { $('.select2').select2('onSortStart'); },
+			update: function() { $('.select2').select2('onSortEnd'); }
 		});
 	}
 });
