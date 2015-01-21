@@ -94,14 +94,14 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_GET['term'])) {
                 if (preg_match('/^~~(\d+)~~$/', $raw_person, $matches)) {
                     $person = $person_manager->findById($matches[1]);
                     if (!$person->isEmpty()) {
-                        $persons[] = array('id'=> $matches[1], 'name' => $person->name);
+                        $persons[] = array('id' => $matches[1], 'name' => $person->name);
                     }
                 } else {
                     $cur_person = $person_manager->openCursor();
                     $cur_person->name = $raw_person;
                     $person = $person_manager->add($cur_person);
                     if ($person) {
-                        $persons[] = array('id'=> $person->id, 'name' => $person->name);
+                        $persons[] = array('id' => $person->id, 'name' => $person->name);
                     }
                 }
             }
@@ -110,13 +110,15 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_GET['term'])) {
 
         try {
             if ($action=='edit') {
-                $album_manager->update($_SESSION['album_id'], $cur);
+                $album_id = $album_manager->update($_SESSION['album_id'], $cur);
                 $message = __('The album has been updated.');
-                unset($_SESSION['album_id']);
             } else {
-                $cur = $album_manager->add($cur);
+                $album_id = $album_manager->add($cur);
                 $message = __('The album has been added.');
             }
+
+            $meta_manager = new metaManager($core);
+            $meta_manager->add($album_id, $persons, 'album:singer');
 
             $_SESSION['rslt_message'] = $message;
             http::redirect($page_url.'&action=edit&id='.(int) $_POST['id']);

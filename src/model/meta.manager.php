@@ -28,14 +28,20 @@ class metaManager
         $this->table = $this->blog->prefix.'rslt_meta';
     }
 
-    public function add($id, $person_id, $type) {
+    public function add($id, array $persons, $type) {
+        $strReq = 'DELETE FROM '.$this->table;
+        $strReq .= ' WHERE ref_id = '.(int) $id;
+        $strReq .= ' AND meta_type = \''.$this->con->escape($type).'\'';
+        $this->con->execute($strReq);
+
         $cur = $this->con->openCursor($this->table);
         try {
-            $cur->meta_id = $id;
-            $cur->person_id = $person_id;
-            $cur->meta_type = $type;
-            $cur->insert();
-            $this->con->unlock();
+            foreach ($persons as $person) {
+                $cur->ref_id = $id;
+                $cur->person_id = $person['id'];
+                $cur->meta_type = $type;
+                $cur->insert();
+            }
         } catch (Exception $e) {
             $this->con->unlock();
             throw $e;

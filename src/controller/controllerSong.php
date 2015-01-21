@@ -92,13 +92,18 @@ if (!empty($_REQUEST['action']) && (in_array($_REQUEST['action'], array('edit', 
 
         try {
             if ($action=='edit') {
-                $song_manager->update($_SESSION['song_id'], $cur);
+                $song_id = $song_manager->update($_SESSION['song_id'], $cur);
                 $message = __('The song has been updated.');
                 unset($_SESSION['song_id']);
             } else {
-                $song_manager->add($cur);
+                $song_id = $song_manager->add($cur);
                 $message = __('The song has been added.');
             }
+            $meta_manager = new metaManager($core);
+            foreach ($meta_fields as $field) {
+                $meta_manager->add($song_id, $meta[$field], "song:$field");
+            }
+
             $_SESSION['rslt_message'] = $message;
             http::redirect($page_url.'&action=edit&id='.(int) $_POST['id']);
         } catch (Exception $e) {

@@ -90,10 +90,10 @@ $s->rslt_support
     ->primary('pk_rslt_support', 'id');
 
 $s->rslt_meta
-    ->meta_id('varchar', 255, false)
+    ->ref_id('bigint', 0, false)
     ->meta_type('varchar', 64, false)
     ->person_id('bigint', 0, false)
-    ->primary('pk_rslt_meta','meta_id','meta_type','person_id');
+    ->primary('pk_rslt_meta','ref_id','meta_type','person_id');
 
 $s->rslt_person
     ->id('bigint', 0, false)

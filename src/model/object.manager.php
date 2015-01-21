@@ -65,7 +65,7 @@ class objectManager
         }
         $this->blog->triggerBlog();
 
-        return $cur;
+        return $cur->id;
     }
 
     public function update($id, $cur) {
@@ -79,7 +79,7 @@ class objectManager
         $cur->update('WHERE id = '.(int) $id." AND blog_id = '".$this->con->escape($this->blog->id)."'");
         $this->blog->triggerBlog();
 
-        return $cur;
+        return $id;
     }
 
     // replace by finding existing object with same title

@@ -35,12 +35,12 @@ class albumManager extends objectManager
 
     public function add($cur) {
         $cur->meta = json_encode($cur->meta);
-        parent::add($cur);
+        return parent::add($cur);
     }
 
     public function update($id, $cur) {
         $cur->meta = json_encode($cur->meta);
-        parent::update($id, $cur);
+        return parent::update($id, $cur);
     }
 
     public function getSongs($album_id) {
