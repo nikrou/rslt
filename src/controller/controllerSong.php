@@ -67,6 +67,9 @@ if (!empty($_REQUEST['action']) && (in_array($_REQUEST['action'], array('edit', 
 
                 $person_manager = new personManager($core);
                 foreach ($raw_persons as $raw_person) {
+                    if ($raw_person=='~~~~') {
+                        continue;
+                    }
                     if (preg_match('/^~~(\d+)~~$/', $raw_person, $matches)) {
                         $person = $person_manager->findById($matches[1]);
                         if (!$person->isEmpty()) {

@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | RSLT - a plugin for dotclear                                          |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2013 Nicolas Roudaire             http://www.nikrou.net  |
+// | Copyright(C) 2013-2015 Nicolas Roudaire        http://www.nikrou.net  |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License version 2 as     |
@@ -22,6 +22,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $page_title = 'Load csv file';
+$page_url = $p_url.'&page=load';
 
 if (!empty($_POST['file']) && !empty($_POST['object'])) {
     $filename = sprintf('%s/%s.csv', __DIR__.'/../../data', $_POST['file']);
@@ -30,6 +31,8 @@ if (!empty($_POST['file']) && !empty($_POST['object'])) {
         $album_manager = new albumManager($core);
         $album_song = new albumSong($core);
         $reference_song = new referenceSong($core);
+        $person_manager = new personManager($core);
+        $meta_manager = new metaManager($core);
 
         if (($fh = fopen($filename, 'r')) !== false) {
             if ($_POST['object']=='song') {
@@ -40,39 +43,48 @@ if (!empty($_POST['file']) && !empty($_POST['object'])) {
                     }
                     $publication_date = isset($data[0])?trim($data[0]):'';
                     $title = isset($data[1])?trim($data[1]):'';
-                    $author = isset($data[2])?trim($data[2]):'';
-                    $compositor = isset($data[3])?trim($data[3]):'';
-                    $adaptator = isset($data[4])?trim($data[4]):'';
-                    $singer = isset($data[5])?trim($data[5]):'';
-                    $editor = isset($data[6])?trim($data[6]):'';
+
+                    $meta_fields = array('author','compositor','adaptator','singer','editor');
+                    $meta = array();
+                    $fields = array();
+                    $fields['author'] = isset($data[2])?trim($data[2]):'';
+                    $fields['compositor'] = isset($data[3])?trim($data[3]):'';
+                    $fields['adaptator'] = isset($data[4])?trim($data[4]):'';
+                    $fields['singer'] = isset($data[5])?trim($data[5]):'';
+                    $fields['editor'] = isset($data[6])?trim($data[6]):'';
                     $original_title = isset($data[7])?trim($data[7]):'';
                     if (empty($title) || empty($publication_date)) {
                         continue;
                     }
 
-                    $song = $song_manager->replaceByTitleAndPublicationDate(array('publication_date' => $publication_date, 'title' => $title,
-                    'author' => $author, 'compositor' => $compositor, 'adaptator' => $adaptator, 'singer' => $singer, 
-                    'editor' => $editor, 'original_title' => $original_title));
-
-                    // find known authors
-                    if (preg_match_all('`('.implode('|', Authors::getAll()).')`', $author, $matches)) {
-                        foreach ($matches[0] as $author_title) {
-                            $reference_song->add(Authors::getAuthorId($author_title), $song->id, 'author');
-                        }
+                    $song = $song_manager->findByTitleAndPublicationDate($title, $publication_date);
+                    if (!$song->isEmpty()) {
+                        continue;
                     }
-
-                    // find known compositors
-                    if (preg_match_all('`('.implode('|', Authors::getAll()).')`', $compositor, $matches)) {
-                        foreach ($matches[0] as $author_title) {
-                            $reference_song->add(Authors::getAuthorId($author_title), $song->id, 'compositor');
+                    $song = $song_manager->openCursor();
+                    $song->publication_date = $publication_date;
+                    $song->title = $title;
+                    foreach ($meta_fields as $field) {
+                        $persons = array();
+                        $raw_persons = explode(',', $fields[$field]);
+                        foreach ($raw_persons as $raw_person) {
+                            $person = $person_manager->searchByName($raw_person);
+                            if ($person->isEmpty()) {
+                                $person = $person_manager->openCursor();
+                                $person->name = $raw_person;
+                                $person_id = $person_manager->add($person);
+                            } else {
+                                $person_id = $person->id;
+                            }
+                            $persons[] = array('id' => $person_id, 'name' => $person->name);
                         }
+                        $meta[$field] = $persons;
+
                     }
-
-                    // find known adaptators
-                    if (preg_match_all('`('.implode('|', Authors::getAll()).')`', $adaptator, $matches)) {
-                        foreach ($matches[0] as $author_title) {
-                            $reference_song->add(Authors::getAuthorId($author_title), $song->id, 'adaptator');
-                        }
+                    $song->meta = $meta;
+                    $song_id = $song_manager->add($song);
+                    foreach ($meta_fields as $field) {
+                        $meta_manager->add($song_id, $meta[$field], "song:$field");
                     }
                 }
                 fclose($fh);
@@ -90,7 +102,28 @@ if (!empty($_POST['file']) && !empty($_POST['object'])) {
                         continue;
                     }
 
-                    $album_manager->replaceByTitle(array('publication_date' => $publication_date, 'title' => $title, 'singer' => $singer));
+                    $album = $album_manager->findByTitleAndPublicationDate($title, $publication_date);
+                    if (!$album->isEmpty()) {
+                        continue;
+                    }
+
+                    $cur = $album_manager->openCursor();
+                    $cur->title = $title;
+                    $cur->publication_date = $publication_date;
+
+                    $persons = array();
+                    $person = $person_manager->searchByName($singer);
+                    if ($person->isEmpty()) {
+                        $person = $person_manager->openCursor();
+                        $person->name = $singer;
+                        $person_id = $person_manager->add($person);
+                    } else {
+                        $person_id = $person->id;
+                    }
+                    $persons[] = array('id' => $person_id, 'name' => $person->name);
+                    $cur->meta = array('singer' => $persons);
+                    $album_id = $album_manager->add($cur);
+                    $meta_manager->add($album_id, $persons, 'album:singer');
                 }
                 fclose($fh);
             } elseif ($_POST['object']=='album_song') {
@@ -98,18 +131,12 @@ if (!empty($_POST['file']) && !empty($_POST['object'])) {
                     if (empty($data)) {
                         continue;
                     }
-                }                
+                }
                 fclose($fh);
             }
-            
+
             $_SESSION['rslt_message'] = __('The data have been loaded.');
-            $_SESSION['rslt_default_tab'] = 'maintenance';
             http::redirect($p_url);
         }
     }
 }
-
-$default_tab = 'maintenance';
-
-include(dirname(__FILE__).'/../views/load.tpl');
-

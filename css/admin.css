@@ -1,9 +1,9 @@
 .meta-field {
-    list-style-type: none;
     margin: 0;
 }
 
 .meta-field li {
+    list-style-type: none;
     display: inline;
     margin-left: 0.5em;
 }

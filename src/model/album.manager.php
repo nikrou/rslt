@@ -21,9 +21,9 @@
 
 class albumManager extends objectManager
 {
-    public static $fields = array('title', 'singer', 'publication_date', 'url', 'media_id', 'bio_express', 'meta');
+    public static $fields = array('title', 'publication_date', 'url', 'media_id', 'bio_express', 'meta');
 
-    public static $required_fields = array('title', 'singer', 'publication_date');
+    public static $required_fields = array('title', 'publication_date');
 
     public function __construct($core) {
         parent::__construct($core, 'album', self::$required_fields, self::$fields);

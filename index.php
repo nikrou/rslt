@@ -36,7 +36,7 @@ $rslt_directory['albums'] = $core->blog->settings->rslt->directory_albums;
 $rslt_directory['bios'] = $core->blog->settings->rslt->directory_bios;
 $rslt_directory['supports'] = $core->blog->settings->rslt->directory_supports;
 
-$Pages = array('settings');
+$Pages = array('settings', 'load');
 $Objects = array('album', 'song', 'person');
 
 // default controller

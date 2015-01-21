@@ -62,7 +62,32 @@
 	  <input type="submit" name="saveconfig" value="<?php echo __('Save configuration');?>" />
 	</p>
       </form>
+
+      <div class="fieldset">
+	<h4><?php echo __('Load data');?></h4>
+	<form action="<?php echo $p_url;?>&amp;page=load" method="post">
+	  <p>
+	    <input type="submit" value="<?php echo __('Load songs csv file');?>"/>
+	    <input type="hidden" name="action" value="load"/>
+	    <input type="hidden" name="file" value="songs"/>
+	    <input type="hidden" name="object" value="song"/>
+	    <?php echo $core->formNonce();?>
+	  </p>
+	</form>
+
+	<form action="<?php echo $page_url;?>&amp;page=load" method="post">
+	  <p>
+	    <input type="submit" value="<?php echo __('Load albums csv file');?>"/>
+	    <input type="hidden" name="action" value="load"/>
+	    <input type="hidden" name="file" value="albums"/>
+	    <input type="hidden" name="object" value="album"/>
+	    <?php echo $core->formNonce();?>
+	  </p>
+	</form>
+      </div>
+
     </div>
+
     <?php endif;?>
     <?php dcPage::helpBlock('rslt');?>
   </body>
