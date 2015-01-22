@@ -117,8 +117,10 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_GET['term'])) {
                 $message = __('The album has been added.');
             }
 
-            $meta_manager = new metaManager($core);
-            $meta_manager->add($album_id, $persons, 'album:singer');
+            if (!empty($album_id) && isset($persons)) {
+                $meta_manager = new metaManager($core);
+                $meta_manager->add($album_id, $persons, 'album:singer');
+            }
 
             $_SESSION['rslt_message'] = $message;
             http::redirect($page_url.'&action=edit&id='.(int) $_POST['id']);

@@ -270,4 +270,10 @@ class objectManager
 
         return $rs->f(0);
     }
+
+    public function updateMeta($id, $meta) {
+        $cur = $this->openCursor($this->table);
+        $cur->meta = json_encode($meta);
+        $cur->update('WHERE id = '.$id);
+    }
 }

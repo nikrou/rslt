@@ -26,6 +26,7 @@ class metaManager
         $this->blog = $core->blog;
         $this->con = $this->blog->con;
         $this->table = $this->blog->prefix.'rslt_meta';
+        $this->table_person = $this->blog->prefix.'rslt_person';
     }
 
     public function add($id, array $persons, $type) {
@@ -46,5 +47,17 @@ class metaManager
             $this->con->unlock();
             throw $e;
         }
+    }
+
+    public function getListFor($prefix) {
+        $strReq =  'SELECT ref_id, meta_type, person_id, p.id, p.title';
+        $strReq .= ' FROM '.$this->table;
+        $strReq .= ' LEFT JOIN '.$this->table_person.' AS p ON person_id = p.id';
+        $strReq .= ' WHERE meta_type like \''.$prefix.'%\'';
+        $strReq .= ' ORDER BY ref_id';
+
+        $rs = $this->con->select($strReq);
+
+        return $rs;
     }
 }

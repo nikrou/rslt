@@ -30,7 +30,7 @@ class rsExtendMeta
                 $elements = $meta[$field];
                 $data = array();
                 foreach ($elements as $element) {
-                    $data[] = sprintf('{ "id":%d, "name":"%s" }', $element['id'], $element['name']);
+                    $data[] = sprintf('{ "id":%d, "title":"%s" }', $element['id'], $element['title']);
                 }
                 $s = '['.implode(',', $data).']';
             }
@@ -66,7 +66,7 @@ class rsExtendMeta
                 $elements = $meta['singer'];
                 $data = array();
                 foreach ($elements as $element) {
-                    $data[] = $element['name'];
+                    $data[] = $element['title'];
                 }
                 $s = implode(',', $data);
             }

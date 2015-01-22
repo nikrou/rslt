@@ -115,7 +115,7 @@ class adminSongsList extends adminGenericList
             foreach ($data as $person) {
                 $s .= sprintf('<li><a href="'.$this->person_url.'">%s</a></li>',
                               $person['id'],
-                              html::escapeHTML($person['name'])
+                              html::escapeHTML($person['title'])
                 );
             }
             if (!empty($s)) {

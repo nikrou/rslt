@@ -62,9 +62,13 @@
 	  <input type="submit" name="saveconfig" value="<?php echo __('Save configuration');?>" />
 	</p>
       </form>
+    </div>
 
+    <div class="multi-part" id="data" title="<?php echo __('Data');?>">
+      <h3 class="hidden-if-js"><?php echo __('Load data');?></h3>
       <div class="fieldset">
-	<h4><?php echo __('Load data');?></h4>
+	<h3><?php echo __('Load initial data');?></h3>
+
 	<form action="<?php echo $p_url;?>&amp;page=load" method="post">
 	  <p>
 	    <input type="submit" value="<?php echo __('Load songs csv file');?>"/>
@@ -85,7 +89,20 @@
 	  </p>
 	</form>
       </div>
+    </div>
 
+    <div class="multi-part" id="maintenance" title="<?php echo __('Maintenance');?>">
+      <div class="fieldset">
+	<p><?php echo __('Synchronize metadata with albums and songs');?></p>
+	<form action="<?php echo $p_url;?>&amp;page=synchronize" method="post">
+	  <p>
+	    <input type="submit" value="<?php echo __('Synchronize');?>"/>
+	    <input type="hidden" name="action" value="synchronize"/>
+	    <?php echo $core->formNonce();?>
+	  </p>
+	</form>
+
+      </div>
     </div>
 
     <?php endif;?>

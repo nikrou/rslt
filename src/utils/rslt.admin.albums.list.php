@@ -79,7 +79,7 @@ class adminAlbumsList extends adminGenericList
             foreach ($singers as $singer) {
                 $singer_string .= sprintf('<li><a href="'.$this->person_url.'">%s</a></li>',
                                           $singer['id'],
-                                          html::escapeHTML($singer['name'])
+                                          html::escapeHTML($singer['title'])
                 );
                 $n++;
                 if ($n>2) {
