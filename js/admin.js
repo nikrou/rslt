@@ -13,8 +13,8 @@ $(function() {
 	});
 
 	if ($.fn['sortable']!==undefined) {
-		$('.songs ul li input[name^="position"]').hide();
-		$('.songs').sortable({
+		$('.songs-album ul li input[name^="position"]').hide();
+		$('.songs-album').sortable({
 			axis: 'y',
 			items: 'ul li',
 			update: function(event, ui) {

@@ -9,10 +9,14 @@
     <p class="message"><?php echo $message;?></p>
     <?php endif;?>
 
-    <?php if ($is_super_admin):?>
+    <?php if ($is_super_admin || $rslt_active):?>
     <div class="multi-part" id="settings" title="<?php echo __('Settings');?>">
       <h3 class="hidden-if-js"><?php echo __('Settings');?></h3>
+      <div class="fieldset">
+	<p>Le plugin est en version : <?php echo $plugin_version;?></strong>.</p>
+      </div>
       <form action="<?php echo $page_url;?>" method="post" enctype="multipart/form-data">
+	<?php if ($is_super_admin):?>
 	<div class="fieldset">
 	  <h3><?php echo __('Plugin activation');?></h3>
 	  <p>
@@ -22,6 +26,7 @@
 	    </label>
 	  </p>
 	</div>
+	<?php endif;?>
 	<?php if ($rslt_active):?>
 	<div class="fieldset">
 	  <h4><?php echo __('URL');?></h4>

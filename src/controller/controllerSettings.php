@@ -22,6 +22,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $page_url = $p_url.'&page=settings';
+$plugin_version = $core->plugins->moduleInfo('rslt', 'version');
 
 if (!empty($_POST['saveconfig'])) {
     try {
