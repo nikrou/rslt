@@ -73,14 +73,14 @@ if (!empty($_REQUEST['action']) && (in_array($_REQUEST['action'], array('edit', 
                     if (preg_match('/^~~(\d+)~~$/', $raw_person, $matches)) {
                         $person = $person_manager->findById($matches[1]);
                         if (!$person->isEmpty()) {
-                            $persons[] = array('id'=> $matches[1], 'name' => $person->name);
+                            $persons[] = array('id'=> $matches[1], 'title' => $person->title);
                         }
                     } else {
                         $cur_person = $person_manager->openCursor();
-                        $cur_person->name = $raw_person;
+                        $cur_person->title = $raw_person;
                         $person = $person_manager->add($cur_person);
                         if ($person) {
-                            $persons[] = array('id'=> $person->id, 'name' => $person->name);
+                            $persons[] = array('id'=> $person->id, 'title' => $person->title);
                         }
                     }
                 }

@@ -71,12 +71,12 @@ if (!empty($_POST['file']) && !empty($_POST['object'])) {
                             $person = $person_manager->searchByName($raw_person);
                             if ($person->isEmpty()) {
                                 $person = $person_manager->openCursor();
-                                $person->name = $raw_person;
+                                $person->title = $raw_person;
                                 $person_id = $person_manager->add($person);
                             } else {
                                 $person_id = $person->id;
                             }
-                            $persons[] = array('id' => $person_id, 'name' => $person->name);
+                            $persons[] = array('id' => $person_id, 'title' => $person->title);
                         }
                         $meta[$field] = $persons;
 
@@ -115,12 +115,12 @@ if (!empty($_POST['file']) && !empty($_POST['object'])) {
                     $person = $person_manager->searchByName($singer);
                     if ($person->isEmpty()) {
                         $person = $person_manager->openCursor();
-                        $person->name = $singer;
+                        $person->title = $singer;
                         $person_id = $person_manager->add($person);
                     } else {
                         $person_id = $person->id;
                     }
-                    $persons[] = array('id' => $person_id, 'name' => $person->name);
+                    $persons[] = array('id' => $person_id, 'title' => $person->title);
                     $cur->meta = array('singer' => $persons);
                     $album_id = $album_manager->add($cur);
                     $meta_manager->add($album_id, $persons, 'album:singer');

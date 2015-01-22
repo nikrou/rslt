@@ -21,18 +21,18 @@
 
 class personManager extends objectManager
 {
-    public static $fields = array('name', 'url');
-    public static $require_fields = array('name');
+    public static $fields = array('title', 'url', 'first_name', 'last_name');
+    public static $require_fields = array('title');
 
     public function __construct($core) {
         parent::__construct($core, 'person', self::$require_fields, self::$fields);
     }
 
-    public function searchByName($q) {
+    public function searchByTitle($q) {
         $strReq =  'SELECT id, url, '.implode(',', $this->object_fields);
         $strReq .= ' FROM '.$this->table;
         $strReq .= ' WHERE blog_id = \''.$this->con->escape($this->blog->id).'\'';
-        $strReq .= ' AND name like \'%'.$this->con->escape($q).'%\'';
+        $strReq .= ' AND title like \'%'.$this->con->escape($q).'%\'';
 
         $rs = $this->con->select($strReq);
         $rs = $rs->toStatic();

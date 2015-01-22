@@ -13,7 +13,9 @@
     <script type="text/javascript">
       var all_elements = [];
       <?php foreach ($json as $field => $ids):?>
+      <?php if (!empty($ids)):?>
       all_elements['<?php echo $field;?>'] = <?php echo $ids;?>;
+      <?php endif;?>
       <?php endforeach;?>
     </script>
   </head>

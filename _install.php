@@ -100,7 +100,7 @@ $s->rslt_person
     ->blog_id ('varchar', 32, false)
     ->first_name('varchar', 255, true, null)
     ->last_name('varchar', 255, true, null)
-    ->name('varchar', 255, false)
+    ->title('varchar', 255, false)
     ->url('varchar', 255, true, null)
     ->created_at('timestamp', 0, false, 'now()')
     ->updated_at('timestamp', 0, false, 'now()')

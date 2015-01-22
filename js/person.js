@@ -18,7 +18,7 @@ $(function() {
 				$.each(data, function(index, item){
 					results.push({
 						id: '~~'+item.id+'~~',
-						text: item.name
+						text: item.title
 					});
 				});
 				return {
@@ -38,7 +38,7 @@ $(function() {
 			var data = [];
 			var elements = all_elements[element.attr('data-elements')];
 			for (var n=0,l=elements.length;n<l;n++) {
-				data.push({id: '~~'+elements[n]['id']+'~~', text: elements[n]['name']});
+				data.push({id: '~~'+elements[n]['id']+'~~', text: elements[n]['title']});
 			}
 			callback(data);
 		},
